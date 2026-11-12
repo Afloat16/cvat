@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: fcf362db1c47daabbdae442d3182bf7bd0cc10dd
-          fetch-depth: 3
+          ref: b1c28f08fa399c3e1fe3a2f74ef47bf5ffd383f6
+          fetch-depth: 4
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
@@ -50,7 +50,7 @@ jobs:
           assert re.search(r"[1-9]\d* failed", text), text
           assert "ERROR collecting" not in text, text
           PY
-          git checkout fcf362db1c47daabbdae442d3182bf7bd0cc10dd -- cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_classification.py cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_detection.py cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_instance_segmentation.py cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_keypoint_detection.py
+          git checkout b1c28f08fa399c3e1fe3a2f74ef47bf5ffd383f6 -- cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_classification.py cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_detection.py cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_instance_segmentation.py cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_keypoint_detection.py
       - name: Check changed Python formatting
         run: |
           python -m black --check --line-length 100 cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_classification.py cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_detection.py cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_instance_segmentation.py cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_keypoint_detection.py tests/python/sdk/test_torchvision_inference_gradients.py
