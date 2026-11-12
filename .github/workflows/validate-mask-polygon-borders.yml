@@ -1,0 +1,66 @@
+name: Validate mask polygon image boundaries
+on:
+  push:
+    branches: [validation/mask-polygon-image-boundaries-20261112]
+permissions:
+  contents: read
+jobs:
+  sdk-native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: cd3958aab863081c3bdd898eb572fa16fba4f563
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Generate the official SDK
+        run: |
+          python -m pip install -r cvat-sdk/gen/requirements.txt
+          ./cvat-sdk/gen/generate.sh
+      - name: Install CPU PyTorch
+        run: python -m pip install torch==2.9.0 torchvision==0.24.0 --index-url https://download.pytorch.org/whl/cpu
+      - name: Install native SDK and test dependencies
+        run: python -m pip install -e './cvat-sdk[pytorch]' -e ./cvat-cli -r tests/python/requirements.txt black==25.12.0 isort==6.1.0
+      - name: Run existing SDK unit controls
+        run: |
+          set -o pipefail
+          python -m pytest tests/python/sdk/test_masks.py tests/python/sdk/test_attributes.py --no-services --no-coverage-collection -q 2>&1 | tee native-bootstrap.log
+      - name: Run native polygon conversion regressions
+        run: |
+          set -o pipefail
+          python -m pytest tests/python/sdk/test_mask_polygon_borders.py --no-services --no-coverage-collection -q 2>&1 | tee patched.log
+      - name: Verify original source fails the new regressions
+        run: |
+          git checkout 873008dead495e215a51dbea5c705bc19b61016d -- cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_instance_segmentation.py
+          set +e
+          python -m pytest tests/python/sdk/test_mask_polygon_borders.py --no-services --no-coverage-collection -q > baseline.log 2>&1
+          status=$?
+          set -e
+          cat baseline.log
+          test "$status" -eq 1
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          text = Path("baseline.log").read_text()
+          assert re.search(r"[1-9]\d* failed", text), text
+          assert "ERROR collecting" not in text, text
+          PY
+          git checkout cd3958aab863081c3bdd898eb572fa16fba4f563 -- cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_instance_segmentation.py
+      - name: Check changed Python formatting
+        run: |
+          python -m black --check --diff --line-length 100 cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_instance_segmentation.py tests/python/sdk/test_mask_polygon_borders.py
+          python -m isort --check-only --diff --profile black --line-length 100 cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_instance_segmentation.py tests/python/sdk/test_mask_polygon_borders.py
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: native-sdk-mask-polygon-borders
+          path: |
+            native-bootstrap.log
+            patched.log
+            baseline.log
+
