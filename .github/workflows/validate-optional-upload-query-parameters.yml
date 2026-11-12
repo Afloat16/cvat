@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 0f88284c517cdbaadc34529f5c6c3a3b9a6c8b70
+          ref: 43956cb1aa0233ae579028c310944c6246ccde5b
           fetch-depth: 3
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
@@ -50,7 +50,7 @@ jobs:
           assert re.search(r"[1-9]\d* failed", text), text
           assert "ERROR collecting" not in text, text
           PY
-          git checkout 0f88284c517cdbaadc34529f5c6c3a3b9a6c8b70 -- cvat-sdk/cvat_sdk/core/uploading.py
+          git checkout 43956cb1aa0233ae579028c310944c6246ccde5b -- cvat-sdk/cvat_sdk/core/uploading.py
       - name: Check changed Python formatting
         run: |
           python -m black --check --diff --line-length 100 cvat-sdk/cvat_sdk/core/uploading.py tests/python/sdk/test_upload_query_parameters.py
