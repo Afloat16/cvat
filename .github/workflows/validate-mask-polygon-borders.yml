@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: cd3958aab863081c3bdd898eb572fa16fba4f563
-          fetch-depth: 2
+          ref: 5a1d116137b4410ad0f48287b55a8e7b58c9ef09
+          fetch-depth: 3
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
@@ -50,7 +50,7 @@ jobs:
           assert re.search(r"[1-9]\d* failed", text), text
           assert "ERROR collecting" not in text, text
           PY
-          git checkout cd3958aab863081c3bdd898eb572fa16fba4f563 -- cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_instance_segmentation.py
+          git checkout 5a1d116137b4410ad0f48287b55a8e7b58c9ef09 -- cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_instance_segmentation.py
       - name: Check changed Python formatting
         run: |
           python -m black --check --diff --line-length 100 cvat-sdk/cvat_sdk/auto_annotation/functions/torchvision_instance_segmentation.py tests/python/sdk/test_mask_polygon_borders.py
