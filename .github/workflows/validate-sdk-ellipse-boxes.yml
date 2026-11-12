@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 4192264276f1c4ce836457b348a70948dc322595
-          fetch-depth: 2
+          ref: bf30b7e5897c1121c669711c3b36281b7b0ee423
+          fetch-depth: 3
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
@@ -50,7 +50,7 @@ jobs:
           assert re.search(r"[1-9]\d* failed", text), text
           assert "ERROR collecting" not in text, text
           PY
-          git checkout 4192264276f1c4ce836457b348a70948dc322595 -- cvat-sdk/cvat_sdk/pytorch/_utils.py
+          git checkout bf30b7e5897c1121c669711c3b36281b7b0ee423 -- cvat-sdk/cvat_sdk/pytorch/_utils.py
       - name: Check changed Python formatting
         run: |
           python -m black --check --line-length 100 cvat-sdk/cvat_sdk/pytorch/_utils.py tests/python/sdk/test_pytorch_ellipse_boxes.py
