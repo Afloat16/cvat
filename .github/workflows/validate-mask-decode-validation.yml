@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 5bfc52fedb9d95ae955fc7d86c2c7150799b44e2
-          fetch-depth: 2
+          ref: cda23a2909737cd74b97ff5f3c26fcb054233cfe
+          fetch-depth: 3
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
@@ -50,7 +50,7 @@ jobs:
           assert re.search(r"[1-9]\d* failed", text), text
           assert "ERROR collecting" not in text, text
           PY
-          git checkout 5bfc52fedb9d95ae955fc7d86c2c7150799b44e2 -- cvat-sdk/cvat_sdk/masks.py
+          git checkout cda23a2909737cd74b97ff5f3c26fcb054233cfe -- cvat-sdk/cvat_sdk/masks.py
       - name: Check changed Python formatting
         run: |
           python -m black --check --diff --line-length 100 cvat-sdk/cvat_sdk/masks.py tests/python/sdk/test_mask_decode_validation.py
