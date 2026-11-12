@@ -1,0 +1,114 @@
+name: Validate mask bounding memory
+on:
+  push:
+    branches: [validation/sdk-mask-bounds-memory-20261112]
+permissions:
+  contents: read
+jobs:
+  sdk-native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 5a9567385a27416a41aca26979af68d33ad63331
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Generate the official SDK
+        run: |
+          python -m pip install -r cvat-sdk/gen/requirements.txt
+          ./cvat-sdk/gen/generate.sh
+      - name: Install native SDK and test dependencies
+        run: python -m pip install -e ./cvat-sdk -e ./cvat-cli -r tests/python/requirements.txt black==25.12.0 isort==6.1.0
+      - name: Run native regressions and existing controls
+        run: |
+          set -o pipefail
+          python -m pytest tests/python/sdk/test_mask_bounds_memory.py tests/python/sdk/test_masks.py tests/python/sdk/test_attributes.py --no-services --no-coverage-collection -q 2>&1 | tee patched.log
+      - name: Write benchmark
+        run: |
+          cat > benchmark_mask_bounds.py <<'PY'
+          import hashlib
+          import json
+          import statistics
+          import time
+          import tracemalloc
+          
+          import numpy as np
+          from cvat_sdk.masks import encode_mask
+          
+          results = []
+          for size in (256, 1024, 2048):
+              for fill in ("full", "small_interior"):
+                  bitmap = np.zeros((size, size), dtype=bool)
+                  if fill == "full":
+                      bitmap[:] = True
+                  else:
+                      bitmap[size // 2 : size // 2 + size // 10, size // 3 : size // 3 + size // 10] = True
+                  encode_mask(bitmap)
+                  times = []
+                  for _ in range(7):
+                      start = time.perf_counter()
+                      encoded = encode_mask(bitmap)
+                      times.append(time.perf_counter() - start)
+                  tracemalloc.start()
+                  encoded = encode_mask(bitmap)
+                  _, peak = tracemalloc.get_traced_memory()
+                  tracemalloc.stop()
+                  results.append(
+                      dict(
+                          size=size,
+                          fill=fill,
+                          median_ms=statistics.median(times) * 1000,
+                          peak_bytes=peak,
+                          encoded_sha256=hashlib.sha256(repr(encoded).encode()).hexdigest(),
+                      )
+                  )
+          print(json.dumps(results, indent=2))
+          PY
+      - name: Measure patched allocation and time
+        run: |
+          for i in 1 2 3; do python benchmark_mask_bounds.py > "patched-benchmark-$i.json"; done
+          cat patched-benchmark-1.json
+      - name: Verify original memory behavior and numeric controls
+        run: |
+          git checkout 873008dead495e215a51dbea5c705bc19b61016d -- cvat-sdk/cvat_sdk/masks.py
+          set +e
+          python -m pytest tests/python/sdk/test_mask_bounds_memory.py --no-services --no-coverage-collection -q > baseline.log 2>&1
+          status=$?
+          set -e
+          cat baseline.log
+          test "$status" -eq 1
+          python - <<'PY'
+          from pathlib import Path
+          text = Path("baseline.log").read_text()
+          assert "1 failed, 20 passed" in text, text
+          assert "ERROR collecting" not in text, text
+          PY
+      - name: Measure unchanged source and check equal encodings
+        run: |
+          for i in 1 2 3; do python benchmark_mask_bounds.py > "baseline-benchmark-$i.json"; done
+          python - <<'PY'
+          import json
+          for i in range(1, 4):
+              before = json.load(open(f"baseline-benchmark-{i}.json"))
+              after = json.load(open(f"patched-benchmark-{i}.json"))
+              assert [x["encoded_sha256"] for x in before] == [x["encoded_sha256"] for x in after]
+          PY
+          cat baseline-benchmark-1.json
+          git checkout 5a9567385a27416a41aca26979af68d33ad63331 -- cvat-sdk/cvat_sdk/masks.py
+      - name: Check changed Python formatting
+        run: |
+          python -m black --check --line-length 100 cvat-sdk/cvat_sdk/masks.py tests/python/sdk/test_mask_bounds_memory.py
+          python -m isort --check-only --profile black --line-length 100 cvat-sdk/cvat_sdk/masks.py tests/python/sdk/test_mask_bounds_memory.py
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: native-sdk-mask-bounds
+          path: |
+            patched.log
+            baseline.log
+            *-benchmark-*.json
