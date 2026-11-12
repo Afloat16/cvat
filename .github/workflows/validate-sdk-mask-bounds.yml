@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 5a9567385a27416a41aca26979af68d33ad63331
-          fetch-depth: 2
+          ref: 4043870d55694b723b75fa073f033873fe3d30f3
+          fetch-depth: 3
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
@@ -99,11 +99,11 @@ jobs:
               assert [x["encoded_sha256"] for x in before] == [x["encoded_sha256"] for x in after]
           PY
           cat baseline-benchmark-1.json
-          git checkout 5a9567385a27416a41aca26979af68d33ad63331 -- cvat-sdk/cvat_sdk/masks.py
+          git checkout 4043870d55694b723b75fa073f033873fe3d30f3 -- cvat-sdk/cvat_sdk/masks.py
       - name: Check changed Python formatting
         run: |
           python -m black --check --line-length 100 cvat-sdk/cvat_sdk/masks.py tests/python/sdk/test_mask_bounds_memory.py
-          python -m isort --check-only --profile black --line-length 100 cvat-sdk/cvat_sdk/masks.py tests/python/sdk/test_mask_bounds_memory.py
+          python -m isort --check-only --diff --profile black --line-length 100 cvat-sdk/cvat_sdk/masks.py tests/python/sdk/test_mask_bounds_memory.py
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: always()
         with:
@@ -112,3 +112,4 @@ jobs:
             patched.log
             baseline.log
             *-benchmark-*.json
+
