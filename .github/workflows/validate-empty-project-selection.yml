@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 5d273cb8bc9007ede411fd267523b774c0e6aee1
-          fetch-depth: 2
+          ref: ab0289b461c004aa3d537c4a663e2567ed62e590
+          fetch-depth: 3
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
@@ -50,7 +50,7 @@ jobs:
           assert re.search(r"[1-9]\d* failed", text), text
           assert "ERROR collecting" not in text, text
           PY
-          git checkout 5d273cb8bc9007ede411fd267523b774c0e6aee1 -- cvat-sdk/cvat_sdk/pytorch/project_dataset.py
+          git checkout ab0289b461c004aa3d537c4a663e2567ed62e590 -- cvat-sdk/cvat_sdk/pytorch/project_dataset.py
       - name: Check changed Python formatting
         run: |
           python -m black --check --line-length 100 cvat-sdk/cvat_sdk/pytorch/project_dataset.py tests/python/sdk/test_empty_project_selection.py
