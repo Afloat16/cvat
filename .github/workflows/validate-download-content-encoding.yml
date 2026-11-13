@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 6ec85fc2ae1fe43002e3c5f2f9d07cc6a825f807
-          fetch-depth: 4
+          ref: 45c2bb9855064975ebd31be8b005859c4231118c
+          fetch-depth: 5
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
@@ -50,7 +50,7 @@ jobs:
           assert re.search(r"[1-9]\d* failed", text), text
           assert "ERROR collecting" not in text, text
           PY
-          git checkout 6ec85fc2ae1fe43002e3c5f2f9d07cc6a825f807 -- cvat-sdk/cvat_sdk/core/downloading.py
+          git checkout 45c2bb9855064975ebd31be8b005859c4231118c -- cvat-sdk/cvat_sdk/core/downloading.py
       - name: Check changed Python formatting
         run: |
           python -m black --check --diff --line-length 100 cvat-sdk/cvat_sdk/core/downloading.py tests/python/sdk/test_download_content_encoding.py
