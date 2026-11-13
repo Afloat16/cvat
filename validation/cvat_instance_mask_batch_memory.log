@@ -1,0 +1,1521 @@
+﻿2026-11-13T09:28:24.9805596Z Current runner version: '2.338.2'
+2026-11-13T09:28:24.9827319Z ##[group]Runner Image Provisioner
+2026-11-13T09:28:24.9828010Z Hosted Compute Agent
+2026-11-13T09:28:24.9828570Z Version: 20261028.624
+2026-11-13T09:28:24.9829433Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-13T09:28:24.9830154Z Build Date: 2026-10-28T21:51:42Z
+2026-11-13T09:28:24.9830710Z Worker ID: {19425bca-630f-4c85-8b88-62f09209d268}
+2026-11-13T09:28:24.9831261Z Region: westus2
+2026-11-13T09:28:24.9831774Z Cloud: Azure
+2026-11-13T09:28:24.9832218Z ##[endgroup]
+2026-11-13T09:28:24.9833428Z ##[group]Operating System
+2026-11-13T09:28:24.9833973Z Ubuntu
+2026-11-13T09:28:24.9834400Z 26.04.1
+2026-11-13T09:28:24.9835165Z LTS
+2026-11-13T09:28:24.9835595Z ##[endgroup]
+2026-11-13T09:28:24.9836135Z ##[group]Runner Image
+2026-11-13T09:28:24.9836644Z Image: ubuntu-26.04
+2026-11-13T09:28:24.9837105Z Version: 20261101.186.1
+2026-11-13T09:28:24.9838177Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+2026-11-13T09:28:24.9839866Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+2026-11-13T09:28:24.9840699Z ##[endgroup]
+2026-11-13T09:28:24.9841573Z ##[group]GITHUB_TOKEN Permissions
+2026-11-13T09:28:24.9843469Z Contents: read
+2026-11-13T09:28:24.9843959Z Metadata: read
+2026-11-13T09:28:24.9844523Z ##[endgroup]
+2026-11-13T09:28:24.9846537Z Secret source: Actions
+2026-11-13T09:28:24.9847384Z Cache mode: write
+2026-11-13T09:28:24.9847949Z Prepare workflow directory
+2026-11-13T09:28:25.0115790Z Prepare all required actions
+2026-11-13T09:28:25.0156203Z Getting action download info
+2026-11-13T09:28:25.4125894Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-11-13T09:28:27.2932658Z Download action repository 'actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0' (SHA:6d4fd22b20465ccc0f7354476588e8df7c9ca0e0)
+2026-11-13T09:28:27.7644722Z Download action repository 'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-11-13T09:28:29.0797844Z Complete job name: sdk-native
+2026-11-13T09:28:29.1490909Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-11-13T09:28:29.1491568Z with:
+2026-11-13T09:28:29.1491819Z   ref: 064aa5750f1428b30b980065b087a05808c39dfe
+2026-11-13T09:28:29.1492092Z   fetch-depth: 4
+2026-11-13T09:28:29.1492318Z   persist-credentials: false
+2026-11-13T09:28:29.1492567Z   repository: Afloat16/cvat
+2026-11-13T09:28:29.1494718Z   token: ***
+2026-11-13T09:28:29.1494939Z   ssh-strict: true
+2026-11-13T09:28:29.1495162Z   ssh-user: git
+2026-11-13T09:28:29.1495360Z   clean: true
+2026-11-13T09:28:29.1495590Z   sparse-checkout-cone-mode: true
+2026-11-13T09:28:29.1495859Z   fetch-tags: false
+2026-11-13T09:28:29.1496090Z   show-progress: true
+2026-11-13T09:28:29.1496306Z   lfs: false
+2026-11-13T09:28:29.1496516Z   submodules: false
+2026-11-13T09:28:29.1496758Z   set-safe-directory: true
+2026-11-13T09:28:29.1497007Z   allow-unsafe-pr-checkout: false
+2026-11-13T09:28:29.1497387Z ##[endgroup]
+2026-11-13T09:28:29.5350899Z Syncing repository: Afloat16/cvat
+2026-11-13T09:28:29.5352170Z ##[group]Getting Git version info
+2026-11-13T09:28:29.5352521Z Working directory is '/home/runner/work/cvat/cvat'
+2026-11-13T09:28:29.5353068Z [command]/usr/bin/git version
+2026-11-13T09:28:29.5520867Z git version 2.56.0
+2026-11-13T09:28:29.5536111Z ##[endgroup]
+2026-11-13T09:28:29.5546331Z Temporarily overriding HOME='/home/runner/work/_temp/f25898b7-681e-4849-a88a-9c8bc4df1b20' before making global git config changes
+2026-11-13T09:28:29.5547389Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-13T09:28:29.5551219Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cvat/cvat
+2026-11-13T09:28:29.5608144Z Deleting the contents of '/home/runner/work/cvat/cvat'
+2026-11-13T09:28:29.5610873Z ##[group]Determining repository object format
+2026-11-13T09:28:29.5612388Z ##[endgroup]
+2026-11-13T09:28:29.5613114Z ##[group]Initializing the repository
+2026-11-13T09:28:29.5616263Z [command]/usr/bin/git init /home/runner/work/cvat/cvat
+2026-11-13T09:28:29.5731431Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-13T09:28:29.5732287Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-13T09:28:29.5732978Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-13T09:28:29.5733532Z hint: call:
+2026-11-13T09:28:29.5733832Z hint:
+2026-11-13T09:28:29.5734285Z hint: 	git config --global init.defaultBranch <name>
+2026-11-13T09:28:29.5734753Z hint:
+2026-11-13T09:28:29.5735184Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-13T09:28:29.5735872Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-13T09:28:29.5736410Z hint:
+2026-11-13T09:28:29.5736729Z hint: 	git branch -m <name>
+2026-11-13T09:28:29.5737123Z hint:
+2026-11-13T09:28:29.5737588Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-13T09:28:29.5738706Z Initialized empty Git repository in /home/runner/work/cvat/cvat/.git/
+2026-11-13T09:28:29.5748032Z [command]/usr/bin/git remote add origin https://github.com/Afloat16/cvat
+2026-11-13T09:28:29.5791017Z ##[endgroup]
+2026-11-13T09:28:29.5791585Z ##[group]Disabling automatic garbage collection
+2026-11-13T09:28:29.5793122Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-13T09:28:29.5824358Z ##[endgroup]
+2026-11-13T09:28:29.5825262Z ##[group]Setting up auth
+2026-11-13T09:28:29.5825975Z Removing SSH command configuration
+2026-11-13T09:28:29.5828461Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T09:28:29.5866437Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T09:28:29.7234879Z Removing HTTP extra header
+2026-11-13T09:28:29.7240093Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T09:28:29.7270141Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T09:28:29.7503269Z Removing includeIf entries pointing to credentials config files
+2026-11-13T09:28:29.7507828Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T09:28:29.7537791Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T09:28:29.7782322Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-17861537-c5de-4086-ace3-5cee644ba419.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-13T09:28:29.7817354Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/cvat/cvat/.git.path /home/runner/work/_temp/git-credentials-17861537-c5de-4086-ace3-5cee644ba419.config
+2026-11-13T09:28:29.8103219Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/cvat/cvat/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-17861537-c5de-4086-ace3-5cee644ba419.config
+2026-11-13T09:28:29.8149349Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-17861537-c5de-4086-ace3-5cee644ba419.config
+2026-11-13T09:28:29.8180202Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-17861537-c5de-4086-ace3-5cee644ba419.config
+2026-11-13T09:28:29.8208140Z ##[endgroup]
+2026-11-13T09:28:29.8208652Z ##[group]Fetching the repository
+2026-11-13T09:28:29.8214759Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=4 origin 064aa5750f1428b30b980065b087a05808c39dfe
+2026-11-13T09:28:33.0069283Z From https://github.com/Afloat16/cvat
+2026-11-13T09:28:33.0069760Z  * branch            064aa5750f1428b30b980065b087a05808c39dfe -> FETCH_HEAD
+2026-11-13T09:28:33.0078054Z [command]/usr/bin/git rev-parse --verify --quiet 064aa5750f1428b30b980065b087a05808c39dfe^{object}
+2026-11-13T09:28:33.0103188Z 064aa5750f1428b30b980065b087a05808c39dfe
+2026-11-13T09:28:33.0130697Z ##[endgroup]
+2026-11-13T09:28:33.0131191Z ##[group]Determining the checkout info
+2026-11-13T09:28:33.0132797Z ##[endgroup]
+2026-11-13T09:28:33.0133141Z [command]/usr/bin/git sparse-checkout disable
+2026-11-13T09:28:33.0183282Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-13T09:28:33.0217207Z ##[group]Checking out the ref
+2026-11-13T09:28:33.0227561Z [command]/usr/bin/git checkout --progress --force 064aa5750f1428b30b980065b087a05808c39dfe
+2026-11-13T09:28:33.5786969Z Note: switching to '064aa5750f1428b30b980065b087a05808c39dfe'.
+2026-11-13T09:28:33.5787400Z 
+2026-11-13T09:28:33.5787583Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-13T09:28:33.5787979Z changes and commit them, and you can discard any commits you make in this
+2026-11-13T09:28:33.5788378Z state without impacting any branches by switching back to a branch.
+2026-11-13T09:28:33.5788600Z 
+2026-11-13T09:28:33.5788930Z If you want to create a new branch to retain commits you create, you may
+2026-11-13T09:28:33.5789306Z do so (now or later) by using -c with the switch command. Example:
+2026-11-13T09:28:33.5789523Z 
+2026-11-13T09:28:33.5789624Z   git switch -c <new-branch-name>
+2026-11-13T09:28:33.5789834Z 
+2026-11-13T09:28:33.5789937Z Or undo this operation with:
+2026-11-13T09:28:33.5790072Z 
+2026-11-13T09:28:33.5790155Z   git switch -
+2026-11-13T09:28:33.5790262Z 
+2026-11-13T09:28:33.5790430Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-13T09:28:33.5790674Z 
+2026-11-13T09:28:33.5790847Z HEAD is now at 064aa57 style: apply Black to instance mask regression tests
+2026-11-13T09:28:33.5868257Z ##[endgroup]
+2026-11-13T09:28:33.5911685Z [command]/usr/bin/git log -1 --format=%H
+2026-11-13T09:28:33.5937902Z 064aa5750f1428b30b980065b087a05808c39dfe
+2026-11-13T09:28:33.5945500Z ##[group]Removing auth
+2026-11-13T09:28:33.5945750Z Removing SSH command configuration
+2026-11-13T09:28:33.5949289Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T09:28:33.5980245Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T09:28:33.6236424Z Removing HTTP extra header
+2026-11-13T09:28:33.6239774Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T09:28:33.6272735Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T09:28:33.6526842Z Removing includeIf entries pointing to credentials config files
+2026-11-13T09:28:33.6528678Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T09:28:33.6553151Z includeif.gitdir:/home/runner/work/cvat/cvat/.git.path
+2026-11-13T09:28:33.6554041Z includeif.gitdir:/home/runner/work/cvat/cvat/.git/worktrees/*.path
+2026-11-13T09:28:33.6554826Z includeif.gitdir:/github/workspace/.git.path
+2026-11-13T09:28:33.6555603Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-13T09:28:33.6566239Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/cvat/cvat/.git.path
+2026-11-13T09:28:33.6593094Z /home/runner/work/_temp/git-credentials-17861537-c5de-4086-ace3-5cee644ba419.config
+2026-11-13T09:28:33.6602343Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/cvat/cvat/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-17861537\-c5de\-4086\-ace3\-5cee644ba419\.config
+2026-11-13T09:28:33.6635848Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/cvat/cvat/.git/worktrees/*.path
+2026-11-13T09:28:33.6658678Z /home/runner/work/_temp/git-credentials-17861537-c5de-4086-ace3-5cee644ba419.config
+2026-11-13T09:28:33.6667203Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/cvat/cvat/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-17861537\-c5de\-4086\-ace3\-5cee644ba419\.config
+2026-11-13T09:28:33.6710039Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-11-13T09:28:33.6825998Z /github/runner_temp/git-credentials-17861537-c5de-4086-ace3-5cee644ba419.config
+2026-11-13T09:28:33.6827819Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-17861537\-c5de\-4086\-ace3\-5cee644ba419\.config
+2026-11-13T09:28:33.6839864Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-13T09:28:33.6840703Z /github/runner_temp/git-credentials-17861537-c5de-4086-ace3-5cee644ba419.config
+2026-11-13T09:28:33.6841961Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-17861537\-c5de\-4086\-ace3\-5cee644ba419\.config
+2026-11-13T09:28:33.6849092Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T09:28:33.7091283Z Removing credentials config '/home/runner/work/_temp/git-credentials-17861537-c5de-4086-ace3-5cee644ba419.config'
+2026-11-13T09:28:33.7100137Z ##[endgroup]
+2026-11-13T09:28:33.7318899Z ##[group]Run actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+2026-11-13T09:28:33.7319224Z with:
+2026-11-13T09:28:33.7319396Z   python-version: 3.11
+2026-11-13T09:28:33.7319593Z   cache: pip
+2026-11-13T09:28:33.7319759Z   check-latest: false
+2026-11-13T09:28:33.7321763Z   token: ***
+2026-11-13T09:28:33.7322023Z   mirror: https://raw.githubusercontent.com/actions/python-versions/main
+2026-11-13T09:28:33.7322332Z   update-environment: true
+2026-11-13T09:28:33.7322530Z   allow-prereleases: false
+2026-11-13T09:28:33.7322718Z   freethreaded: false
+2026-11-13T09:28:33.7322897Z ##[endgroup]
+2026-11-13T09:28:33.8281757Z ##[group]Installed versions
+2026-11-13T09:28:33.8377387Z Successfully set up CPython (3.11.18)
+2026-11-13T09:28:33.8377942Z ##[endgroup]
+2026-11-13T09:28:34.0883417Z [command]/opt/hostedtoolcache/Python/3.11.18/x64/bin/pip cache dir
+2026-11-13T09:28:34.3311784Z /home/runner/.cache/pip
+2026-11-13T09:28:34.5839808Z pip cache is not found
+2026-11-13T09:28:34.5980418Z ##[group]Run python -m pip install -r cvat-sdk/gen/requirements.txt
+2026-11-13T09:28:34.5980880Z [36;1mpython -m pip install -r cvat-sdk/gen/requirements.txt[0m
+2026-11-13T09:28:34.5981187Z [36;1m./cvat-sdk/gen/generate.sh[0m
+2026-11-13T09:28:34.6031365Z shell: /usr/bin/bash -e {0}
+2026-11-13T09:28:34.6031583Z env:
+2026-11-13T09:28:34.6031818Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:28:34.6032206Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-13T09:28:34.6032556Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:28:34.6032859Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:28:34.6033157Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:28:34.6033452Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-13T09:28:34.6033705Z ##[endgroup]
+2026-11-13T09:28:35.2139368Z Collecting inflection>=0.5.1 (from -r cvat-sdk/gen/requirements.txt (line 3))
+2026-11-13T09:28:35.2533306Z   Downloading inflection-0.5.1-py2.py3-none-any.whl.metadata (1.7 kB)
+2026-11-13T09:28:35.4604491Z Collecting ruamel.yaml>=0.17.21 (from -r cvat-sdk/gen/requirements.txt (line 4))
+2026-11-13T09:28:35.4684427Z   Downloading ruamel_yaml-0.19.1-py3-none-any.whl.metadata (16 kB)
+2026-11-13T09:28:35.4819182Z Downloading inflection-0.5.1-py2.py3-none-any.whl (9.5 kB)
+2026-11-13T09:28:35.6141027Z Downloading ruamel_yaml-0.19.1-py3-none-any.whl (118 kB)
+2026-11-13T09:28:35.6620706Z Installing collected packages: ruamel.yaml, inflection
+2026-11-13T09:28:35.7504119Z 
+2026-11-13T09:28:35.7511897Z Successfully installed inflection-0.5.1 ruamel.yaml-0.19.1
+2026-11-13T09:28:35.7517915Z 
+2026-11-13T09:28:35.7518111Z [notice] A new release of pip is available: 26.2.2 -> 26.3
+2026-11-13T09:28:35.7518488Z [notice] To update, run: pip install --upgrade pip
+2026-11-13T09:28:35.8973778Z Unable to find image 'openapitools/openapi-generator-cli:v6.0.1' locally
+2026-11-13T09:28:36.6887983Z v6.0.1: Pulling from openapitools/openapi-generator-cli
+2026-11-13T09:28:36.9500311Z f78b052dd935: Pulling fs layer
+2026-11-13T09:28:36.9501172Z 131116dba45e: Pulling fs layer
+2026-11-13T09:28:36.9501925Z 9250eef0f01e: Pulling fs layer
+2026-11-13T09:28:36.9502508Z 8a014c921489: Pulling fs layer
+2026-11-13T09:28:36.9503004Z 293ff1be7001: Pulling fs layer
+2026-11-13T09:28:36.9503472Z ea267e4631a9: Pulling fs layer
+2026-11-13T09:28:36.9503936Z cb984b413388: Pulling fs layer
+2026-11-13T09:28:36.9504260Z 3969d4e96be0: Pulling fs layer
+2026-11-13T09:28:37.1002901Z 131116dba45e: Download complete
+2026-11-13T09:28:37.2006066Z 3969d4e96be0: Download complete
+2026-11-13T09:28:37.3997347Z 8a014c921489: Download complete
+2026-11-13T09:28:37.4003780Z 9250eef0f01e: Download complete
+2026-11-13T09:28:37.4009501Z cb984b413388: Download complete
+2026-11-13T09:28:37.6000885Z 293ff1be7001: Download complete
+2026-11-13T09:28:38.0008037Z ea267e4631a9: Download complete
+2026-11-13T09:28:38.0010529Z f78b052dd935: Download complete
+2026-11-13T09:28:38.9070312Z ea267e4631a9: Pull complete
+2026-11-13T09:28:39.0021201Z 8a014c921489: Pull complete
+2026-11-13T09:28:39.1051563Z 293ff1be7001: Pull complete
+2026-11-13T09:28:39.2014576Z 3969d4e96be0: Pull complete
+2026-11-13T09:28:39.2021379Z 9250eef0f01e: Pull complete
+2026-11-13T09:28:39.7024867Z f78b052dd935: Pull complete
+2026-11-13T09:28:39.7941711Z 131116dba45e: Pull complete
+2026-11-13T09:28:39.7947740Z cb984b413388: Pull complete
+2026-11-13T09:28:39.7948277Z Digest: sha256:b62b1151839e5ac4082cb2447e0e9e1472565ef6d9272e133b8a1ceffad5cb96
+2026-11-13T09:28:39.7949076Z Status: Downloaded newer image for openapitools/openapi-generator-cli:v6.0.1
+2026-11-13T09:28:45.0585830Z [main] INFO  o.o.codegen.DefaultGenerator - Generating with dryRun=false
+2026-11-13T09:28:45.0610071Z [main] INFO  o.o.codegen.DefaultGenerator - OpenAPI Generator: python (client)
+2026-11-13T09:28:45.0611573Z [main] INFO  o.o.codegen.DefaultGenerator - Generator 'python' is considered stable.
+2026-11-13T09:28:45.0962409Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as AnnotationId_shape_type. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.0985403Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as AttributeComparison_default. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.0988125Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as AttributeComparisonDefaultRule_comparator. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.0990889Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as AttributeComparisonRequest_default. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1000453Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as ClientEventsRequest_previous_event. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1003514Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as CloudStorageRead_owner. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1083286Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as DataRequest_validation_params. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1110627Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as JobRead_assignee. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1118229Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as JobRead_target_storage. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1156608Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as PatchedProjectWriteRequest_target_storage. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1177778Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as PatchedQualityRequirementRequest_annotation_type. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1180700Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as PatchedQualityRequirementRequest_metric. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1183397Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as PatchedQualityRequirementRequest_similarity_metric. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1242970Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as PatchedQualityRequirementRequest_iou_threshold. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1251133Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as PatchedQualityRequirementRequest_point_size_base. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1252734Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as PatchedQualityRequirementRequest_attribute_comparison. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1262913Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as PatchedUserRequest_cvat_usage_reason. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1271651Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as ProjectRead_target_storage. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1289772Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as QualityReportRequirementCalculation_reason. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1297709Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as QualityReportSummary_tasks. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1299567Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as QualityReportSummary_jobs. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1310543Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as QualityRequirement_iou_threshold. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1324026Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as QualityRequirement_attribute_comparison. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1352465Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as Request_owner. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1367459Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as TaskValidationLayoutRead_mode. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1369105Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as User_created_via. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1371395Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as UserGrowthData_owner. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1377915Z [main] INFO  o.o.codegen.InlineModelResolver - Inline schema created as WebhooksEvent_group. To have complete control of the model name, set the `title` field or use the inlineSchemaNameMapping option (--inline-schema-name-mapping in CLI).
+2026-11-13T09:28:45.1380387Z [main] INFO  o.o.c.l.AbstractPythonCodegen - Environment variable PYTHON_POST_PROCESS_FILE not defined so the Python code may not be properly formatted. To define it, try 'export PYTHON_POST_PROCESS_FILE="/usr/local/bin/yapf -i"' (Linux/Mac)
+2026-11-13T09:28:45.1392548Z [main] INFO  o.o.c.l.AbstractPythonCodegen - NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+2026-11-13T09:28:45.1394641Z [main] INFO  o.o.c.l.PythonLegacyClientCodegen - Environment variable PYTHON_POST_PROCESS_FILE not defined so the Python code may not be properly formatted. To define it, try 'export PYTHON_POST_PROCESS_FILE="/usr/local/bin/yapf -i"' (Linux/Mac)
+2026-11-13T09:28:45.1396665Z [main] INFO  o.o.c.l.PythonLegacyClientCodegen - NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+2026-11-13T09:28:45.1428119Z [main] INFO  o.o.c.languages.PythonClientCodegen - generateAliasAsModel is hard coded to true in this generator. Alias models will only be generated if they contain validations or enums
+2026-11-13T09:28:45.1481673Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:45.1535307Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:45.2448042Z [main] INFO  o.o.codegen.DefaultGenerator - Model AssetWriteRequest not generated since it's marked as unused (due to form parameters) and `skipFormModel` (global property) set to true (default)
+2026-11-13T09:28:45.3371791Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.3380969Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.3891681Z [main] WARN  o.o.codegen.DefaultCodegen - 'JobWriteRequest' defines discriminator 'type', but the referenced schema 'GroundTruthJobCreateRequest' is incorrect. invalid type for type, set it to string
+2026-11-13T09:28:45.3893570Z [main] WARN  o.o.codegen.DefaultCodegen - 'JobWriteRequest' defines discriminator 'type', but the referenced schema 'ReplicaJobCreateRequest' is incorrect. invalid type for type, set it to string
+2026-11-13T09:28:45.5811429Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5813786Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5826688Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5829122Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5843250Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5845334Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5866427Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5868954Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5878658Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5880793Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5901097Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5903153Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5905648Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5908354Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5920913Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5922846Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5955929Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5959460Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5982584Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.5985217Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6002426Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6007221Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6019754Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6024605Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6032935Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6035249Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6044026Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6046606Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6062367Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6064585Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6077620Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6079945Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6098701Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6100915Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6104566Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6106448Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:45.6731421Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/about.py
+2026-11-13T09:28:45.6770664Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/About.md
+2026-11-13T09:28:45.6955173Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/accept_invitation_read.py
+2026-11-13T09:28:45.6988977Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AcceptInvitationRead.md
+2026-11-13T09:28:45.7132026Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/access_token_read.py
+2026-11-13T09:28:45.7154595Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AccessTokenRead.md
+2026-11-13T09:28:45.7229962Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/access_token_write_request.py
+2026-11-13T09:28:45.7249293Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AccessTokenWriteRequest.md
+2026-11-13T09:28:45.7304819Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/aggregation_enum.py
+2026-11-13T09:28:45.7321089Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AggregationEnum.md
+2026-11-13T09:28:45.7372457Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/all_webhook_type.py
+2026-11-13T09:28:45.7393037Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AllWebhookType.md
+2026-11-13T09:28:45.7450091Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/annotation_conflict.py
+2026-11-13T09:28:45.7467289Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AnnotationConflict.md
+2026-11-13T09:28:45.7521757Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/annotation_conflict_annotation_type.py
+2026-11-13T09:28:45.7537520Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AnnotationConflictAnnotationType.md
+2026-11-13T09:28:45.7599999Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/annotation_conflict_requirement.py
+2026-11-13T09:28:45.7617141Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AnnotationConflictRequirement.md
+2026-11-13T09:28:45.7663765Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/annotation_conflict_severity.py
+2026-11-13T09:28:45.7679909Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AnnotationConflictSeverity.md
+2026-11-13T09:28:45.7728082Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/annotation_conflict_type.py
+2026-11-13T09:28:45.7744135Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AnnotationConflictType.md
+2026-11-13T09:28:45.7806629Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/annotation_file_request.py
+2026-11-13T09:28:45.7821525Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AnnotationFileRequest.md
+2026-11-13T09:28:45.7874408Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/annotation_guide_read.py
+2026-11-13T09:28:45.7890029Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AnnotationGuideRead.md
+2026-11-13T09:28:45.7939881Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/annotation_guide_write_request.py
+2026-11-13T09:28:45.7981280Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AnnotationGuideWriteRequest.md
+2026-11-13T09:28:45.8110120Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/annotation_id.py
+2026-11-13T09:28:45.8119680Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AnnotationId.md
+2026-11-13T09:28:45.8210320Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/annotation_id_shape_type.py
+2026-11-13T09:28:45.8211727Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AnnotationIdShapeType.md
+2026-11-13T09:28:45.8269964Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/annotation_type_enum.py
+2026-11-13T09:28:45.8300789Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AnnotationTypeEnum.md
+2026-11-13T09:28:45.8359925Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/asset_read.py
+2026-11-13T09:28:45.8374891Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AssetRead.md
+2026-11-13T09:28:45.8445203Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute.py
+2026-11-13T09:28:45.8463239Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/Attribute.md
+2026-11-13T09:28:45.8509624Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_comparison.py
+2026-11-13T09:28:45.8521184Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeComparison.md
+2026-11-13T09:28:45.8594164Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_comparison_default.py
+2026-11-13T09:28:45.8609826Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeComparisonDefault.md
+2026-11-13T09:28:45.8684027Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_comparison_default_rule.py
+2026-11-13T09:28:45.8691162Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeComparisonDefaultRule.md
+2026-11-13T09:28:45.8757743Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_comparison_default_rule_comparator.py
+2026-11-13T09:28:45.8771028Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeComparisonDefaultRuleComparator.md
+2026-11-13T09:28:45.8819826Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_comparison_default_rule_request.py
+2026-11-13T09:28:45.8828419Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeComparisonDefaultRuleRequest.md
+2026-11-13T09:28:45.8869910Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_comparison_request.py
+2026-11-13T09:28:45.8872177Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeComparisonRequest.md
+2026-11-13T09:28:45.8929795Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_comparison_request_default.py
+2026-11-13T09:28:45.8949844Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeComparisonRequestDefault.md
+2026-11-13T09:28:45.8978896Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_comparison_rule.py
+2026-11-13T09:28:45.9005890Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeComparisonRule.md
+2026-11-13T09:28:45.9039681Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_comparison_rule_request.py
+2026-11-13T09:28:45.9040806Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeComparisonRuleRequest.md
+2026-11-13T09:28:45.9085337Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_request.py
+2026-11-13T09:28:45.9095940Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeRequest.md
+2026-11-13T09:28:45.9123085Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_val.py
+2026-11-13T09:28:45.9129575Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeVal.md
+2026-11-13T09:28:45.9157203Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/attribute_val_request.py
+2026-11-13T09:28:45.9162763Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AttributeValRequest.md
+2026-11-13T09:28:45.9213332Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/basic_organization.py
+2026-11-13T09:28:45.9217278Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/BasicOrganization.md
+2026-11-13T09:28:45.9266553Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/basic_user.py
+2026-11-13T09:28:45.9276267Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/BasicUser.md
+2026-11-13T09:28:45.9311659Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/basic_user_request.py
+2026-11-13T09:28:45.9320529Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/BasicUserRequest.md
+2026-11-13T09:28:45.9341026Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/blank_enum.py
+2026-11-13T09:28:45.9347613Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/BlankEnum.md
+2026-11-13T09:28:45.9402373Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/chapter.py
+2026-11-13T09:28:45.9403192Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/Chapter.md
+2026-11-13T09:28:45.9413064Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/chapter_metadata.py
+2026-11-13T09:28:45.9417964Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ChapterMetadata.md
+2026-11-13T09:28:45.9450500Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/chunk_type.py
+2026-11-13T09:28:45.9458192Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ChunkType.md
+2026-11-13T09:28:45.9490447Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/client_events.py
+2026-11-13T09:28:45.9498690Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ClientEvents.md
+2026-11-13T09:28:45.9540592Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/client_events_request.py
+2026-11-13T09:28:45.9543450Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ClientEventsRequest.md
+2026-11-13T09:28:45.9609625Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/client_events_request_previous_event.py
+2026-11-13T09:28:45.9610623Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ClientEventsRequestPreviousEvent.md
+2026-11-13T09:28:45.9654471Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/cloud_storage_content.py
+2026-11-13T09:28:45.9655941Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CloudStorageContent.md
+2026-11-13T09:28:45.9690943Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/cloud_storage_read.py
+2026-11-13T09:28:45.9700275Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CloudStorageRead.md
+2026-11-13T09:28:45.9761060Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/cloud_storage_read_owner.py
+2026-11-13T09:28:45.9765934Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CloudStorageReadOwner.md
+2026-11-13T09:28:45.9811269Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/cloud_storage_write_request.py
+2026-11-13T09:28:45.9820380Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CloudStorageWriteRequest.md
+2026-11-13T09:28:45.9860596Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/comment_read.py
+2026-11-13T09:28:45.9870282Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CommentRead.md
+2026-11-13T09:28:45.9993632Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/comment_write_request.py
+2026-11-13T09:28:46.0010869Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CommentWriteRequest.md
+2026-11-13T09:28:46.0042411Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/comments_summary.py
+2026-11-13T09:28:46.0049638Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CommentsSummary.md
+2026-11-13T09:28:46.0077142Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/comparator_enum.py
+2026-11-13T09:28:46.0088640Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ComparatorEnum.md
+2026-11-13T09:28:46.0122889Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/consensus_merge_create_request.py
+2026-11-13T09:28:46.0128493Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ConsensusMergeCreateRequest.md
+2026-11-13T09:28:46.0165970Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/consensus_settings.py
+2026-11-13T09:28:46.0173635Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ConsensusSettings.md
+2026-11-13T09:28:46.0200854Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/created_via_enum.py
+2026-11-13T09:28:46.0208285Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CreatedViaEnum.md
+2026-11-13T09:28:46.0235375Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/credentials_type_enum.py
+2026-11-13T09:28:46.0242827Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CredentialsTypeEnum.md
+2026-11-13T09:28:46.0269934Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/cvat_usage_reason_enum.py
+2026-11-13T09:28:46.0277119Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CvatUsageReasonEnum.md
+2026-11-13T09:28:46.0316717Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/data_meta_read.py
+2026-11-13T09:28:46.0324377Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/DataMetaRead.md
+2026-11-13T09:28:46.0361840Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/data_request.py
+2026-11-13T09:28:46.0370215Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/DataRequest.md
+2026-11-13T09:28:46.0430481Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/data_request_validation_params.py
+2026-11-13T09:28:46.0436340Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/DataRequestValidationParams.md
+2026-11-13T09:28:46.0471229Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/data_response.py
+2026-11-13T09:28:46.0476994Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/DataResponse.md
+2026-11-13T09:28:46.0521301Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/dataset_file_request.py
+2026-11-13T09:28:46.0526648Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/DatasetFileRequest.md
+2026-11-13T09:28:46.0571240Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/dataset_format.py
+2026-11-13T09:28:46.0576302Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/DatasetFormat.md
+2026-11-13T09:28:46.0610693Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/dataset_formats.py
+2026-11-13T09:28:46.0630682Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/DatasetFormats.md
+2026-11-13T09:28:46.0705103Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/event.py
+2026-11-13T09:28:46.0706664Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/Event.md
+2026-11-13T09:28:46.0731136Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/event_group.py
+2026-11-13T09:28:46.0736509Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/EventGroup.md
+2026-11-13T09:28:46.0770988Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/event_request.py
+2026-11-13T09:28:46.0776031Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/EventRequest.md
+2026-11-13T09:28:46.0800971Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/events.py
+2026-11-13T09:28:46.0810309Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/Events.md
+2026-11-13T09:28:46.0830348Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/events_enum.py
+2026-11-13T09:28:46.0835390Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/EventsEnum.md
+2026-11-13T09:28:46.0851582Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/extrapolation_enum.py
+2026-11-13T09:28:46.0858305Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ExtrapolationEnum.md
+2026-11-13T09:28:46.0887035Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/file_info.py
+2026-11-13T09:28:46.0894599Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/FileInfo.md
+2026-11-13T09:28:46.0920382Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/file_info_type_enum.py
+2026-11-13T09:28:46.0923434Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/FileInfoTypeEnum.md
+2026-11-13T09:28:46.0959861Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/frame_meta.py
+2026-11-13T09:28:46.0960558Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/FrameMeta.md
+2026-11-13T09:28:46.0977237Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/frame_selection_method.py
+2026-11-13T09:28:46.1021512Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/FrameSelectionMethod.md
+2026-11-13T09:28:46.1050864Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/function_call.py
+2026-11-13T09:28:46.1060021Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/FunctionCall.md
+2026-11-13T09:28:46.1089901Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/function_call_params.py
+2026-11-13T09:28:46.1091085Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/FunctionCallParams.md
+2026-11-13T09:28:46.1119948Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/function_call_request.py
+2026-11-13T09:28:46.1121163Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/FunctionCallRequest.md
+2026-11-13T09:28:46.1149868Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/ground_truth_job_create_request.py
+2026-11-13T09:28:46.1151691Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/GroundTruthJobCreateRequest.md
+2026-11-13T09:28:46.1169774Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/ground_truth_job_create_type_enum.py
+2026-11-13T09:28:46.1179666Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/GroundTruthJobCreateTypeEnum.md
+2026-11-13T09:28:46.1199616Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/input_enum.py
+2026-11-13T09:28:46.1200624Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/InputEnum.md
+2026-11-13T09:28:46.1227457Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/input_type_enum.py
+2026-11-13T09:28:46.1228906Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/InputTypeEnum.md
+2026-11-13T09:28:46.1251981Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/invitation_read.py
+2026-11-13T09:28:46.1259855Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/InvitationRead.md
+2026-11-13T09:28:46.1284118Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/invitation_write_request.py
+2026-11-13T09:28:46.1291321Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/InvitationWriteRequest.md
+2026-11-13T09:28:46.1313844Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/issue_read.py
+2026-11-13T09:28:46.1326111Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/IssueRead.md
+2026-11-13T09:28:46.1348012Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/issue_write_request.py
+2026-11-13T09:28:46.1354685Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/IssueWriteRequest.md
+2026-11-13T09:28:46.1372670Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/issues_summary.py
+2026-11-13T09:28:46.1378323Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/IssuesSummary.md
+2026-11-13T09:28:46.1407808Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/job_read.py
+2026-11-13T09:28:46.1415666Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/JobRead.md
+2026-11-13T09:28:46.1449175Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/job_read_assignee.py
+2026-11-13T09:28:46.1456581Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/JobReadAssignee.md
+2026-11-13T09:28:46.1485257Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/job_read_target_storage.py
+2026-11-13T09:28:46.1490476Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/JobReadTargetStorage.md
+2026-11-13T09:28:46.1507160Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/job_stage.py
+2026-11-13T09:28:46.1513493Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/JobStage.md
+2026-11-13T09:28:46.1531648Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/job_status.py
+2026-11-13T09:28:46.1538276Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/JobStatus.md
+2026-11-13T09:28:46.1559487Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/job_type.py
+2026-11-13T09:28:46.1569699Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/JobType.md
+2026-11-13T09:28:46.1599997Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/job_validation_layout_read.py
+2026-11-13T09:28:46.1601403Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/JobValidationLayoutRead.md
+2026-11-13T09:28:46.1650001Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/job_write_request.py
+2026-11-13T09:28:46.1651347Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/JobWriteRequest.md
+2026-11-13T09:28:46.1679752Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/jobs_summary.py
+2026-11-13T09:28:46.1683133Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/JobsSummary.md
+2026-11-13T09:28:46.1709086Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/label.py
+2026-11-13T09:28:46.1716244Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/Label.md
+2026-11-13T09:28:46.1739550Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/label_mapping_entry_request.py
+2026-11-13T09:28:46.1747721Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabelMappingEntryRequest.md
+2026-11-13T09:28:46.1763208Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/label_type.py
+2026-11-13T09:28:46.1772280Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabelType.md
+2026-11-13T09:28:46.1801460Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/labeled_data.py
+2026-11-13T09:28:46.1812599Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabeledData.md
+2026-11-13T09:28:46.1839154Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/labeled_data_request.py
+2026-11-13T09:28:46.1848725Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabeledDataRequest.md
+2026-11-13T09:28:46.1872235Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/labeled_image.py
+2026-11-13T09:28:46.1879239Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabeledImage.md
+2026-11-13T09:28:46.1906084Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/labeled_image_request.py
+2026-11-13T09:28:46.1917594Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabeledImageRequest.md
+2026-11-13T09:28:46.1942242Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/labeled_interval.py
+2026-11-13T09:28:46.1949577Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabeledInterval.md
+2026-11-13T09:28:46.1975338Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/labeled_interval_request.py
+2026-11-13T09:28:46.1982754Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabeledIntervalRequest.md
+2026-11-13T09:28:46.2007840Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/labeled_shape.py
+2026-11-13T09:28:46.2015249Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabeledShape.md
+2026-11-13T09:28:46.2043620Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/labeled_shape_request.py
+2026-11-13T09:28:46.2050439Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabeledShapeRequest.md
+2026-11-13T09:28:46.2076271Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/labeled_track.py
+2026-11-13T09:28:46.2083684Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabeledTrack.md
+2026-11-13T09:28:46.2108598Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/labeled_track_request.py
+2026-11-13T09:28:46.2114244Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabeledTrackRequest.md
+2026-11-13T09:28:46.2134558Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/labels_summary.py
+2026-11-13T09:28:46.2172133Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabelsSummary.md
+2026-11-13T09:28:46.2173572Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/location_enum.py
+2026-11-13T09:28:46.2174672Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LocationEnum.md
+2026-11-13T09:28:46.2191426Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/login_serializer_ex_request.py
+2026-11-13T09:28:46.2204200Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LoginSerializerExRequest.md
+2026-11-13T09:28:46.2218077Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/membership_read.py
+2026-11-13T09:28:46.2223768Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/MembershipRead.md
+2026-11-13T09:28:46.2251796Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/meta_user.py
+2026-11-13T09:28:46.2258161Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/MetaUser.md
+2026-11-13T09:28:46.2274208Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/null_enum.py
+2026-11-13T09:28:46.2281387Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/NullEnum.md
+2026-11-13T09:28:46.2297052Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/online_function_call_request.py
+2026-11-13T09:28:46.2306523Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/OnlineFunctionCallRequest.md
+2026-11-13T09:28:46.2321057Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/operation_status.py
+2026-11-13T09:28:46.2326779Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/OperationStatus.md
+2026-11-13T09:28:46.2353863Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/organization_read.py
+2026-11-13T09:28:46.2359846Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/OrganizationRead.md
+2026-11-13T09:28:46.2384972Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/organization_write_request.py
+2026-11-13T09:28:46.2390292Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/OrganizationWriteRequest.md
+2026-11-13T09:28:46.2408029Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_access_token_read_list.py
+2026-11-13T09:28:46.2414924Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedAccessTokenReadList.md
+2026-11-13T09:28:46.2434139Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_annotation_conflict_list.py
+2026-11-13T09:28:46.2443186Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedAnnotationConflictList.md
+2026-11-13T09:28:46.2463285Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_cloud_storage_read_list.py
+2026-11-13T09:28:46.2470378Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedCloudStorageReadList.md
+2026-11-13T09:28:46.2487428Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_comment_read_list.py
+2026-11-13T09:28:46.2498214Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedCommentReadList.md
+2026-11-13T09:28:46.2518877Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_consensus_settings_list.py
+2026-11-13T09:28:46.2530504Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedConsensusSettingsList.md
+2026-11-13T09:28:46.2559870Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_invitation_read_list.py
+2026-11-13T09:28:46.2566224Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedInvitationReadList.md
+2026-11-13T09:28:46.2601406Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_issue_read_list.py
+2026-11-13T09:28:46.2608964Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedIssueReadList.md
+2026-11-13T09:28:46.2630042Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_job_read_list.py
+2026-11-13T09:28:46.2636376Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedJobReadList.md
+2026-11-13T09:28:46.2662725Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_label_list.py
+2026-11-13T09:28:46.2669138Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedLabelList.md
+2026-11-13T09:28:46.2687386Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_membership_read_list.py
+2026-11-13T09:28:46.2694048Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedMembershipReadList.md
+2026-11-13T09:28:46.2712939Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_meta_user_list.py
+2026-11-13T09:28:46.2719539Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedMetaUserList.md
+2026-11-13T09:28:46.2768407Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_organization_read_list.py
+2026-11-13T09:28:46.2775546Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedOrganizationReadList.md
+2026-11-13T09:28:46.2799691Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_project_read_list.py
+2026-11-13T09:28:46.2809769Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedProjectReadList.md
+2026-11-13T09:28:46.2836922Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_quality_report_list.py
+2026-11-13T09:28:46.2838349Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedQualityReportList.md
+2026-11-13T09:28:46.2869118Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_quality_requirement_list_item_list.py
+2026-11-13T09:28:46.2871984Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedQualityRequirementListItemList.md
+2026-11-13T09:28:46.2901016Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_quality_settings_list.py
+2026-11-13T09:28:46.2907530Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedQualitySettingsList.md
+2026-11-13T09:28:46.2932285Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_request_list.py
+2026-11-13T09:28:46.2939595Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedRequestList.md
+2026-11-13T09:28:46.2989835Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_task_read_list.py
+2026-11-13T09:28:46.2991306Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedTaskReadList.md
+2026-11-13T09:28:46.3019997Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_user_growth_data_list.py
+2026-11-13T09:28:46.3022750Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedUserGrowthDataList.md
+2026-11-13T09:28:46.3056086Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_webhook_delivery_read_list.py
+2026-11-13T09:28:46.3068440Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedWebhookDeliveryReadList.md
+2026-11-13T09:28:46.3099998Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/paginated_webhook_read_list.py
+2026-11-13T09:28:46.3110261Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PaginatedWebhookReadList.md
+2026-11-13T09:28:46.3139870Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/password_change_request.py
+2026-11-13T09:28:46.3145731Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PasswordChangeRequest.md
+2026-11-13T09:28:46.3179944Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/password_reset_confirm_request.py
+2026-11-13T09:28:46.3189892Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PasswordResetConfirmRequest.md
+2026-11-13T09:28:46.3219806Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/password_reset_serializer_ex_request.py
+2026-11-13T09:28:46.3240442Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PasswordResetSerializerExRequest.md
+2026-11-13T09:28:46.3281031Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_access_token_write_request.py
+2026-11-13T09:28:46.3282500Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedAccessTokenWriteRequest.md
+2026-11-13T09:28:46.3321061Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_annotation_guide_write_request.py
+2026-11-13T09:28:46.3330627Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedAnnotationGuideWriteRequest.md
+2026-11-13T09:28:46.3370833Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_cloud_storage_write_request.py
+2026-11-13T09:28:46.3391022Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedCloudStorageWriteRequest.md
+2026-11-13T09:28:46.3421008Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_comment_write_request.py
+2026-11-13T09:28:46.3430663Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedCommentWriteRequest.md
+2026-11-13T09:28:46.3470857Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_consensus_settings_request.py
+2026-11-13T09:28:46.3480623Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedConsensusSettingsRequest.md
+2026-11-13T09:28:46.3521068Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_data_meta_write_request.py
+2026-11-13T09:28:46.3523011Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedDataMetaWriteRequest.md
+2026-11-13T09:28:46.3560931Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_issue_write_request.py
+2026-11-13T09:28:46.3562155Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedIssueWriteRequest.md
+2026-11-13T09:28:46.3600860Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_job_data_meta_write_request.py
+2026-11-13T09:28:46.3602006Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedJobDataMetaWriteRequest.md
+2026-11-13T09:28:46.3634373Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_job_validation_layout_write_request.py
+2026-11-13T09:28:46.3648026Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedJobValidationLayoutWriteRequest.md
+2026-11-13T09:28:46.3681058Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_job_write_request.py
+2026-11-13T09:28:46.3701130Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedJobWriteRequest.md
+2026-11-13T09:28:46.3731286Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_label_request.py
+2026-11-13T09:28:46.3750980Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedLabelRequest.md
+2026-11-13T09:28:46.3781192Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_labeled_data_request.py
+2026-11-13T09:28:46.3790941Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedLabeledDataRequest.md
+2026-11-13T09:28:46.3831370Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_membership_write_request.py
+2026-11-13T09:28:46.3832544Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedMembershipWriteRequest.md
+2026-11-13T09:28:46.3881319Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_organization_write_request.py
+2026-11-13T09:28:46.3882341Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedOrganizationWriteRequest.md
+2026-11-13T09:28:46.4002921Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_project_write_request.py
+2026-11-13T09:28:46.4021749Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedProjectWriteRequest.md
+2026-11-13T09:28:46.4061694Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_project_write_request_target_storage.py
+2026-11-13T09:28:46.4062830Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedProjectWriteRequestTargetStorage.md
+2026-11-13T09:28:46.4101201Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_quality_requirement_request.py
+2026-11-13T09:28:46.4115614Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedQualityRequirementRequest.md
+2026-11-13T09:28:46.4151713Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_quality_requirement_request_annotation_type.py
+2026-11-13T09:28:46.4171196Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedQualityRequirementRequestAnnotationType.md
+2026-11-13T09:28:46.4200131Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_quality_requirement_request_attribute_comparison.py
+2026-11-13T09:28:46.4210100Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedQualityRequirementRequestAttributeComparison.md
+2026-11-13T09:28:46.4242381Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_quality_requirement_request_iou_threshold.py
+2026-11-13T09:28:46.4251402Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedQualityRequirementRequestIouThreshold.md
+2026-11-13T09:28:46.4279842Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_quality_requirement_request_metric.py
+2026-11-13T09:28:46.4286167Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedQualityRequirementRequestMetric.md
+2026-11-13T09:28:46.4319618Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_quality_requirement_request_point_size_base.py
+2026-11-13T09:28:46.4325228Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedQualityRequirementRequestPointSizeBase.md
+2026-11-13T09:28:46.4358608Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_quality_requirement_request_similarity_metric.py
+2026-11-13T09:28:46.4365858Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedQualityRequirementRequestSimilarityMetric.md
+2026-11-13T09:28:46.4393784Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_quality_settings_request.py
+2026-11-13T09:28:46.4400148Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedQualitySettingsRequest.md
+2026-11-13T09:28:46.4421794Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_task_validation_layout_write_request.py
+2026-11-13T09:28:46.4427733Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedTaskValidationLayoutWriteRequest.md
+2026-11-13T09:28:46.4452775Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_task_write_request.py
+2026-11-13T09:28:46.4458880Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedTaskWriteRequest.md
+2026-11-13T09:28:46.4486836Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_user_growth_data_request.py
+2026-11-13T09:28:46.4494529Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedUserGrowthDataRequest.md
+2026-11-13T09:28:46.4518408Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_user_request.py
+2026-11-13T09:28:46.4522127Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedUserRequest.md
+2026-11-13T09:28:46.4550036Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_user_request_cvat_usage_reason.py
+2026-11-13T09:28:46.4559999Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedUserRequestCvatUsageReason.md
+2026-11-13T09:28:46.4576817Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/patched_webhook_write_request.py
+2026-11-13T09:28:46.4583227Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PatchedWebhookWriteRequest.md
+2026-11-13T09:28:46.4601380Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/planned_activities_enum.py
+2026-11-13T09:28:46.4607369Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/PlannedActivitiesEnum.md
+2026-11-13T09:28:46.4629026Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/plugins.py
+2026-11-13T09:28:46.4633629Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/Plugins.md
+2026-11-13T09:28:46.4652823Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/project_file_request.py
+2026-11-13T09:28:46.4657796Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ProjectFileRequest.md
+2026-11-13T09:28:46.4680008Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/project_read.py
+2026-11-13T09:28:46.4685854Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ProjectRead.md
+2026-11-13T09:28:46.4716950Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/project_read_target_storage.py
+2026-11-13T09:28:46.4721582Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ProjectReadTargetStorage.md
+2026-11-13T09:28:46.4748217Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/project_write_request.py
+2026-11-13T09:28:46.4753566Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ProjectWriteRequest.md
+2026-11-13T09:28:46.4770497Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/provider_type_enum.py
+2026-11-13T09:28:46.4775050Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ProviderTypeEnum.md
+2026-11-13T09:28:46.4791490Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_point_size_base.py
+2026-11-13T09:28:46.4795981Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityPointSizeBase.md
+2026-11-13T09:28:46.4823031Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report.py
+2026-11-13T09:28:46.4828073Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReport.md
+2026-11-13T09:28:46.4855774Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_confusion_matrix.py
+2026-11-13T09:28:46.4861191Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportConfusionMatrix.md
+2026-11-13T09:28:46.4881716Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_confusion_matrix_axes.py
+2026-11-13T09:28:46.4886138Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportConfusionMatrixAxes.md
+2026-11-13T09:28:46.4906146Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_create_request.py
+2026-11-13T09:28:46.4910812Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportCreateRequest.md
+2026-11-13T09:28:46.4939796Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_jobs_summary.py
+2026-11-13T09:28:46.4940720Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportJobsSummary.md
+2026-11-13T09:28:46.4969540Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_requirement_calculation.py
+2026-11-13T09:28:46.4972186Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportRequirementCalculation.md
+2026-11-13T09:28:46.5009729Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_requirement_calculation_reason.py
+2026-11-13T09:28:46.5010753Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportRequirementCalculationReason.md
+2026-11-13T09:28:46.5029796Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_requirement_calculation_status_enum.py
+2026-11-13T09:28:46.5034698Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportRequirementCalculationStatusEnum.md
+2026-11-13T09:28:46.5056994Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_requirement_summary_item.py
+2026-11-13T09:28:46.5065071Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportRequirementSummaryItem.md
+2026-11-13T09:28:46.5088566Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_requirements_summary.py
+2026-11-13T09:28:46.5099793Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportRequirementsSummary.md
+2026-11-13T09:28:46.5126916Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_score_components.py
+2026-11-13T09:28:46.5136550Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportScoreComponents.md
+2026-11-13T09:28:46.5161783Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_summary.py
+2026-11-13T09:28:46.5171999Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportSummary.md
+2026-11-13T09:28:46.5208170Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_summary_jobs.py
+2026-11-13T09:28:46.5218087Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportSummaryJobs.md
+2026-11-13T09:28:46.5245193Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_summary_tasks.py
+2026-11-13T09:28:46.5252655Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportSummaryTasks.md
+2026-11-13T09:28:46.5273204Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_target.py
+2026-11-13T09:28:46.5277214Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportTarget.md
+2026-11-13T09:28:46.5293747Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_target_metric_summary.py
+2026-11-13T09:28:46.5299738Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportTargetMetricSummary.md
+2026-11-13T09:28:46.5319011Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_target_metric_summary_metric_enum.py
+2026-11-13T09:28:46.5320791Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportTargetMetricSummaryMetricEnum.md
+2026-11-13T09:28:46.5350113Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_target_metric_values.py
+2026-11-13T09:28:46.5351458Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportTargetMetricValues.md
+2026-11-13T09:28:46.5380125Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_report_tasks_summary.py
+2026-11-13T09:28:46.5382082Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityReportTasksSummary.md
+2026-11-13T09:28:46.5419921Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_requirement.py
+2026-11-13T09:28:46.5421010Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityRequirement.md
+2026-11-13T09:28:46.5459880Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_requirement_attribute_comparison.py
+2026-11-13T09:28:46.5461130Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityRequirementAttributeComparison.md
+2026-11-13T09:28:46.5489739Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_requirement_bulk_create_node_request.py
+2026-11-13T09:28:46.5499936Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityRequirementBulkCreateNodeRequest.md
+2026-11-13T09:28:46.5519846Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_requirement_bulk_create_request.py
+2026-11-13T09:28:46.5529875Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityRequirementBulkCreateRequest.md
+2026-11-13T09:28:46.5567867Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_requirement_iou_threshold.py
+2026-11-13T09:28:46.5569241Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityRequirementIouThreshold.md
+2026-11-13T09:28:46.5611287Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_requirement_list_item.py
+2026-11-13T09:28:46.5612471Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityRequirementListItem.md
+2026-11-13T09:28:46.5640210Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_requirement_list_item_request.py
+2026-11-13T09:28:46.5641496Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityRequirementListItemRequest.md
+2026-11-13T09:28:46.5679790Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_requirement_request.py
+2026-11-13T09:28:46.5680976Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityRequirementRequest.md
+2026-11-13T09:28:46.5709720Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_settings.py
+2026-11-13T09:28:46.5710736Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualitySettings.md
+2026-11-13T09:28:46.5739738Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_settings_request.py
+2026-11-13T09:28:46.5740799Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualitySettingsRequest.md
+2026-11-13T09:28:46.5759607Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/quality_target_metric.py
+2026-11-13T09:28:46.5760881Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityTargetMetric.md
+2026-11-13T09:28:46.5779646Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/reason_enum.py
+2026-11-13T09:28:46.5782024Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ReasonEnum.md
+2026-11-13T09:28:46.5809697Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/register_serializer_ex.py
+2026-11-13T09:28:46.5818654Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/RegisterSerializerEx.md
+2026-11-13T09:28:46.5849074Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/register_serializer_ex_request.py
+2026-11-13T09:28:46.5850203Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/RegisterSerializerExRequest.md
+2026-11-13T09:28:46.5873326Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/replica_job_create_request.py
+2026-11-13T09:28:46.5879615Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ReplicaJobCreateRequest.md
+2026-11-13T09:28:46.5929787Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/replica_job_create_type_enum.py
+2026-11-13T09:28:46.5931188Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ReplicaJobCreateTypeEnum.md
+2026-11-13T09:28:46.5934539Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/request.py
+2026-11-13T09:28:46.5945854Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/Request.md
+2026-11-13T09:28:46.5969717Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/request_data_operation.py
+2026-11-13T09:28:46.5970869Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/RequestDataOperation.md
+2026-11-13T09:28:46.6006289Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/request_owner.py
+2026-11-13T09:28:46.6012073Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/RequestOwner.md
+2026-11-13T09:28:46.6026055Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/request_status.py
+2026-11-13T09:28:46.6032048Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/RequestStatus.md
+2026-11-13T09:28:46.6070022Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/rest_auth_detail.py
+2026-11-13T09:28:46.6090210Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/RestAuthDetail.md
+2026-11-13T09:28:46.6108165Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/role_enum.py
+2026-11-13T09:28:46.6119861Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/RoleEnum.md
+2026-11-13T09:28:46.6137865Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/rq_id.py
+2026-11-13T09:28:46.6143528Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/RqId.md
+2026-11-13T09:28:46.6179611Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/rq_status.py
+2026-11-13T09:28:46.6180920Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/RqStatus.md
+2026-11-13T09:28:46.6182094Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/rq_status_state_enum.py
+2026-11-13T09:28:46.6183337Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/RqStatusStateEnum.md
+2026-11-13T09:28:46.6221245Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/shape_type.py
+2026-11-13T09:28:46.6222613Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ShapeType.md
+2026-11-13T09:28:46.6223700Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/similarity_metric_enum.py
+2026-11-13T09:28:46.6224849Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SimilarityMetricEnum.md
+2026-11-13T09:28:46.6231047Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/similarity_threshold_policy.py
+2026-11-13T09:28:46.6236980Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SimilarityThresholdPolicy.md
+2026-11-13T09:28:46.6249593Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/similarity_threshold_policy_mode_enum.py
+2026-11-13T09:28:46.6254162Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SimilarityThresholdPolicyModeEnum.md
+2026-11-13T09:28:46.6281717Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/similarity_threshold_policy_request.py
+2026-11-13T09:28:46.6287013Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SimilarityThresholdPolicyRequest.md
+2026-11-13T09:28:46.6299657Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/similarity_threshold_policy_type_enum.py
+2026-11-13T09:28:46.6303766Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SimilarityThresholdPolicyTypeEnum.md
+2026-11-13T09:28:46.6315439Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/sorting_method.py
+2026-11-13T09:28:46.6318078Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SortingMethod.md
+2026-11-13T09:28:46.6332185Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/storage.py
+2026-11-13T09:28:46.6335416Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/Storage.md
+2026-11-13T09:28:46.6369700Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/storage_method.py
+2026-11-13T09:28:46.6370643Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/StorageMethod.md
+2026-11-13T09:28:46.6371586Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/storage_request.py
+2026-11-13T09:28:46.6389710Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/StorageRequest.md
+2026-11-13T09:28:46.6391269Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/storage_type.py
+2026-11-13T09:28:46.6392476Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/StorageType.md
+2026-11-13T09:28:46.6419831Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/sub_labeled_shape.py
+2026-11-13T09:28:46.6429909Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SubLabeledShape.md
+2026-11-13T09:28:46.6431081Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/sub_labeled_shape_request.py
+2026-11-13T09:28:46.6439624Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SubLabeledShapeRequest.md
+2026-11-13T09:28:46.6452686Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/sub_labeled_track.py
+2026-11-13T09:28:46.6459566Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SubLabeledTrack.md
+2026-11-13T09:28:46.6479675Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/sub_labeled_track_request.py
+2026-11-13T09:28:46.6481308Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SubLabeledTrackRequest.md
+2026-11-13T09:28:46.6499614Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/sublabel.py
+2026-11-13T09:28:46.6505051Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/Sublabel.md
+2026-11-13T09:28:46.6519390Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/sublabel_mapping_entry_request.py
+2026-11-13T09:28:46.6520462Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SublabelMappingEntryRequest.md
+2026-11-13T09:28:46.6529845Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/sublabel_request.py
+2026-11-13T09:28:46.6533230Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SublabelRequest.md
+2026-11-13T09:28:46.6549845Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/task_file_request.py
+2026-11-13T09:28:46.6551016Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/TaskFileRequest.md
+2026-11-13T09:28:46.6569632Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/task_read.py
+2026-11-13T09:28:46.6571826Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/TaskRead.md
+2026-11-13T09:28:46.6589865Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/task_validation_layout_read.py
+2026-11-13T09:28:46.6591139Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/TaskValidationLayoutRead.md
+2026-11-13T09:28:46.6609864Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/task_validation_layout_read_mode.py
+2026-11-13T09:28:46.6612513Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/TaskValidationLayoutReadMode.md
+2026-11-13T09:28:46.6640020Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/task_write_request.py
+2026-11-13T09:28:46.6641201Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/TaskWriteRequest.md
+2026-11-13T09:28:46.6649914Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/tasks_summary.py
+2026-11-13T09:28:46.6652385Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/TasksSummary.md
+2026-11-13T09:28:46.6669915Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/threshold_policy_point.py
+2026-11-13T09:28:46.6672450Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ThresholdPolicyPoint.md
+2026-11-13T09:28:46.6689871Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/threshold_policy_point_request.py
+2026-11-13T09:28:46.6691455Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ThresholdPolicyPointRequest.md
+2026-11-13T09:28:46.6709919Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/token.py
+2026-11-13T09:28:46.6711361Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/Token.md
+2026-11-13T09:28:46.6739690Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/tracked_shape.py
+2026-11-13T09:28:46.6740623Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/TrackedShape.md
+2026-11-13T09:28:46.6756266Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/tracked_shape_request.py
+2026-11-13T09:28:46.6757504Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/TrackedShapeRequest.md
+2026-11-13T09:28:46.6779879Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/user.py
+2026-11-13T09:28:46.6780935Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/User.md
+2026-11-13T09:28:46.6799959Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/user_created_via.py
+2026-11-13T09:28:46.6801196Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/UserCreatedVia.md
+2026-11-13T09:28:46.6819677Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/user_growth_data.py
+2026-11-13T09:28:46.6820875Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/UserGrowthData.md
+2026-11-13T09:28:46.6840777Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/user_growth_data_owner.py
+2026-11-13T09:28:46.6843683Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/UserGrowthDataOwner.md
+2026-11-13T09:28:46.6859694Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/user_identifiers.py
+2026-11-13T09:28:46.6862565Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/UserIdentifiers.md
+2026-11-13T09:28:46.6880183Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/validation_mode.py
+2026-11-13T09:28:46.6889857Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ValidationMode.md
+2026-11-13T09:28:46.6911147Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/validation_params_request.py
+2026-11-13T09:28:46.6914895Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ValidationParamsRequest.md
+2026-11-13T09:28:46.6926082Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/webhook_content_type.py
+2026-11-13T09:28:46.6934977Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/WebhookContentType.md
+2026-11-13T09:28:46.6954689Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/webhook_delivery_read.py
+2026-11-13T09:28:46.6958413Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/WebhookDeliveryRead.md
+2026-11-13T09:28:46.6989849Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/webhook_read.py
+2026-11-13T09:28:46.6990806Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/WebhookRead.md
+2026-11-13T09:28:46.6995612Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/webhook_type.py
+2026-11-13T09:28:46.6999582Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/WebhookType.md
+2026-11-13T09:28:46.7014964Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/webhook_write_request.py
+2026-11-13T09:28:46.7019100Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/WebhookWriteRequest.md
+2026-11-13T09:28:46.7032558Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/webhooks_event.py
+2026-11-13T09:28:46.7036252Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/WebhooksEvent.md
+2026-11-13T09:28:46.7073644Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/webhooks_event_group.py
+2026-11-13T09:28:46.7074728Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/WebhooksEventGroup.md
+2026-11-13T09:28:46.7540476Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.7559666Z [main] WARN  o.o.c.languages.PythonClientCodegen - Multiple MediaTypes found, using only the first one
+2026-11-13T09:28:46.7569805Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.7594243Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.7610719Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.7740301Z [main] WARN  o.o.c.l.AbstractPythonCodegen - From (reserved word) cannot be used as model name. Renamed to ModelFrom
+2026-11-13T09:28:46.7759864Z [main] WARN  o.o.c.l.AbstractPythonCodegen - From (reserved word) cannot be used as model name. Renamed to ModelFrom
+2026-11-13T09:28:46.7947397Z [main] WARN  o.o.codegen.DefaultCodegen - 'JobWriteRequest' defines discriminator 'type', but the referenced schema 'GroundTruthJobCreateRequest' is incorrect. invalid type for type, set it to string
+2026-11-13T09:28:46.7949534Z [main] WARN  o.o.codegen.DefaultCodegen - 'JobWriteRequest' defines discriminator 'type', but the referenced schema 'ReplicaJobCreateRequest' is incorrect. invalid type for type, set it to string
+2026-11-13T09:28:46.8020915Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8049746Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8069903Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8073937Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8089903Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8129845Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8550578Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8551950Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8570218Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8573900Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8659892Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8680227Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.8900564Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/vnd.oai.openapi)
+2026-11-13T09:28:46.8914361Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/vnd.oai.openapi)
+2026-11-13T09:28:46.9044182Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.9070083Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.9077877Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.9081439Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.9093464Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.9109988Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.9140790Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:46.9143052Z [main] INFO  o.o.codegen.utils.ModelUtils - [deprecated] inheritance without use of 'discriminator.propertyName' has been deprecated in the 5.x release. Composed schema name: null. Title: null
+2026-11-13T09:28:46.9145110Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.9161339Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.9225308Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.9235776Z [main] WARN  o.o.codegen.utils.ModelUtils - Multiple schemas found in the OAS 'content' section, returning only the first one (application/json)
+2026-11-13T09:28:46.9404203Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9438387Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/assets_api.py
+2026-11-13T09:28:46.9449469Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_assets_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9475098Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AssetsApi.md
+2026-11-13T09:28:46.9489571Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9514735Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/auth_api.py
+2026-11-13T09:28:46.9522662Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_auth_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9548107Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/AuthApi.md
+2026-11-13T09:28:46.9559020Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9576666Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/cloudstorages_api.py
+2026-11-13T09:28:46.9580805Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_cloudstorages_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9598426Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CloudstoragesApi.md
+2026-11-13T09:28:46.9604673Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9629654Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/comments_api.py
+2026-11-13T09:28:46.9631267Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_comments_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9637465Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/CommentsApi.md
+2026-11-13T09:28:46.9642240Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9659531Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/consensus_api.py
+2026-11-13T09:28:46.9679781Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_consensus_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9680778Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ConsensusApi.md
+2026-11-13T09:28:46.9681502Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9691512Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/events_api.py
+2026-11-13T09:28:46.9693251Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_events_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9705813Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/EventsApi.md
+2026-11-13T09:28:46.9708612Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9721605Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/growth_api.py
+2026-11-13T09:28:46.9723942Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_growth_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9737324Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/GrowthApi.md
+2026-11-13T09:28:46.9741745Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9755032Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/guides_api.py
+2026-11-13T09:28:46.9757618Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_guides_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9770641Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/GuidesApi.md
+2026-11-13T09:28:46.9775160Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9790516Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/invitations_api.py
+2026-11-13T09:28:46.9793397Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_invitations_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9809866Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/InvitationsApi.md
+2026-11-13T09:28:46.9814511Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9829459Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/issues_api.py
+2026-11-13T09:28:46.9832572Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_issues_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9850021Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/IssuesApi.md
+2026-11-13T09:28:46.9856460Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9879118Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/jobs_api.py
+2026-11-13T09:28:46.9882828Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_jobs_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9907680Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/JobsApi.md
+2026-11-13T09:28:46.9913028Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9930648Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/labels_api.py
+2026-11-13T09:28:46.9932680Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_labels_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9949932Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LabelsApi.md
+2026-11-13T09:28:46.9958150Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:46.9975148Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/lambda_api.py
+2026-11-13T09:28:46.9976541Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_lambda_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:46.9990790Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/LambdaApi.md
+2026-11-13T09:28:46.9995072Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:47.0010506Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/memberships_api.py
+2026-11-13T09:28:47.0013768Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_memberships_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:47.0029560Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/MembershipsApi.md
+2026-11-13T09:28:47.0035081Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:47.0069799Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/organizations_api.py
+2026-11-13T09:28:47.0071091Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_organizations_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:47.0072261Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/OrganizationsApi.md
+2026-11-13T09:28:47.0074073Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:47.0089698Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/projects_api.py
+2026-11-13T09:28:47.0090802Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_projects_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:47.0109232Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ProjectsApi.md
+2026-11-13T09:28:47.0118985Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:47.0138041Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/quality_api.py
+2026-11-13T09:28:47.0142106Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_quality_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:47.0164364Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/QualityApi.md
+2026-11-13T09:28:47.0169260Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:47.0184003Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/requests_api.py
+2026-11-13T09:28:47.0186196Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_requests_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:47.0200645Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/RequestsApi.md
+2026-11-13T09:28:47.0202988Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:47.0217163Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/schema_api.py
+2026-11-13T09:28:47.0219233Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_schema_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:47.0231831Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/SchemaApi.md
+2026-11-13T09:28:47.0234999Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:47.0248353Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/server_api.py
+2026-11-13T09:28:47.0250547Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_server_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:47.0264309Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/ServerApi.md
+2026-11-13T09:28:47.0273110Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:47.0293650Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/tasks_api.py
+2026-11-13T09:28:47.0296753Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_tasks_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:47.0320571Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/TasksApi.md
+2026-11-13T09:28:47.0341116Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:47.0342486Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/users_api.py
+2026-11-13T09:28:47.0343818Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_users_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:47.0359646Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/UsersApi.md
+2026-11-13T09:28:47.0363013Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:47.0383899Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/webhooks_api.py
+2026-11-13T09:28:47.0387453Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/cvat_sdk/api_client/test/test_webhooks_api.py (Skipped by apiTests options supplied by user.)
+2026-11-13T09:28:47.0404624Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/docs/WebhooksApi.md
+2026-11-13T09:28:47.0419924Z [main] INFO  o.o.codegen.utils.URLPathUtils - 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/]
+2026-11-13T09:28:47.0421216Z [main] INFO  o.o.codegen.TemplateManager - Ignored /mnt/dst/cvat_sdk/api_client_README.md (Ignored by rule in ignore file.)
+2026-11-13T09:28:47.0435181Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/configuration.py
+2026-11-13T09:28:47.0441199Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/__init__.py
+2026-11-13T09:28:47.0446648Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api/__init__.py
+2026-11-13T09:28:47.0449751Z [main] INFO  o.o.codegen.TemplateManager - Ignored /mnt/dst/cvat_sdk/__init__.py (Ignored by rule in ignore file.)
+2026-11-13T09:28:47.0454634Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/exceptions.py
+2026-11-13T09:28:47.0470635Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/api_client.py
+2026-11-13T09:28:47.0478250Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/rest.py
+2026-11-13T09:28:47.0516517Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model_utils.py
+2026-11-13T09:28:47.0532043Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/models/__init__.py
+2026-11-13T09:28:47.0536460Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/model/__init__.py
+2026-11-13T09:28:47.0542104Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/cvat_sdk/api_client/apis/__init__.py
+2026-11-13T09:28:47.0553257Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/api_summary.md
+2026-11-13T09:28:47.0555423Z [main] INFO  o.o.codegen.TemplateManager - Skipped /mnt/dst/.openapi-generator-ignore (Skipped by supportingFiles options supplied by user.)
+2026-11-13T09:28:47.0556517Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/.openapi-generator/VERSION
+2026-11-13T09:28:47.0636439Z [main] INFO  o.o.codegen.TemplateManager - writing file /mnt/dst/.openapi-generator/FILES
+2026-11-13T09:28:47.0640478Z ################################################################################
+2026-11-13T09:28:47.0642400Z # Thanks for using OpenAPI Generator.                                          #
+2026-11-13T09:28:47.0646919Z # Please consider donation to help us maintain this project 🙏                 #
+2026-11-13T09:28:47.0648411Z # https://opencollective.com/openapi_generator/donate                          #
+2026-11-13T09:28:47.0650005Z ################################################################################
+2026-11-13T09:28:52.4558400Z ##[group]Run python -m pip install torch==2.9.0 torchvision==0.24.0 --index-url https://download.pytorch.org/whl/cpu
+2026-11-13T09:28:52.4559277Z [36;1mpython -m pip install torch==2.9.0 torchvision==0.24.0 --index-url https://download.pytorch.org/whl/cpu[0m
+2026-11-13T09:28:52.4604097Z shell: /usr/bin/bash -e {0}
+2026-11-13T09:28:52.4604312Z env:
+2026-11-13T09:28:52.4604534Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:28:52.4604893Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-13T09:28:52.4605224Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:28:52.4605724Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:28:52.4606025Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:28:52.4606341Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-13T09:28:52.4606611Z ##[endgroup]
+2026-11-13T09:28:52.6898878Z Looking in indexes: https://download.pytorch.org/whl/cpu
+2026-11-13T09:28:53.0006886Z Collecting torch==2.9.0
+2026-11-13T09:28:53.0517710Z   Downloading torch-2.9.0%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (29 kB)
+2026-11-13T09:28:53.1299060Z Collecting torchvision==0.24.0
+2026-11-13T09:28:53.1472328Z   Downloading torchvision-0.24.0%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (5.9 kB)
+2026-11-13T09:28:53.1794254Z Collecting filelock (from torch==2.9.0)
+2026-11-13T09:28:53.2118334Z   Downloading filelock-4.2.4-py3-none-any.whl.metadata (2.0 kB)
+2026-11-13T09:28:53.2409296Z Collecting typing-extensions>=4.10.0 (from torch==2.9.0)
+2026-11-13T09:28:53.2477662Z   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+2026-11-13T09:28:53.2878025Z Collecting sympy>=1.13.3 (from torch==2.9.0)
+2026-11-13T09:28:53.2948492Z   Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+2026-11-13T09:28:53.3235041Z Collecting networkx>=2.5.1 (from torch==2.9.0)
+2026-11-13T09:28:53.3305567Z   Downloading networkx-3.6.1-py3-none-any.whl.metadata (6.8 kB)
+2026-11-13T09:28:53.3503529Z Collecting jinja2 (from torch==2.9.0)
+2026-11-13T09:28:53.3620078Z   Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+2026-11-13T09:28:53.3868236Z Collecting fsspec>=0.8.5 (from torch==2.9.0)
+2026-11-13T09:28:53.3938660Z   Downloading fsspec-2026.9.0-py3-none-any.whl.metadata (10 kB)
+2026-11-13T09:28:53.6147798Z Collecting numpy (from torchvision==0.24.0)
+2026-11-13T09:28:53.6220401Z   Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+2026-11-13T09:28:53.7824039Z Collecting pillow!=8.3.*,>=5.3.0 (from torchvision==0.24.0)
+2026-11-13T09:28:53.7892967Z   Downloading pillow-13.0.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
+2026-11-13T09:28:53.8113362Z Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch==2.9.0)
+2026-11-13T09:28:53.8181363Z   Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+2026-11-13T09:28:53.8407354Z Collecting MarkupSafe>=2.0 (from jinja2->torch==2.9.0)
+2026-11-13T09:28:53.8521330Z   Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+2026-11-13T09:28:53.9212145Z Downloading torch-2.9.0%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl (184.5 MB)
+2026-11-13T09:28:55.7608359Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 184.5/184.5 MB 101.0 MB/s  0:00:01
+2026-11-13T09:28:55.8345848Z Downloading torchvision-0.24.0%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl (1.9 MB)
+2026-11-13T09:28:56.8608198Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 1.6 MB/s  0:00:01
+2026-11-13T09:28:56.8681377Z Downloading fsspec-2026.9.0-py3-none-any.whl (221 kB)
+2026-11-13T09:28:56.8889447Z Downloading networkx-3.6.1-py3-none-any.whl (2.1 MB)
+2026-11-13T09:28:56.9190592Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 73.4 MB/s  0:00:00
+2026-11-13T09:28:56.9265751Z Downloading pillow-13.0.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (7.1 MB)
+2026-11-13T09:28:57.1511020Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.1/7.1 MB 31.0 MB/s  0:00:00
+2026-11-13T09:28:57.1585947Z Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+2026-11-13T09:28:57.1994371Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 156.3 MB/s  0:00:00
+2026-11-13T09:28:57.2065685Z Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+2026-11-13T09:28:57.2123082Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 66.8 MB/s  0:00:00
+2026-11-13T09:28:57.2191918Z Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-11-13T09:28:57.2279284Z Downloading filelock-4.2.4-py3-none-any.whl (162 kB)
+2026-11-13T09:28:57.2417802Z Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+2026-11-13T09:28:57.2728616Z Downloading markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+2026-11-13T09:28:57.2817300Z Downloading numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.9 MB)
+2026-11-13T09:28:57.3965482Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.9/16.9 MB 147.9 MB/s  0:00:00
+2026-11-13T09:28:57.7235278Z Installing collected packages: mpmath, typing-extensions, sympy, pillow, numpy, networkx, MarkupSafe, fsspec, filelock, jinja2, torch, torchvision
+2026-11-13T09:29:14.5976195Z 
+2026-11-13T09:29:14.5986851Z Successfully installed MarkupSafe-3.0.3 filelock-4.2.4 fsspec-2026.9.0 jinja2-3.1.6 mpmath-1.3.0 networkx-3.6.1 numpy-2.4.6 pillow-13.0.0 sympy-1.14.0 torch-2.9.0+cpu torchvision-0.24.0+cpu typing-extensions-4.16.0
+2026-11-13T09:29:14.5993495Z 
+2026-11-13T09:29:14.5993740Z [notice] A new release of pip is available: 26.2.2 -> 26.3
+2026-11-13T09:29:14.5994258Z [notice] To update, run: pip install --upgrade pip
+2026-11-13T09:29:14.6922976Z ##[group]Run python -m pip install -e './cvat-sdk[pytorch]' -e ./cvat-cli -r tests/python/requirements.txt black==25.12.0 isort==6.1.0
+2026-11-13T09:29:14.6923659Z [36;1mpython -m pip install -e './cvat-sdk[pytorch]' -e ./cvat-cli -r tests/python/requirements.txt black==25.12.0 isort==6.1.0[0m
+2026-11-13T09:29:14.6969198Z shell: /usr/bin/bash -e {0}
+2026-11-13T09:29:14.6969412Z env:
+2026-11-13T09:29:14.6969630Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:29:14.6969981Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-13T09:29:14.6970324Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:29:14.6970620Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:29:14.6970919Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:29:14.6971222Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-13T09:29:14.6971495Z ##[endgroup]
+2026-11-13T09:29:14.9405791Z Obtaining file:///home/runner/work/cvat/cvat/cvat-sdk
+2026-11-13T09:29:14.9425835Z   Installing build dependencies: started
+2026-11-13T09:29:15.6998101Z   Installing build dependencies: finished with status 'done'
+2026-11-13T09:29:15.7003014Z   Checking if build backend supports build_editable: started
+2026-11-13T09:29:15.9451306Z   Checking if build backend supports build_editable: finished with status 'done'
+2026-11-13T09:29:15.9457285Z   Getting requirements to build editable: started
+2026-11-13T09:29:16.1960888Z   Getting requirements to build editable: finished with status 'done'
+2026-11-13T09:29:16.1967978Z   Preparing editable metadata (pyproject.toml): started
+2026-11-13T09:29:16.3446838Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2026-11-13T09:29:16.3469767Z Obtaining file:///home/runner/work/cvat/cvat/cvat-cli
+2026-11-13T09:29:16.3481209Z   Installing build dependencies: started
+2026-11-13T09:29:16.7499237Z   Installing build dependencies: finished with status 'done'
+2026-11-13T09:29:16.7502942Z   Checking if build backend supports build_editable: started
+2026-11-13T09:29:16.9702478Z   Checking if build backend supports build_editable: finished with status 'done'
+2026-11-13T09:29:16.9707983Z   Getting requirements to build editable: started
+2026-11-13T09:29:17.2112987Z   Getting requirements to build editable: finished with status 'done'
+2026-11-13T09:29:17.2119600Z   Preparing editable metadata (pyproject.toml): started
+2026-11-13T09:29:17.3481147Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+2026-11-13T09:29:17.3499152Z Ignoring numpy: markers 'python_version >= "3.14"' don't match your environment
+2026-11-13T09:29:17.4419966Z Collecting black==25.12.0
+2026-11-13T09:29:17.4719695Z   Downloading black-25.12.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (86 kB)
+2026-11-13T09:29:17.5210203Z Collecting isort==6.1.0
+2026-11-13T09:29:17.5278433Z   Downloading isort-6.1.0-py3-none-any.whl.metadata (12 kB)
+2026-11-13T09:29:17.5456027Z Collecting allure-pytest==2.14.2 (from -r tests/python/requirements.txt (line 1))
+2026-11-13T09:29:17.5530436Z   Downloading allure_pytest-2.14.2-py3-none-any.whl.metadata (3.0 kB)
+2026-11-13T09:29:17.5881674Z Collecting av==16.0.1 (from -r tests/python/requirements.txt (line 2))
+2026-11-13T09:29:17.5958578Z   Downloading av-16.0.1-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (4.6 kB)
+2026-11-13T09:29:17.6304856Z Collecting pytest==9.0.3 (from -r tests/python/requirements.txt (line 3))
+2026-11-13T09:29:17.6372461Z   Downloading pytest-9.0.3-py3-none-any.whl.metadata (7.6 kB)
+2026-11-13T09:29:17.6574512Z Collecting pytest-cases==3.10.1 (from -r tests/python/requirements.txt (line 4))
+2026-11-13T09:29:17.6647717Z   Downloading pytest_cases-3.10.1-py2.py3-none-any.whl.metadata (3.5 kB)
+2026-11-13T09:29:17.6778095Z Collecting pytest-timeout==2.4.0 (from -r tests/python/requirements.txt (line 5))
+2026-11-13T09:29:17.6842538Z   Downloading pytest_timeout-2.4.0-py3-none-any.whl.metadata (20 kB)
+2026-11-13T09:29:17.6990419Z Collecting pytest-cov==7.1.0 (from -r tests/python/requirements.txt (line 6))
+2026-11-13T09:29:17.7057249Z   Downloading pytest_cov-7.1.0-py3-none-any.whl.metadata (32 kB)
+2026-11-13T09:29:17.7221720Z Collecting pytest-xdist==3.8.0 (from -r tests/python/requirements.txt (line 7))
+2026-11-13T09:29:17.7288287Z   Downloading pytest_xdist-3.8.0-py3-none-any.whl.metadata (3.0 kB)
+2026-11-13T09:29:17.7466482Z Collecting requests==2.33.0 (from -r tests/python/requirements.txt (line 8))
+2026-11-13T09:29:17.7531837Z   Downloading requests-2.33.0-py3-none-any.whl.metadata (5.1 kB)
+2026-11-13T09:29:17.7702906Z Collecting deepdiff==8.6.2 (from -r tests/python/requirements.txt (line 9))
+2026-11-13T09:29:17.7768312Z   Downloading deepdiff-8.6.2-py3-none-any.whl.metadata (8.8 kB)
+2026-11-13T09:29:17.9232617Z Collecting boto3==1.39.0 (from -r tests/python/requirements.txt (line 10))
+2026-11-13T09:29:17.9306334Z   Downloading boto3-1.39.0-py3-none-any.whl.metadata (6.6 kB)
+2026-11-13T09:29:17.9337614Z Requirement already satisfied: Pillow==13.0.0 in /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages (from -r tests/python/requirements.txt (line 11)) (13.0.0)
+2026-11-13T09:29:17.9582709Z Collecting pyyaml==6.0.2 (from -r tests/python/requirements.txt (line 12))
+2026-11-13T09:29:17.9678585Z   Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+2026-11-13T09:29:18.1256972Z Collecting numpy==2.0.0 (from -r tests/python/requirements.txt (line 14))
+2026-11-13T09:29:18.1341631Z   Downloading numpy-2.0.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+2026-11-13T09:29:18.1614077Z Collecting soundfile==0.14.0 (from -r tests/python/requirements.txt (line 15))
+2026-11-13T09:29:18.1714965Z   Downloading soundfile-0.14.0-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (18 kB)
+2026-11-13T09:29:18.1860225Z Collecting attrs>=21.4.0 (from cvat_sdk==2.83.1)
+2026-11-13T09:29:18.1927157Z   Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+2026-11-13T09:29:18.2080070Z Collecting packaging>=21.3 (from cvat_sdk==2.83.1)
+2026-11-13T09:29:18.2145336Z   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+2026-11-13T09:29:18.2456245Z Collecting platformdirs>=2.1.0 (from cvat_sdk==2.83.1)
+2026-11-13T09:29:18.2521504Z   Downloading platformdirs-4.14.5-py3-none-any.whl.metadata (5.7 kB)
+2026-11-13T09:29:18.2733486Z Collecting tqdm>=4.64.0 (from cvat_sdk==2.83.1)
+2026-11-13T09:29:18.2802524Z   Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+2026-11-13T09:29:18.3015411Z Collecting urllib3>=1.25.3 (from cvat_sdk==2.83.1)
+2026-11-13T09:29:18.3081675Z   Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+2026-11-13T09:29:18.3236013Z Collecting json-with-comments==1.2.10 (from cvat-cli==2.83.1)
+2026-11-13T09:29:18.3322368Z   Downloading json_with_comments-1.2.10-py3-none-any.whl.metadata (2.1 kB)
+2026-11-13T09:29:18.3353849Z Requirement already satisfied: torch in /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages (from cvat_sdk==2.83.1) (2.9.0+cpu)
+2026-11-13T09:29:18.3356846Z Requirement already satisfied: torchvision in /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages (from cvat_sdk==2.83.1) (0.24.0+cpu)
+2026-11-13T09:29:18.3781517Z Collecting scikit-image>=0.24 (from cvat_sdk==2.83.1)
+2026-11-13T09:29:18.3852507Z   Downloading scikit_image-0.26.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (15 kB)
+2026-11-13T09:29:18.4086206Z Collecting click>=8.0.0 (from black==25.12.0)
+2026-11-13T09:29:18.4152149Z   Downloading click-8.5.1-py3-none-any.whl.metadata (2.6 kB)
+2026-11-13T09:29:18.4375189Z Collecting mypy-extensions>=0.4.3 (from black==25.12.0)
+2026-11-13T09:29:18.4440598Z   Downloading mypy_extensions-1.2.0-py3-none-any.whl.metadata (1.1 kB)
+2026-11-13T09:29:18.4582425Z Collecting pathspec>=0.9.0 (from black==25.12.0)
+2026-11-13T09:29:18.4651161Z   Downloading pathspec-1.1.1-py3-none-any.whl.metadata (14 kB)
+2026-11-13T09:29:18.4836887Z Collecting pytokens>=0.3.0 (from black==25.12.0)
+2026-11-13T09:29:18.4902779Z   Downloading pytokens-0.4.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (3.8 kB)
+2026-11-13T09:29:18.5101593Z Collecting allure-python-commons==2.14.2 (from allure-pytest==2.14.2->-r tests/python/requirements.txt (line 1))
+2026-11-13T09:29:18.5185262Z   Downloading allure_python_commons-2.14.2-py3-none-any.whl.metadata (5.7 kB)
+2026-11-13T09:29:18.5329111Z Collecting iniconfig>=1.0.1 (from pytest==9.0.3->-r tests/python/requirements.txt (line 3))
+2026-11-13T09:29:18.5394789Z   Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+2026-11-13T09:29:18.5527725Z Collecting pluggy<2,>=1.5 (from pytest==9.0.3->-r tests/python/requirements.txt (line 3))
+2026-11-13T09:29:18.5602653Z   Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+2026-11-13T09:29:18.5766673Z Collecting pygments>=2.7.2 (from pytest==9.0.3->-r tests/python/requirements.txt (line 3))
+2026-11-13T09:29:18.5833020Z   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+2026-11-13T09:29:18.5985619Z Collecting decopatch (from pytest-cases==3.10.1->-r tests/python/requirements.txt (line 4))
+2026-11-13T09:29:18.6051809Z   Downloading decopatch-1.4.10-py2.py3-none-any.whl.metadata (3.2 kB)
+2026-11-13T09:29:18.6225923Z Collecting makefun>=1.15.1 (from pytest-cases==3.10.1->-r tests/python/requirements.txt (line 4))
+2026-11-13T09:29:18.6292044Z   Downloading makefun-1.16.0-py2.py3-none-any.whl.metadata (2.9 kB)
+2026-11-13T09:29:18.9433815Z Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov==7.1.0->-r tests/python/requirements.txt (line 6))
+2026-11-13T09:29:18.9503954Z   Downloading coverage-7.17.3-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.3 kB)
+2026-11-13T09:29:18.9653590Z Collecting execnet>=2.1 (from pytest-xdist==3.8.0->-r tests/python/requirements.txt (line 7))
+2026-11-13T09:29:18.9719543Z   Downloading execnet-2.1.2-py3-none-any.whl.metadata (2.9 kB)
+2026-11-13T09:29:19.0855382Z Collecting charset_normalizer<4,>=2 (from requests==2.33.0->-r tests/python/requirements.txt (line 8))
+2026-11-13T09:29:19.0925768Z   Downloading charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (46 kB)
+2026-11-13T09:29:19.1099158Z Collecting idna<4,>=2.5 (from requests==2.33.0->-r tests/python/requirements.txt (line 8))
+2026-11-13T09:29:19.1167410Z   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+2026-11-13T09:29:19.1355860Z Collecting certifi>=2023.5.7 (from requests==2.33.0->-r tests/python/requirements.txt (line 8))
+2026-11-13T09:29:19.1430718Z   Downloading certifi-2026.10.23-py3-none-any.whl.metadata (2.5 kB)
+2026-11-13T09:29:19.1562620Z Collecting orderly-set<6,>=5.4.1 (from deepdiff==8.6.2->-r tests/python/requirements.txt (line 9))
+2026-11-13T09:29:19.1629558Z   Downloading orderly_set-5.5.0-py3-none-any.whl.metadata (6.6 kB)
+2026-11-13T09:29:19.3084566Z Collecting botocore<1.40.0,>=1.39.0 (from boto3==1.39.0->-r tests/python/requirements.txt (line 10))
+2026-11-13T09:29:19.3153426Z   Downloading botocore-1.39.17-py3-none-any.whl.metadata (5.7 kB)
+2026-11-13T09:29:19.3295040Z Collecting jmespath<2.0.0,>=0.7.1 (from boto3==1.39.0->-r tests/python/requirements.txt (line 10))
+2026-11-13T09:29:19.3360462Z   Downloading jmespath-1.1.0-py3-none-any.whl.metadata (7.6 kB)
+2026-11-13T09:29:24.3888085Z Collecting s3transfer<0.14.0,>=0.13.0 (from boto3==1.39.0->-r tests/python/requirements.txt (line 10))
+2026-11-13T09:29:24.3958380Z   Downloading s3transfer-0.13.1-py3-none-any.whl.metadata (1.7 kB)
+2026-11-13T09:29:32.3737799Z Collecting cffi>=1.0 (from soundfile==0.14.0->-r tests/python/requirements.txt (line 15))
+2026-11-13T09:29:32.3809351Z   Downloading cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+2026-11-13T09:29:32.5892613Z Requirement already satisfied: typing-extensions in /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages (from soundfile==0.14.0->-r tests/python/requirements.txt (line 15)) (4.16.0)
+2026-11-13T09:29:32.6165137Z Collecting python-dateutil<3.0.0,>=2.1 (from botocore<1.40.0,>=1.39.0->boto3==1.39.0->-r tests/python/requirements.txt (line 10))
+2026-11-13T09:29:32.6236955Z   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+2026-11-13T09:29:32.6582043Z Collecting six>=1.5 (from python-dateutil<3.0.0,>=2.1->botocore<1.40.0,>=1.39.0->boto3==1.39.0->-r tests/python/requirements.txt (line 10))
+2026-11-13T09:29:32.6654058Z   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+2026-11-13T09:29:32.7437185Z Collecting pycparser (from cffi>=1.0->soundfile==0.14.0->-r tests/python/requirements.txt (line 15))
+2026-11-13T09:29:32.7507471Z   Downloading pycparser-3.12-py3-none-any.whl.metadata (9.7 kB)
+2026-11-13T09:29:32.8861076Z Collecting scipy>=1.11.4 (from scikit-image>=0.24->cvat_sdk==2.83.1)
+2026-11-13T09:29:32.8929653Z   Downloading scipy-1.17.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+2026-11-13T09:29:32.9275892Z Requirement already satisfied: networkx>=3.0 in /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages (from scikit-image>=0.24->cvat_sdk==2.83.1) (3.6.1)
+2026-11-13T09:29:32.9699694Z Collecting imageio!=2.35.0,>=2.33 (from scikit-image>=0.24->cvat_sdk==2.83.1)
+2026-11-13T09:29:32.9767387Z   Downloading imageio-2.38.1-py3-none-any.whl.metadata (9.7 kB)
+2026-11-13T09:29:33.0409833Z Collecting tifffile>=2022.8.12 (from scikit-image>=0.24->cvat_sdk==2.83.1)
+2026-11-13T09:29:33.0480717Z   Downloading tifffile-2026.3.3-py3-none-any.whl.metadata (31 kB)
+2026-11-13T09:29:33.1011600Z Collecting lazy-loader>=0.4 (from scikit-image>=0.24->cvat_sdk==2.83.1)
+2026-11-13T09:29:33.1079158Z   Downloading lazy_loader-0.6-py3-none-any.whl.metadata (6.0 kB)
+2026-11-13T09:29:33.1504568Z Requirement already satisfied: filelock in /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages (from torch->cvat_sdk==2.83.1) (4.2.4)
+2026-11-13T09:29:33.1508025Z Requirement already satisfied: sympy>=1.13.3 in /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages (from torch->cvat_sdk==2.83.1) (1.14.0)
+2026-11-13T09:29:33.1511105Z Requirement already satisfied: jinja2 in /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages (from torch->cvat_sdk==2.83.1) (3.1.6)
+2026-11-13T09:29:33.1513605Z Requirement already satisfied: fsspec>=0.8.5 in /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages (from torch->cvat_sdk==2.83.1) (2026.9.0)
+2026-11-13T09:29:33.1558442Z Requirement already satisfied: mpmath<1.4,>=1.1.0 in /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages (from sympy>=1.13.3->torch->cvat_sdk==2.83.1) (1.3.0)
+2026-11-13T09:29:33.1591650Z Requirement already satisfied: MarkupSafe>=2.0 in /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages (from jinja2->torch->cvat_sdk==2.83.1) (3.0.3)
+2026-11-13T09:29:33.1702210Z Downloading black-25.12.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.8 MB)
+2026-11-13T09:29:33.2969044Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 12.7 MB/s  0:00:00
+2026-11-13T09:29:33.3038610Z Downloading isort-6.1.0-py3-none-any.whl (94 kB)
+2026-11-13T09:29:33.3294119Z Downloading allure_pytest-2.14.2-py3-none-any.whl (11 kB)
+2026-11-13T09:29:33.3849537Z Downloading av-16.0.1-cp311-cp311-manylinux_2_28_x86_64.whl (40.2 MB)
+2026-11-13T09:29:33.8306739Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.2/40.2 MB 90.2 MB/s  0:00:00
+2026-11-13T09:29:33.8375935Z Downloading pytest-9.0.3-py3-none-any.whl (375 kB)
+2026-11-13T09:29:33.8742730Z Downloading pytest_cases-3.10.1-py2.py3-none-any.whl (108 kB)
+2026-11-13T09:29:33.8901123Z Downloading pytest_timeout-2.4.0-py3-none-any.whl (14 kB)
+2026-11-13T09:29:33.9064504Z Downloading pytest_cov-7.1.0-py3-none-any.whl (22 kB)
+2026-11-13T09:29:33.9245750Z Downloading pytest_xdist-3.8.0-py3-none-any.whl (46 kB)
+2026-11-13T09:29:33.9365840Z Downloading requests-2.33.0-py3-none-any.whl (65 kB)
+2026-11-13T09:29:33.9526597Z Downloading deepdiff-8.6.2-py3-none-any.whl (91 kB)
+2026-11-13T09:29:33.9677862Z Downloading boto3-1.39.0-py3-none-any.whl (139 kB)
+2026-11-13T09:29:34.0133427Z Downloading PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (762 kB)
+2026-11-13T09:29:34.0327750Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 763.0/763.0 kB 28.8 MB/s  0:00:00
+2026-11-13T09:29:34.0405518Z Downloading numpy-2.0.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (19.3 MB)
+2026-11-13T09:29:34.2739532Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.3/19.3 MB 82.3 MB/s  0:00:00
+2026-11-13T09:29:34.2818608Z Downloading soundfile-0.14.0-py2.py3-none-manylinux_2_28_x86_64.whl (1.3 MB)
+2026-11-13T09:29:34.3126180Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 36.0 MB/s  0:00:00
+2026-11-13T09:29:34.3209104Z Downloading allure_python_commons-2.14.2-py3-none-any.whl (16 kB)
+2026-11-13T09:29:34.5044809Z Downloading json_with_comments-1.2.10-py3-none-any.whl (6.5 kB)
+2026-11-13T09:29:34.6010895Z Downloading botocore-1.39.17-py3-none-any.whl (13.9 MB)
+2026-11-13T09:29:34.7665350Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.9/13.9 MB 83.7 MB/s  0:00:00
+2026-11-13T09:29:34.7738964Z Downloading charset_normalizer-3.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (269 kB)
+2026-11-13T09:29:34.7903501Z Downloading idna-3.20-py3-none-any.whl (69 kB)
+2026-11-13T09:29:34.8023418Z Downloading jmespath-1.1.0-py3-none-any.whl (20 kB)
+2026-11-13T09:29:34.8125412Z Downloading orderly_set-5.5.0-py3-none-any.whl (13 kB)
+2026-11-13T09:29:35.0089441Z Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+2026-11-13T09:29:35.0185264Z Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+2026-11-13T09:29:35.0282744Z Downloading s3transfer-0.13.1-py3-none-any.whl (85 kB)
+2026-11-13T09:29:35.0382811Z Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+2026-11-13T09:29:35.0487722Z Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+2026-11-13T09:29:35.0599133Z Downloading certifi-2026.10.23-py3-none-any.whl (135 kB)
+2026-11-13T09:29:35.0706240Z Downloading cffi-2.1.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (217 kB)
+2026-11-13T09:29:35.0842951Z Downloading click-8.5.1-py3-none-any.whl (126 kB)
+2026-11-13T09:29:35.0938917Z Downloading coverage-7.17.3-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (263 kB)
+2026-11-13T09:29:35.1080861Z Downloading execnet-2.1.2-py3-none-any.whl (40 kB)
+2026-11-13T09:29:35.1163927Z Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+2026-11-13T09:29:35.1259050Z Downloading makefun-1.16.0-py2.py3-none-any.whl (22 kB)
+2026-11-13T09:29:35.1389141Z Downloading mypy_extensions-1.2.0-py3-none-any.whl (5.1 kB)
+2026-11-13T09:29:35.1482885Z Downloading packaging-26.3-py3-none-any.whl (129 kB)
+2026-11-13T09:29:35.1600075Z Downloading pathspec-1.1.1-py3-none-any.whl (57 kB)
+2026-11-13T09:29:35.1805510Z Downloading platformdirs-4.14.5-py3-none-any.whl (35 kB)
+2026-11-13T09:29:35.2165908Z Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+2026-11-13T09:29:35.2389052Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 48.5 MB/s  0:00:00
+2026-11-13T09:29:35.2463115Z Downloading pytokens-0.4.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (260 kB)
+2026-11-13T09:29:35.2625724Z Downloading scikit_image-0.26.0-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (13.7 MB)
+2026-11-13T09:29:35.8053833Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.7/13.7 MB 24.9 MB/s  0:00:00
+2026-11-13T09:29:35.8123301Z Downloading imageio-2.38.1-py3-none-any.whl (328 kB)
+2026-11-13T09:29:35.9783469Z Downloading lazy_loader-0.6-py3-none-any.whl (8.8 kB)
+2026-11-13T09:29:36.4096170Z Downloading scipy-1.17.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+2026-11-13T09:29:37.0264106Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 57.2 MB/s  0:00:00
+2026-11-13T09:29:37.0334112Z Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+2026-11-13T09:29:37.0522255Z Downloading tifffile-2026.3.3-py3-none-any.whl (243 kB)
+2026-11-13T09:29:37.0682674Z Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+2026-11-13T09:29:37.0797083Z Downloading decopatch-1.4.10-py2.py3-none-any.whl (18 kB)
+2026-11-13T09:29:37.0960063Z Downloading pycparser-3.12-py3-none-any.whl (62 kB)
+2026-11-13T09:29:37.2986155Z Building wheels for collected packages: cvat_sdk, cvat-cli
+2026-11-13T09:29:37.2992749Z   Building editable for cvat_sdk (pyproject.toml): started
+2026-11-13T09:29:37.7644358Z   Building editable for cvat_sdk (pyproject.toml): finished with status 'done'
+2026-11-13T09:29:37.7647936Z   Created wheel for cvat_sdk: filename=cvat_sdk-2.83.1-0.editable-py3-none-any.whl size=2139 sha256=34e10e4320df69262d7917815e96892a31ae2c842f7e7814c74ea6010a7ef110
+2026-11-13T09:29:37.7649304Z   Stored in directory: /tmp/pip-ephem-wheel-cache-gxka0qc9/wheels/52/45/b8/6e35ed3727dedda543757fedf55811805f8166bead1c6d9081
+2026-11-13T09:29:37.7665448Z   Building editable for cvat-cli (pyproject.toml): started
+2026-11-13T09:29:37.9345122Z   Building editable for cvat-cli (pyproject.toml): finished with status 'done'
+2026-11-13T09:29:37.9349081Z   Created wheel for cvat-cli: filename=cvat_cli-2.83.1-0.editable-py3-none-any.whl size=2598 sha256=6713d7859c6368db6200b8f2cfb00e2d306aef1dfb77766dc72d074e571abcb0
+2026-11-13T09:29:37.9350186Z   Stored in directory: /tmp/pip-ephem-wheel-cache-gxka0qc9/wheels/3a/b3/5b/676cf4299f3d734fd4d69eaa49ebff5b5beb5f36aa3da1d08e
+2026-11-13T09:29:37.9362325Z Successfully built cvat_sdk cvat-cli
+2026-11-13T09:29:38.0247278Z Installing collected packages: makefun, urllib3, tqdm, six, pyyaml, pytokens, pygments, pycparser, pluggy, platformdirs, pathspec, packaging, orderly-set, numpy, mypy-extensions, json-with-comments, jmespath, isort, iniconfig, idna, execnet, decopatch, coverage, click, charset_normalizer, certifi, av, attrs, tifffile, scipy, requests, python-dateutil, pytest, lazy-loader, imageio, deepdiff, cvat_sdk, cffi, black, allure-python-commons, soundfile, scikit-image, pytest-xdist, pytest-timeout, pytest-cov, pytest-cases, cvat-cli, botocore, allure-pytest, s3transfer, boto3
+2026-11-13T09:29:38.8596496Z   Attempting uninstall: numpy
+2026-11-13T09:29:38.8610222Z     Found existing installation: numpy 2.4.6
+2026-11-13T09:29:38.8927748Z     Uninstalling numpy-2.4.6:
+2026-11-13T09:29:38.8994315Z       Successfully uninstalled numpy-2.4.6
+2026-11-13T09:29:54.5810292Z 
+2026-11-13T09:29:54.5833770Z Successfully installed allure-pytest-2.14.2 allure-python-commons-2.14.2 attrs-26.1.0 av-16.0.1 black-25.12.0 boto3-1.39.0 botocore-1.39.17 certifi-2026.10.23 cffi-2.1.1 charset_normalizer-3.5.2 click-8.5.1 coverage-7.17.3 cvat-cli-2.83.1 cvat_sdk-2.83.1 decopatch-1.4.10 deepdiff-8.6.2 execnet-2.1.2 idna-3.20 imageio-2.38.1 iniconfig-2.3.1 isort-6.1.0 jmespath-1.1.0 json-with-comments-1.2.10 lazy-loader-0.6 makefun-1.16.0 mypy-extensions-1.2.0 numpy-2.0.0 orderly-set-5.5.0 packaging-26.3 pathspec-1.1.1 platformdirs-4.14.5 pluggy-1.7.0 pycparser-3.12 pygments-2.21.0 pytest-9.0.3 pytest-cases-3.10.1 pytest-cov-7.1.0 pytest-timeout-2.4.0 pytest-xdist-3.8.0 python-dateutil-2.9.0.post0 pytokens-0.4.1 pyyaml-6.0.2 requests-2.33.0 s3transfer-0.13.1 scikit-image-0.26.0 scipy-1.17.1 six-1.17.0 soundfile-0.14.0 tifffile-2026.3.3 tqdm-4.70.1 urllib3-2.8.0
+2026-11-13T09:29:54.5841401Z 
+2026-11-13T09:29:54.5841773Z [notice] A new release of pip is available: 26.2.2 -> 26.3
+2026-11-13T09:29:54.5842111Z [notice] To update, run: pip install --upgrade pip
+2026-11-13T09:29:55.0181944Z ##[group]Run set -o pipefail
+2026-11-13T09:29:55.0182209Z [36;1mset -o pipefail[0m
+2026-11-13T09:29:55.0182680Z [36;1mpython -m pytest tests/python/sdk/test_instance_mask_storage.py --no-services --no-coverage-collection -q 2>&1 | tee patched.log[0m
+2026-11-13T09:29:55.0183423Z [36;1mpython -m pytest tests/python/sdk/test_masks.py tests/python/sdk/test_attributes.py --no-services --no-coverage-collection -q 2>&1 | tee existing.log[0m
+2026-11-13T09:29:55.0228686Z shell: /usr/bin/bash -e {0}
+2026-11-13T09:29:55.0229074Z env:
+2026-11-13T09:29:55.0229297Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:29:55.0229646Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-13T09:29:55.0229995Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:29:55.0230298Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:29:55.0230588Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:29:55.0230922Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-13T09:29:55.0231183Z ##[endgroup]
+2026-11-13T09:29:58.9640209Z ============================= test session starts ==============================
+2026-11-13T09:29:58.9640625Z platform linux -- Python 3.11.18, pytest-9.0.3, pluggy-1.7.0
+2026-11-13T09:29:58.9640942Z rootdir: /home/runner/work/cvat/cvat/tests/python
+2026-11-13T09:29:58.9641203Z configfile: pytest.ini
+2026-11-13T09:29:58.9641579Z plugins: cov-7.1.0, platformdirs-4.14.5, allure-pytest-2.14.2, xdist-3.8.0, cases-3.10.1, timeout-2.4.0
+2026-11-13T09:29:58.9641943Z timeout: 15.0s
+2026-11-13T09:29:58.9642121Z timeout method: signal
+2026-11-13T09:29:58.9642302Z timeout func_only: False
+2026-11-13T09:29:58.9642481Z collected 20 items
+2026-11-13T09:29:58.9642594Z 
+2026-11-13T09:29:59.6116516Z tests/python/sdk/test_instance_mask_storage.py ....................      [100%]
+2026-11-13T09:29:59.6116831Z 
+2026-11-13T09:29:59.6116993Z ============================== 20 passed in 2.00s ==============================
+2026-11-13T09:30:00.6854288Z ============================= test session starts ==============================
+2026-11-13T09:30:00.6855149Z platform linux -- Python 3.11.18, pytest-9.0.3, pluggy-1.7.0
+2026-11-13T09:30:00.6855788Z rootdir: /home/runner/work/cvat/cvat/tests/python
+2026-11-13T09:30:00.6856082Z configfile: pytest.ini
+2026-11-13T09:30:00.6856456Z plugins: cov-7.1.0, platformdirs-4.14.5, allure-pytest-2.14.2, xdist-3.8.0, cases-3.10.1, timeout-2.4.0
+2026-11-13T09:30:00.6857035Z timeout: 15.0s
+2026-11-13T09:30:00.6857212Z timeout method: signal
+2026-11-13T09:30:00.6857393Z timeout func_only: False
+2026-11-13T09:30:00.6857573Z collected 48 items
+2026-11-13T09:30:00.6857677Z 
+2026-11-13T09:30:00.8732679Z tests/python/sdk/test_masks.py ..............................            [ 62%]
+2026-11-13T09:30:00.9721086Z tests/python/sdk/test_attributes.py ..................                   [100%]
+2026-11-13T09:30:00.9721404Z 
+2026-11-13T09:30:00.9721566Z ============================== 48 passed in 0.23s ==============================
+2026-11-13T09:30:01.1067605Z ##[group]Run cat > /tmp/benchmark_instance_masks.py <<'PY'
+2026-11-13T09:30:01.1068260Z [36;1mcat > /tmp/benchmark_instance_masks.py <<'PY'[0m
+2026-11-13T09:30:01.1068653Z [36;1mimport gc[0m
+2026-11-13T09:30:01.1069117Z [36;1mimport hashlib[0m
+2026-11-13T09:30:01.1069399Z [36;1mimport json[0m
+2026-11-13T09:30:01.1069668Z [36;1mimport resource[0m
+2026-11-13T09:30:01.1069970Z [36;1mimport statistics[0m
+2026-11-13T09:30:01.1070272Z [36;1mimport subprocess[0m
+2026-11-13T09:30:01.1070558Z [36;1mimport sys[0m
+2026-11-13T09:30:01.1070813Z [36;1mimport time[0m
+2026-11-13T09:30:01.1071075Z [36;1m[0m
+2026-11-13T09:30:01.1071300Z [36;1m[0m
+2026-11-13T09:30:01.1071572Z [36;1mdef child(count, height):[0m
+2026-11-13T09:30:01.1071883Z [36;1m    import torch[0m
+2026-11-13T09:30:01.1072170Z [36;1m    from cvat_sdk import models[0m
+2026-11-13T09:30:01.1072597Z [36;1m    from cvat_sdk.datasets.common import FrameAnnotations[0m
+2026-11-13T09:30:01.1073133Z [36;1m    from cvat_sdk.pytorch.common import Target[0m
+2026-11-13T09:30:01.1073658Z [36;1m    from cvat_sdk.pytorch.transforms import ExtractInstanceMasks[0m
+2026-11-13T09:30:01.1074106Z [36;1m[0m
+2026-11-13T09:30:01.1074352Z [36;1m    torch.set_num_threads(2)[0m
+2026-11-13T09:30:01.1074699Z [36;1m    torch.set_num_interop_threads(1)[0m
+2026-11-13T09:30:01.1075039Z [36;1m[0m
+2026-11-13T09:30:01.1075292Z [36;1m    def target(n, size):[0m
+2026-11-13T09:30:01.1075607Z [36;1m        shapes = [][0m
+2026-11-13T09:30:01.1075924Z [36;1m        for index in range(n):[0m
+2026-11-13T09:30:01.1076274Z [36;1m            start = 1 + index % 16[0m
+2026-11-13T09:30:01.1076631Z [36;1m            end = size - 2[0m
+2026-11-13T09:30:01.1077003Z [36;1m            shapes.append(models.LabeledShape([0m
+2026-11-13T09:30:01.1077545Z [36;1m                frame=0, label_id=1, type=models.ShapeType("polygon"), rotation=0,[0m
+2026-11-13T09:30:01.1078143Z [36;1m                points=[start, start, end, start, end, end, start, end],[0m
+2026-11-13T09:30:01.1078574Z [36;1m            ))[0m
+2026-11-13T09:30:01.1079019Z [36;1m        return Target([0m
+2026-11-13T09:30:01.1079413Z [36;1m            annotations=FrameAnnotations(shapes=shapes),[0m
+2026-11-13T09:30:01.1079846Z [36;1m            label_id_to_index={1: 1},[0m
+2026-11-13T09:30:01.1080206Z [36;1m            image_size=(size, size),[0m
+2026-11-13T09:30:01.1080582Z [36;1m        )[0m
+2026-11-13T09:30:01.1080821Z [36;1m[0m
+2026-11-13T09:30:01.1081176Z [36;1m    transform = ExtractInstanceMasks(include_shape_types=("polygon",))[0m
+2026-11-13T09:30:01.1081635Z [36;1m    transform(target(1, 64))[0m
+2026-11-13T09:30:01.1081962Z [36;1m    data = target(count, height)[0m
+2026-11-13T09:30:01.1082284Z [36;1m    gc.collect()[0m
+2026-11-13T09:30:01.1082708Z [36;1m    before = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024[0m
+2026-11-13T09:30:01.1083167Z [36;1m    output = transform(data)[0m
+2026-11-13T09:30:01.1083618Z [36;1m    peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024[0m
+2026-11-13T09:30:01.1084233Z [36;1m    digest = hashlib.sha256(memoryview(output["masks"].numpy())).hexdigest()[0m
+2026-11-13T09:30:01.1084730Z [36;1m    size = output["masks"].numel()[0m
+2026-11-13T09:30:01.1085061Z [36;1m    del output[0m
+2026-11-13T09:30:01.1085317Z [36;1m    timings = [][0m
+2026-11-13T09:30:01.1085591Z [36;1m    for _ in range(5):[0m
+2026-11-13T09:30:01.1086196Z [36;1m        gc.collect()[0m
+2026-11-13T09:30:01.1086513Z [36;1m        start = time.perf_counter()[0m
+2026-11-13T09:30:01.1086867Z [36;1m        output = transform(data)[0m
+2026-11-13T09:30:01.1087297Z [36;1m        timings.append((time.perf_counter() - start) * 1000)[0m
+2026-11-13T09:30:01.1087717Z [36;1m        del output[0m
+2026-11-13T09:30:01.1088012Z [36;1m    print(json.dumps({[0m
+2026-11-13T09:30:01.1088412Z [36;1m        "count": count, "height": height, "output_bytes": size,[0m
+2026-11-13T09:30:01.1089437Z [36;1m        "peak_rss_bytes": peak, "additional_peak_bytes": max(0, peak - before),[0m
+2026-11-13T09:30:01.1090070Z [36;1m        "median_ms": statistics.median(timings), "sha256": digest,[0m
+2026-11-13T09:30:01.1090513Z [36;1m    }))[0m
+2026-11-13T09:30:01.1090755Z [36;1m[0m
+2026-11-13T09:30:01.1090968Z [36;1m[0m
+2026-11-13T09:30:01.1091269Z [36;1mif len(sys.argv) == 4 and sys.argv[1] == "--child":[0m
+2026-11-13T09:30:01.1091730Z [36;1m    child(int(sys.argv[2]), int(sys.argv[3]))[0m
+2026-11-13T09:30:01.1092087Z [36;1melse:[0m
+2026-11-13T09:30:01.1092337Z [36;1m    results = [][0m
+2026-11-13T09:30:01.1092707Z [36;1m    for count, height in [(8, 256), (16, 1024), (64, 1024)]:[0m
+2026-11-13T09:30:01.1093122Z [36;1m        runs = [][0m
+2026-11-13T09:30:01.1093429Z [36;1m        for _ in range(3):[0m
+2026-11-13T09:30:01.1093785Z [36;1m            completed = subprocess.run([0m
+2026-11-13T09:30:01.1094287Z [36;1m                [sys.executable, __file__, "--child", str(count), str(height)],[0m
+2026-11-13T09:30:01.1094921Z [36;1m                check=True, text=True, capture_output=True,[0m
+2026-11-13T09:30:01.1095337Z [36;1m            )[0m
+2026-11-13T09:30:01.1095697Z [36;1m            runs.append(json.loads(completed.stdout))[0m
+2026-11-13T09:30:01.1096178Z [36;1m        assert len({run["sha256"] for run in runs}) == 1[0m
+2026-11-13T09:30:01.1096592Z [36;1m        results.append({[0m
+2026-11-13T09:30:01.1097000Z [36;1m            "count": count, "height": height, "runs": runs,[0m
+2026-11-13T09:30:01.1097615Z [36;1m            "median_peak_rss_bytes": statistics.median(r["peak_rss_bytes"] for r in runs),[0m
+2026-11-13T09:30:01.1098437Z [36;1m            "median_additional_peak_bytes": statistics.median(r["additional_peak_bytes"] for r in runs),[0m
+2026-11-13T09:30:01.1099339Z [36;1m            "median_ms": statistics.median(r["median_ms"] for r in runs),[0m
+2026-11-13T09:30:01.1099796Z [36;1m        })[0m
+2026-11-13T09:30:01.1100110Z [36;1m    print(json.dumps(results, indent=2))[0m
+2026-11-13T09:30:01.1100491Z [36;1m[0m
+2026-11-13T09:30:01.1100717Z [36;1mPY[0m
+2026-11-13T09:30:01.1149721Z shell: /usr/bin/bash -e {0}
+2026-11-13T09:30:01.1149933Z env:
+2026-11-13T09:30:01.1150164Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:01.1150541Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-13T09:30:01.1150876Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:01.1151187Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:01.1151491Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:01.1151788Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-13T09:30:01.1152046Z ##[endgroup]
+2026-11-13T09:30:01.2193768Z ##[group]Run python /tmp/benchmark_instance_masks.py > benchmark-patched.json
+2026-11-13T09:30:01.2194223Z [36;1mpython /tmp/benchmark_instance_masks.py > benchmark-patched.json[0m
+2026-11-13T09:30:01.2238718Z shell: /usr/bin/bash -e {0}
+2026-11-13T09:30:01.2239130Z env:
+2026-11-13T09:30:01.2239358Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:01.2239716Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-13T09:30:01.2240051Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:01.2240351Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:01.2240910Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:01.2241208Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-13T09:30:01.2241463Z ##[endgroup]
+2026-11-13T09:30:26.6151706Z ##[group]Run git checkout af625a127fff3d2c0019f9bc0dc003d66b75385e -- cvat-sdk/cvat_sdk/pytorch/transforms.py
+2026-11-13T09:30:26.6152335Z [36;1mgit checkout af625a127fff3d2c0019f9bc0dc003d66b75385e -- cvat-sdk/cvat_sdk/pytorch/transforms.py[0m
+2026-11-13T09:30:26.6152723Z [36;1mset -o pipefail[0m
+2026-11-13T09:30:26.6153168Z [36;1mpython -m pytest tests/python/sdk/test_instance_mask_storage.py --no-services --no-coverage-collection -q 2>&1 | tee baseline.log[0m
+2026-11-13T09:30:26.6153736Z [36;1mpython /tmp/benchmark_instance_masks.py > benchmark-baseline.json[0m
+2026-11-13T09:30:26.6154200Z [36;1mgit checkout 064aa5750f1428b30b980065b087a05808c39dfe -- cvat-sdk/cvat_sdk/pytorch/transforms.py[0m
+2026-11-13T09:30:26.6154587Z [36;1mpython - <<'PY'[0m
+2026-11-13T09:30:26.6154798Z [36;1mimport json[0m
+2026-11-13T09:30:26.6155022Z [36;1mold = json.load(open("benchmark-baseline.json"))[0m
+2026-11-13T09:30:26.6155350Z [36;1mnew = json.load(open("benchmark-patched.json"))[0m
+2026-11-13T09:30:26.6155620Z [36;1mfor before, after in zip(old, new):[0m
+2026-11-13T09:30:26.6155918Z [36;1m    assert before["runs"][0]["sha256"] == after["runs"][0]["sha256"][0m
+2026-11-13T09:30:26.6156284Z [36;1m    print(json.dumps({"count": before["count"], "height": before["height"],[0m
+2026-11-13T09:30:26.6156645Z [36;1m        "old_extra_peak": before["median_additional_peak_bytes"],[0m
+2026-11-13T09:30:26.6156976Z [36;1m        "new_extra_peak": after["median_additional_peak_bytes"],[0m
+2026-11-13T09:30:26.6157365Z [36;1m        "old_peak": before["median_peak_rss_bytes"], "new_peak": after["median_peak_rss_bytes"],[0m
+2026-11-13T09:30:26.6157775Z [36;1m        "old_ms": before["median_ms"], "new_ms": after["median_ms"]}))[0m
+2026-11-13T09:30:26.6158045Z [36;1mPY[0m
+2026-11-13T09:30:26.6203528Z shell: /usr/bin/bash -e {0}
+2026-11-13T09:30:26.6203731Z env:
+2026-11-13T09:30:26.6203950Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:26.6204293Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-13T09:30:26.6204628Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:26.6204924Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:26.6205227Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:26.6205518Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-13T09:30:26.6205770Z ##[endgroup]
+2026-11-13T09:30:29.1070680Z ============================= test session starts ==============================
+2026-11-13T09:30:29.1071497Z platform linux -- Python 3.11.18, pytest-9.0.3, pluggy-1.7.0
+2026-11-13T09:30:29.1072008Z rootdir: /home/runner/work/cvat/cvat/tests/python
+2026-11-13T09:30:29.1072410Z configfile: pytest.ini
+2026-11-13T09:30:29.1072989Z plugins: cov-7.1.0, platformdirs-4.14.5, allure-pytest-2.14.2, xdist-3.8.0, cases-3.10.1, timeout-2.4.0
+2026-11-13T09:30:29.1073593Z timeout: 15.0s
+2026-11-13T09:30:29.1073865Z timeout method: signal
+2026-11-13T09:30:29.1074138Z timeout func_only: False
+2026-11-13T09:30:29.1074411Z collected 20 items
+2026-11-13T09:30:29.1074571Z 
+2026-11-13T09:30:29.8001980Z tests/python/sdk/test_instance_mask_storage.py ....................      [100%]
+2026-11-13T09:30:29.8002399Z 
+2026-11-13T09:30:29.8002567Z ============================== 20 passed in 1.67s ==============================
+2026-11-13T09:30:57.5688298Z {"count": 8, "height": 256, "old_extra_peak": 1572864, "new_extra_peak": 131072, "old_peak": 417247232, "new_peak": 415707136, "old_ms": 0.8276480000120046, "new_ms": 0.7505229999935636}
+2026-11-13T09:30:57.5689815Z {"count": 16, "height": 1024, "old_extra_peak": 36175872, "new_extra_peak": 19267584, "old_peak": 451858432, "new_peak": 434941952, "old_ms": 14.930491000001211, "new_ms": 4.5921010000142815}
+2026-11-13T09:30:57.5691235Z {"count": 64, "height": 1024, "old_extra_peak": 136970240, "new_extra_peak": 69730304, "old_peak": 552648704, "new_peak": 485306368, "old_ms": 58.94415299999878, "new_ms": 28.332896999984314}
+2026-11-13T09:30:57.5748089Z ##[group]Run python -m black --check --diff --line-length 100 cvat-sdk/cvat_sdk/pytorch/transforms.py tests/python/sdk/test_instance_mask_storage.py
+2026-11-13T09:30:57.5749562Z [36;1mpython -m black --check --diff --line-length 100 cvat-sdk/cvat_sdk/pytorch/transforms.py tests/python/sdk/test_instance_mask_storage.py[0m
+2026-11-13T09:30:57.5750870Z [36;1mpython -m isort --check-only --diff --profile black --line-length 100 cvat-sdk/cvat_sdk/pytorch/transforms.py tests/python/sdk/test_instance_mask_storage.py[0m
+2026-11-13T09:30:57.5802386Z shell: /usr/bin/bash -e {0}
+2026-11-13T09:30:57.5802682Z env:
+2026-11-13T09:30:57.5802968Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:57.5803331Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-13T09:30:57.5803687Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:57.5803982Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:57.5804316Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:57.5804623Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-13T09:30:57.5804885Z ##[endgroup]
+2026-11-13T09:30:57.7961607Z All done! ✨ 🍰 ✨
+2026-11-13T09:30:57.7961973Z 2 files would be left unchanged.
+2026-11-13T09:30:57.9078488Z ##[group]Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+2026-11-13T09:30:57.9079003Z with:
+2026-11-13T09:30:57.9079183Z   name: instance-mask-batch-memory
+2026-11-13T09:30:57.9079467Z   path: patched.log
+baseline.log
+existing.log
+benchmark-*.json
+
+2026-11-13T09:30:57.9079745Z   if-no-files-found: warn
+2026-11-13T09:30:57.9079938Z   compression-level: 6
+2026-11-13T09:30:57.9080128Z   overwrite: false
+2026-11-13T09:30:57.9080329Z   include-hidden-files: false
+2026-11-13T09:30:57.9080526Z   archive: true
+2026-11-13T09:30:57.9080683Z env:
+2026-11-13T09:30:57.9080885Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:57.9081225Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib/pkgconfig
+2026-11-13T09:30:57.9081553Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:57.9081854Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:57.9082168Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.18/x64
+2026-11-13T09:30:57.9082476Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.18/x64/lib
+2026-11-13T09:30:57.9082728Z ##[endgroup]
+2026-11-13T09:30:58.0402014Z With the provided path, there will be 5 files uploaded
+2026-11-13T09:30:58.0407017Z Artifact name is valid!
+2026-11-13T09:30:58.0407496Z Root directory input is valid!
+2026-11-13T09:30:58.4292496Z Uploading artifact: instance-mask-batch-memory.zip
+2026-11-13T09:30:58.4321632Z Beginning upload of artifact content to blob storage
+2026-11-13T09:30:58.7713628Z Uploaded bytes 2641
+2026-11-13T09:30:58.8484862Z Finished uploading artifact content to blob storage!
+2026-11-13T09:30:58.8485720Z SHA256 digest of uploaded artifact is 80ef053c4f602a3b9276ee74248245c6e226e08b407b8e2468b4d41884c78396
+2026-11-13T09:30:58.8486461Z Finalizing artifact upload
+2026-11-13T09:30:59.3869608Z Artifact instance-mask-batch-memory successfully finalized. Artifact ID 14025895464
+2026-11-13T09:30:59.3870503Z Artifact instance-mask-batch-memory has been successfully uploaded! Final size is 2641 bytes. Artifact ID is 14025895464
+2026-11-13T09:30:59.3871693Z Artifact download URL: https://github.com/Afloat16/cvat/actions/runs/43401475556/artifacts/14025895464
+2026-11-13T09:30:59.4032593Z Post job cleanup.
+2026-11-13T09:30:59.5142325Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/cvat/cvat --files-from manifest.txt --use-compress-program zstdmt
+2026-11-13T09:31:01.2330704Z Sent 0 of 352255948 (0.0%), 0.0 MBs/sec
+2026-11-13T09:31:02.2328362Z Sent 150929356 of 352255948 (42.8%), 72.0 MBs/sec
+2026-11-13T09:31:02.3940752Z Sent 352255948 of 352255948 (100.0%), 155.5 MBs/sec
+2026-11-13T09:31:02.7140248Z Cache saved with the key: setup-python-Linux-x64-26.04-Ubuntu-python-3.11.18-pip-d23899feeaa7755aeabc434b08cd0d2a2fe4199572f852040827000613d12592
+2026-11-13T09:31:02.7336503Z Post job cleanup.
+2026-11-13T09:31:02.8073011Z [command]/usr/bin/git version
+2026-11-13T09:31:02.8148857Z git version 2.56.0
+2026-11-13T09:31:02.8181899Z Temporarily overriding HOME='/home/runner/work/_temp/b344a236-d709-4843-b473-19133872f203' before making global git config changes
+2026-11-13T09:31:02.8182820Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-13T09:31:02.8186909Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cvat/cvat
+2026-11-13T09:31:02.8222905Z Removing SSH command configuration
+2026-11-13T09:31:02.8229105Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T09:31:02.8265180Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T09:31:02.8561304Z Removing HTTP extra header
+2026-11-13T09:31:02.8566490Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T09:31:02.8605486Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T09:31:02.8871251Z Removing includeIf entries pointing to credentials config files
+2026-11-13T09:31:02.8877078Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T09:31:02.8909383Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T09:31:02.9292581Z Cleaning up orphan processes
