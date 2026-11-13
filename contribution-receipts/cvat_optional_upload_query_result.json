@@ -1,0 +1,31 @@
+{
+  "repository": "cvat-ai/cvat",
+  "stars": 17125,
+  "title": "Handle optional upload query parameters without mutating callers",
+  "base": "873008dead495e215a51dbea5c705bc19b61016d",
+  "base_branch": "develop",
+  "branch": "fix/optional-upload-query-parameters-20261112",
+  "commit": "43956cb1aa0233ae579028c310944c6246ccde5b",
+  "commit_url": "https://github.com/Afloat16/cvat/commit/43956cb1aa0233ae579028c310944c6246ccde5b",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_url": "https://github.com/cvat-ai/cvat/pull/11483",
+  "pr_number": 11483,
+  "merged_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "issue_url": "https://github.com/cvat-ai/cvat/issues/11481",
+  "body": "### Motivation and context\n\nCloses #11481.\n\nUploader.upload_file accepts omitted query parameters, but the final request assigns its server-provided filename into None after the TUS transfer has completed. Passing a mapping avoids the exception but mutates the caller's mapping, so reusing it can send a stale filename in a later upload-start request.\n\nCreate a private dictionary before starting the existing upload sequence. Keep its supplied values and add the final filename to that private copy.\n\n### How has this been tested?\n\n- Exact final commit: `43956cb1aa0233ae579028c310944c6246ccde5b`.\n- Native generated SDK and real HTTP transport against a local protocol peer.\n- Final validation: https://github.com/Afloat16/cvat/actions/runs/43310465808\n- All 13 new cases pass; all 13 fail against the original implementation.\n- 48 existing mask/attribute unit cases pass.\n- Black and isort checks pass.\n\nThe tests cover omitted, explicit None, empty, and populated parameters; zero-byte, small, and multi-chunk files; actual upload-start/finish requests and complete transferred bytes; and reuse of one mapping for two files. They assert that the original mapping is unchanged.\n\n### Scope and risks\n\nThe test peer implements the HTTP upload protocol exercised by the native client; this is not a full CVAT service integration test. Retry policy, chunk sizing, filename validation, and supplied query values are unchanged.\n\n### Checklist\n\n- [x] Based on `develop`.\n- [x] Added a changelog fragment and regression tests.\n- [x] Preserved the existing transfer protocol and caller-supplied values.\n- [x] Documentation impact: existing optional parameter contract is restored.\n",
+  "validation": {
+    "after": "13 new and 48 existing SDK controls passed.",
+    "before": "All 13 new cases failed on original source.",
+    "checks": "Black 25.12.0 and isort 6.1.0 passed.",
+    "run_url": "https://github.com/Afloat16/cvat/actions/runs/43310465808",
+    "workflow_commit": "d0505ccea28431d62e044df52b9e4567cea68c14",
+    "validation_branch": "validation/optional-upload-query-parameters-20261112",
+    "broader": "Native generated SDK on CPU; controlled local HTTP peer where applicable; no full running CVAT service or GPU validation claimed."
+  },
+  "independent_review": "eval_contributions read-only semantic review passed; final formatting only.",
+  "deduplication": "All fork heads and personal PR history checked; 21-entry uploading history, #5204/#9824 and open #11446 actual diffs reviewed. #11446 retry-budget change does not address optional query parameters.",
+  "recorded_at": "2026-11-13T09:06:28.823Z"
+}

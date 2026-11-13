@@ -1,0 +1,31 @@
+{
+  "repository": "cvat-ai/cvat",
+  "stars": 17125,
+  "title": "Close mask polygon contours at image boundaries",
+  "base": "873008dead495e215a51dbea5c705bc19b61016d",
+  "base_branch": "develop",
+  "branch": "fix/mask-polygon-image-boundaries-20261112",
+  "commit": "5a1d116137b4410ad0f48287b55a8e7b58c9ef09",
+  "commit_url": "https://github.com/Afloat16/cvat/commit/5a1d116137b4410ad0f48287b55a8e7b58c9ef09",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_url": "https://github.com/cvat-ai/cvat/pull/11480",
+  "pr_number": 11480,
+  "merged_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "issue_url": "https://github.com/cvat-ai/cvat/issues/11479",
+  "body": "### Motivation and context\n\nCloses #11479.\n\nCalling `find_contours` directly on an image-sized mask leaves contours open at the image edge. A fully foreground mask has no contour, and border-touching regions can be dropped or converted into truncated polygons.\n\nAdd a one-pixel background border for contour extraction, then subtract its coordinate offset. Keep the existing orientation filtering, approximation tolerance, too-few-points fallback, and RLE path.\n\n### How has this been tested?\n\n- Exact final commit: `5a1d116137b4410ad0f48287b55a8e7b58c9ef09`.\n- Native generated SDK, PyTorch tensors, and scikit-image.\n- Final validation: https://github.com/Afloat16/cvat/actions/runs/43306800851\n- 24 new tests pass; the original implementation has 19 failures and 5 passing controls.\n- 48 existing mask/attribute unit controls pass.\n- Black and isort checks pass.\n\nThe regressions compare each edge/corner and full-image foreground mask with the same region translated into a larger image with background. They cover probabilities of exactly 0.5 and 1.0, disconnected border components, and unchanged interior-hole filtering, approximation, empty masks, and RLE output.\n\nThe coordinates keep the existing pixel-center interpolation convention, so an outer contour can extend approximately half a pixel beyond the image boundary. The conversion allocates one padded mask. This validation concerns geometry and annotation preservation, not model quality, GPU performance, or a running CVAT server.\n\n### Checklist\n\n- [x] Based on `develop`.\n- [x] Added a changelog fragment and regression tests.\n- [x] Kept the ordinary interior contour and RLE behavior.\n- [x] Documentation impact: no public API change.\n",
+  "validation": {
+    "after": "24 new and 48 existing SDK controls passed.",
+    "before": "19 failed and 5 passed on original source.",
+    "checks": "Black 25.12.0 and isort 6.1.0 passed.",
+    "run_url": "https://github.com/Afloat16/cvat/actions/runs/43306800851",
+    "workflow_commit": "cc7a383c5b9f4b869d6877800ea25c4a87af97ad",
+    "validation_branch": "validation/mask-polygon-image-boundaries-20261112",
+    "broader": "Native generated SDK on CPU; controlled local HTTP peer where applicable; no full running CVAT service or GPU validation claimed."
+  },
+  "independent_review": "eval_contributions read-only semantic review passed; final formatting commit does not change geometry.",
+  "deduplication": "New fork has only this batch's branches; full target-file history and actual #8724/#9820 diffs reviewed with no equivalent fix.",
+  "recorded_at": "2026-11-13T09:06:28.451Z"
+}
