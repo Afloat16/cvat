@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 42f0d813b88e1d08ea5706151c1355de9654e5f0
-          fetch-depth: 3
+          ref: 61ad3d8b3ebee62c3eb1a1fc9a6888810aa5f3b4
+          fetch-depth: 4
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
@@ -50,7 +50,7 @@ jobs:
           assert re.search(r"[1-9]\d* failed", text), text
           assert "ERROR collecting" not in text, text
           PY
-          git checkout 42f0d813b88e1d08ea5706151c1355de9654e5f0 -- cvat-sdk/cvat_sdk/core/proxies/annotations.py
+          git checkout 61ad3d8b3ebee62c3eb1a1fc9a6888810aa5f3b4 -- cvat-sdk/cvat_sdk/core/proxies/annotations.py
       - name: Check changed Python formatting
         run: |
           python -m black --check --diff --line-length 100 cvat-sdk/cvat_sdk/core/proxies/annotations.py tests/python/sdk/test_empty_annotation_selection.py
