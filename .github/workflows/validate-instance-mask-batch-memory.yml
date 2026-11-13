@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 26c9a21f8463ab8eab0be5ed7395340f0533d7d9
-          fetch-depth: 3
+          ref: 064aa5750f1428b30b980065b087a05808c39dfe
+          fetch-depth: 4
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
@@ -123,7 +123,7 @@ jobs:
           set -o pipefail
           python -m pytest tests/python/sdk/test_instance_mask_storage.py --no-services --no-coverage-collection -q 2>&1 | tee baseline.log
           python /tmp/benchmark_instance_masks.py > benchmark-baseline.json
-          git checkout 26c9a21f8463ab8eab0be5ed7395340f0533d7d9 -- cvat-sdk/cvat_sdk/pytorch/transforms.py
+          git checkout 064aa5750f1428b30b980065b087a05808c39dfe -- cvat-sdk/cvat_sdk/pytorch/transforms.py
           python - <<'PY'
           import json
           old = json.load(open("benchmark-baseline.json"))
