@@ -1,0 +1,151 @@
+name: Validate instance mask batch memory
+on:
+  push:
+    branches: [validation/instance-mask-batch-memory-20261113]
+permissions:
+  contents: read
+jobs:
+  sdk-native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: 55e474aceb896db1d196acb296c8516ff4861862
+          fetch-depth: 3
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Generate the official SDK
+        run: |
+          python -m pip install -r cvat-sdk/gen/requirements.txt
+          ./cvat-sdk/gen/generate.sh
+      - name: Install CPU PyTorch
+        run: python -m pip install torch==2.9.0 torchvision==0.24.0 --index-url https://download.pytorch.org/whl/cpu
+      - name: Install native SDK and test dependencies
+        run: python -m pip install -e './cvat-sdk[pytorch]' -e ./cvat-cli -r tests/python/requirements.txt black==25.12.0 isort==6.1.0
+      - name: Run native mask extraction and existing SDK controls
+        run: |
+          set -o pipefail
+          python -m pytest tests/python/sdk/test_instance_mask_storage.py --no-services --no-coverage-collection -q 2>&1 | tee patched.log
+          python -m pytest tests/python/sdk/test_masks.py tests/python/sdk/test_attributes.py --no-services --no-coverage-collection -q 2>&1 | tee existing.log
+      - name: Prepare isolated process benchmark
+        run: |
+          cat > /tmp/benchmark_instance_masks.py <<'PY'
+          import gc
+          import hashlib
+          import json
+          import resource
+          import statistics
+          import subprocess
+          import sys
+          import time
+          
+          
+          def child(count, height):
+              import torch
+              from cvat_sdk import models
+              from cvat_sdk.datasets.common import FrameAnnotations
+              from cvat_sdk.pytorch.common import Target
+              from cvat_sdk.pytorch.transforms import ExtractInstanceMasks
+          
+              torch.set_num_threads(2)
+              torch.set_num_interop_threads(1)
+          
+              def target(n, size):
+                  shapes = []
+                  for index in range(n):
+                      start = 1 + index % 16
+                      end = size - 2
+                      shapes.append(models.LabeledShape(
+                          frame=0, label_id=1, type=models.ShapeType("polygon"),
+                          points=[start, start, end, start, end, end, start, end],
+                      ))
+                  return Target(
+                      annotations=FrameAnnotations(shapes=shapes),
+                      label_id_to_index={1: 1},
+                      image_size=(size, size),
+                  )
+          
+              transform = ExtractInstanceMasks(include_shape_types=("polygon",))
+              transform(target(1, 64))
+              data = target(count, height)
+              gc.collect()
+              before = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024
+              output = transform(data)
+              peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * 1024
+              digest = hashlib.sha256(memoryview(output["masks"].numpy())).hexdigest()
+              size = output["masks"].numel()
+              del output
+              timings = []
+              for _ in range(5):
+                  gc.collect()
+                  start = time.perf_counter()
+                  output = transform(data)
+                  timings.append((time.perf_counter() - start) * 1000)
+                  del output
+              print(json.dumps({
+                  "count": count, "height": height, "output_bytes": size,
+                  "peak_rss_bytes": peak, "additional_peak_bytes": max(0, peak - before),
+                  "median_ms": statistics.median(timings), "sha256": digest,
+              }))
+          
+          
+          if len(sys.argv) == 4 and sys.argv[1] == "--child":
+              child(int(sys.argv[2]), int(sys.argv[3]))
+          else:
+              results = []
+              for count, height in [(8, 256), (16, 1024), (64, 1024)]:
+                  runs = []
+                  for _ in range(3):
+                      completed = subprocess.run(
+                          [sys.executable, __file__, "--child", str(count), str(height)],
+                          check=True, text=True, capture_output=True,
+                      )
+                      runs.append(json.loads(completed.stdout))
+                  assert len({run["sha256"] for run in runs}) == 1
+                  results.append({
+                      "count": count, "height": height, "runs": runs,
+                      "median_peak_rss_bytes": statistics.median(r["peak_rss_bytes"] for r in runs),
+                      "median_additional_peak_bytes": statistics.median(r["additional_peak_bytes"] for r in runs),
+                      "median_ms": statistics.median(r["median_ms"] for r in runs),
+                  })
+              print(json.dumps(results, indent=2))
+          
+          PY
+      - name: Measure patched peak memory and time
+        run: python /tmp/benchmark_instance_masks.py > benchmark-patched.json
+      - name: Verify numeric equivalence on original source and measure its memory
+        run: |
+          git checkout af625a127fff3d2c0019f9bc0dc003d66b75385e -- cvat-sdk/cvat_sdk/pytorch/transforms.py
+          set -o pipefail
+          python -m pytest tests/python/sdk/test_instance_mask_storage.py --no-services --no-coverage-collection -q 2>&1 | tee baseline.log
+          python /tmp/benchmark_instance_masks.py > benchmark-baseline.json
+          git checkout 55e474aceb896db1d196acb296c8516ff4861862 -- cvat-sdk/cvat_sdk/pytorch/transforms.py
+          python - <<'PY'
+          import json
+          old = json.load(open("benchmark-baseline.json"))
+          new = json.load(open("benchmark-patched.json"))
+          for before, after in zip(old, new):
+              assert before["runs"][0]["sha256"] == after["runs"][0]["sha256"]
+              print(json.dumps({"count": before["count"], "height": before["height"],
+                  "old_extra_peak": before["median_additional_peak_bytes"],
+                  "new_extra_peak": after["median_additional_peak_bytes"],
+                  "old_peak": before["median_peak_rss_bytes"], "new_peak": after["median_peak_rss_bytes"],
+                  "old_ms": before["median_ms"], "new_ms": after["median_ms"]}))
+          PY
+      - name: Check changed Python formatting
+        run: |
+          python -m black --check --diff --line-length 100 cvat-sdk/cvat_sdk/pytorch/transforms.py tests/python/sdk/test_instance_mask_storage.py
+          python -m isort --check-only --diff --profile black --line-length 100 cvat-sdk/cvat_sdk/pytorch/transforms.py tests/python/sdk/test_instance_mask_storage.py
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: instance-mask-batch-memory
+          path: |
+            patched.log
+            baseline.log
+            existing.log
+            benchmark-*.json
