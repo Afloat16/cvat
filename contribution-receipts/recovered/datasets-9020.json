@@ -1,0 +1,25 @@
+{
+  "repository": "huggingface/datasets",
+  "title": "fix(parallel): restore outer backend contexts",
+  "base_branch": "main",
+  "branch": "fix/restore-nested-parallel-backends-20261112",
+  "commit": "e8a958509998951cf92f4f232c0ef51072708d83",
+  "commit_url": "https://github.com/Afloat16/datasets/commit/e8a958509998951cf92f4f232c0ef51072708d83",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 9020,
+  "pr_url": "https://github.com/huggingface/datasets/pull/9020",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nExiting an inner `parallel_backend` context always resets the selected backend to `None`, even when an outer backend context is still active. Subsequent operations inside the outer context silently use the default multiprocessing path. For example, a local callable that works with joblib's threading backend then fails to pickle after a nested context exits. Spark backend registration also happens before the `try/finally`, so a failed optional dependency import leaves the global selection changed.\n\n## Changes\n\nSave the previous backend and restore it when the context exits. Include Spark import and registration in the protected region so setup failures restore the outer selection as well. The backend configuration remains global; this change addresses nested context restoration, not concurrent thread isolation.\n\n## Validation\n\n- Added 14 native tests covering nested threading/sequential contexts, normal and exceptional exits, top-level controls, joblib backend validation errors, and the actual missing optional Spark dependency path.\n- The new tests fail 10 cases and pass 4 on the unchanged upstream revision.\n- With this change, the new tests and 37 existing `map_nested` cases pass: **51 passed**.\n- The nested tests execute real `map_nested` calls with local closures before, during, and after the inner context.\n- Ruff lint, Ruff formatting, and `git diff --check` pass.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

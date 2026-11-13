@@ -1,0 +1,25 @@
+{
+  "repository": "cleanlab/cleanlab",
+  "title": "Handle degenerate non-IID permutation distributions exactly",
+  "base_branch": "master",
+  "branch": "fix/degenerate-noniid-permutations-20261112",
+  "commit": "9fb0e84f6f542b54d731ac3f131fd39a8d11486b",
+  "commit_url": "https://github.com/Afloat16/cleanlab/commit/9fb0e84f6f542b54d731ac3f131fd39a8d11486b",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1374,
+  "pr_url": "https://github.com/cleanlab/cleanlab/pull/1374",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nHandle exactly constant permutation statistics as a point-mass null distribution in the non-IID issue manager. The inclusive tail probability is one when the observed statistic is at or below that point and zero when it is above it.\n\nValid nearest-neighbor graphs can produce this case, including fully connected graphs with `k = N - 1`. Fitting a Gaussian KDE to these statistics either raises a singular-covariance error or produces a spurious boundary probability. Nonconstant permutation statistics continue to use the existing KDE calculation; this change does not introduce a near-zero-variance tolerance.\n\n## Validation\n\n- Added 14 regression cases covering real Datalab calls with feature arrays and CSR neighbor graphs for two through six samples, all three observed-statistic positions relative to a constant null, and a nonconstant KDE control.\n- On the unchanged upstream revision, the new tests produced 13 failures and 1 pass.\n- With the fix, the new tests and the existing non-IID module tests passed: 28 passed.\n- Project-pinned Black 25.12.0 and `git diff --check` passed.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "Unstructured-IO/unstructured",
+  "title": "fix(staging): preserve link lists in typed DataFrame exports",
+  "base_branch": "main",
+  "branch": "Afloat16/dataframe-link-arrays-20261112",
+  "commit": "50af03296761306f84a19b213054bdf341416860",
+  "commit_url": "https://github.com/Afloat16/unstructured/commit/50af03296761306f84a19b213054bdf341416860",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 4699,
+  "pr_url": "https://github.com/Unstructured-IO/unstructured/pull/4699",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nKeep `link_urls` as an object column when `convert_to_dataframe(..., set_dtypes=True)` applies its dtype map. `ElementMetadata.link_urls` contains a list of strings, but its map entry currently uses `StringDtype`, turning the whole list into a string representation.\n\nThis loses the sequence structure in JSON records and Hugging Face datasets and prevents URLs from being exploded alongside the corresponding link text and offsets. Use the same object representation already used for other list-valued metadata such as `link_texts`.\n\n## Validation\n\n- Added 11 regression cases: unchanged upstream produces 6 failures and 5 passes.\n- Exercised native pandas multi-column `explode`, JSON records, and `datasets.Dataset.from_pandas`, with typed/untyped controls, missing links, Unicode URLs, and source-metadata preservation.\n- New tests plus existing DataFrame, pandas-dtype, and flattening tests: **31 passed** on Python 3.12; 65 unrelated tests were deselected. The existing email-derived DataFrame test also passed after its real fixture and dependencies were made available.\n- Lockfile-pinned Ruff 0.15.10 check/format and `git diff --check` passed. The full repository suite was not run.\n\n## Checklist\n\n- [x] The PR title is a user-facing release-note entry with a conventional commit prefix.\n- [ ] Please apply the `bug` category label during maintainer triage.\n- [x] No changelog edit or version bump.\n\n<!-- This is an auto-generated description by cubic. -->\n<a href=\"https://cubic.dev/pr/Unstructured-IO/unstructured/pull/4699?utm_source=github\" target=\"_blank\" rel=\"noopener noreferrer\" data-no-image-dialog=\"true\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-dark.svg\"><source media=\"(prefers-color-scheme: light)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"><img alt=\"View guided diff\" src=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"></picture></a>\n<!-- End of auto-generated description by cubic. -->\n\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

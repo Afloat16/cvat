@@ -1,0 +1,25 @@
+{
+  "repository": "cleanlab/cleanlab",
+  "title": "Check identifier columns without expanding their integer range",
+  "base_branch": "master",
+  "branch": "perf/bounded-identifier-column-check-20261112",
+  "commit": "7cc8b24467a5de2aa3db5d7348f59849822f7122",
+  "commit_url": "https://github.com/Afloat16/cleanlab/commit/7cc8b24467a5de2aa3db5d7348f59849822f7122",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1369,
+  "pr_url": "https://github.com/cleanlab/cleanlab/pull/1369",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nDetermine whether an integer feature is sequential by inspecting adjacent sorted unique values, instead of allocating `np.arange(minimum, maximum + 1)`.\n\n## Impact\n\nThe existing check allocates memory proportional to the numeric span of a feature, even for a column containing only two values. Large integer identifiers or sparse numeric features can therefore make a dataset audit allocate an enormous array. Adding one to the maximum coordinate can also overflow its integer dtype.\n\nThe new check uses memory proportional to the sample count, includes sequences ending at a dtype's maximum value, and preserves the existing set semantics for duplicate values and the exclusion of constant columns.\n\n## Testing\n\n- Added 19 regression cases. Final upstream-base run: 12 failed and 7 passed. Fixed branch plus existing identifier-column tests: 47 passed.\n- Covered all eight signed/unsigned integer widths, widely separated extreme endpoints, empty/constant/duplicate/shuffled inputs, measured allocation, and a real Datalab audit using the public registration API for this optional issue type.\n- Native local benchmark, 1,024 values spanning 1,047,552: traced peak temporary allocation decreased from 8,388,920 to 19,448 bytes. Median of seven warm calls was 0.289279 ms before and 0.051939 ms after. Both returned False. These are measurements of this helper and input, not whole-process memory or a general runtime guarantee.\n- Pinned Black 25.12.0 and `git diff --check` passed.\n\n## Links/References\n\nChecked the original proposals #947/#1120 and subsequent identifier-column history, along with all-state range/memory/overflow searches. No equivalent bounded-memory check was found.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

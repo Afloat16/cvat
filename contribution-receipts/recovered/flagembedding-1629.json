@@ -1,0 +1,25 @@
+{
+  "repository": "FlagOpen/FlagEmbedding",
+  "title": "Preserve reranker query groups in partial training batches",
+  "base_branch": "master",
+  "branch": "fix/reranker-partial-batch-groups-20261112",
+  "commit": "54ac9d565ed4ee287a4abb98bb75513d5cc4bf07",
+  "commit_url": "https://github.com/Afloat16/FlagEmbedding/commit/54ac9d565ed4ee287a4abb98bb75513d5cc4bf07",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1629,
+  "pr_url": "https://github.com/FlagOpen/FlagEmbedding/pull/1629",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nThe reranker collators flatten each query's positive and negative passages, but the model reshapes their scores using the configured training batch size. A final DataLoader batch with fewer queries can therefore mix candidates from different queries, raise a reshape error, or create one-candidate groups with zero cross-entropy. The same grouping also affects teacher targets and layerwise distillation.\n\n## Changes\n\n- Preserve the number of passages per query as `group_size` in both reranker collators.\n- Infer the actual local query count from the encoded score rows and that group size in the shared and layerwise reranker training forwards.\n- Keep the configured batch-size fallback for direct callers that omit the new metadata.\n- Add native, download-free regression tests using tiny BERT, GPT-2, and the repository's LayerWiseMiniCPM models with real collators and DataLoader batches.\n\nThe group-size metadata stays valid when tensors are split at complete query-group boundaries. This change does not address existing DataParallel behavior for Python-list teacher scores or tensor splits through the middle of a query group.\n\n## Validation\n\n- On the unchanged upstream base, the 27 new cases produce **15 failures and 12 passes**; with this patch all **27 pass**.\n- The tests compare cross-entropy, external distillation, and layerwise self-distillation losses and gradients against explicit per-query calculations, including one-query/two-query final batches, full batches, and legacy direct calls.\n- Six additional cases within that set simulate per-device tensor splitting with replicated scalar metadata for all three model families.\n- New tests plus existing Trainer/import and offline tokenizer-compatibility tests: **39 passed, 1 skipped** on PyTorch 2.15.0+cpu and Transformers 4.57.1. The skipped import check requires Transformers 5.x. Download-dependent model/tokenizer tests and CUDA execution were not run.\n- Ruff on the new test file and `git diff --check` pass.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

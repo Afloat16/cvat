@@ -1,0 +1,41 @@
+{
+  "repository": "sloria/TextBlob",
+  "title": "Resolve known sentiment synset identifiers safely",
+  "base_branch": "dev",
+  "branch": "fix/sentiment-synset-identifiers-20261112",
+  "commit": "445080cf5d4910420e8ec5eb8199c21a963a6d2f",
+  "commit_url": "https://github.com/Afloat16/TextBlob/commit/445080cf5d4910420e8ec5eb8199c21a963a6d2f",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 625,
+  "pr_url": "https://github.com/sloria/TextBlob/pull/625",
+  "merged_at": null,
+  "closed_at": "2026-11-12T17:11:27Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\nThe lexical sentiment engine documents synset-identifier string input, but its identifier branch requires strings to have object-only attributes such as `synonyms`. Known identifiers in the loaded lexicon therefore fall through to ordinary word tokenization and return neutral scores instead of their stored sentiment.\n\n## Change\nResolve a matching identifier only when it actually exists in the lexicon's synset mapping, loading that mapping on first use. Unknown identifier-shaped strings continue through ordinary text assessment. The separate Synset-object path is unchanged.\n\n## Prior fix compatibility\nPR #179 and its source change were inspected. That fix prevented arbitrary strings such as `c-17` from raising `AttributeError` by treating them as objects. This change preserves that protection and adds the previously unavailable lookup for known string identifiers. It never reads Synset-object attributes from a plain string.\n\n## Validation\n- The nine new tests on unchanged upstream: 5 failed, 4 passed.\n- New tests plus all existing non-slow sentiment tests: 13 passed, 1 deselected.\n- XML-backed first-use tests cover adjective, noun, verb, adverb and Cornetto-style IDs. Unknown `c-17`, unknown WordNet-shaped IDs and ordinary text remain controls.\n- Ruff and `git diff --check` passed. Independent read-only review checked the earlier PR #179 patch and found no overlap or semantic blockers.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  },
+  "closure_audit": {
+    "number": 625,
+    "events": [
+      {
+        "event": "closed",
+        "actor": "sloria",
+        "created_at": "2026-11-12T17:11:28Z",
+        "commit_id": null
+      }
+    ],
+    "issue_comments": [],
+    "reviews": [],
+    "inline_comments": [],
+    "public_closing_reason": null,
+    "interpretation": "Closed by maintainer without a public closing explanation in timeline, issue comments, reviews, or inline review comments."
+  }
+}

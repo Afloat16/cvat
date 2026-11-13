@@ -1,0 +1,43 @@
+{
+  "repository": "huggingface/tokenizers",
+  "title": "fix(unigram): apply sampling temperature once per token score",
+  "base_branch": "main",
+  "branch": "fix/unigram-sampling-temperature-20261112",
+  "commit": "691dabb68ff22c5df5d414d49bbf90dcdfebd5f1",
+  "commit_url": "https://github.com/Afloat16/tokenizers/commit/691dabb68ff22c5df5d414d49bbf90dcdfebd5f1",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 2681,
+  "pr_url": "https://github.com/huggingface/tokenizers/pull/2681",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "The full-lattice Unigram sampler multiplies the accumulated forward log weight by `theta` again at every node. Earlier token scores therefore receive extra temperature factors depending on path depth, although backward sampling uses `alpha[previous] + theta * token_score`.\n\nApply the temperature only to the current token score. The accumulated forward value already contains the scaled scores for every preceding path.\n\nFor a vocabulary where `a`, `aa`, `aaa`, and `aaaa` score -10, -20, -30, and -40, all eight segmentations of `aaaa` have total score -40 and must be equally likely at any temperature. The unchanged implementation assigns some paths frequencies near 0.1% instead of 12.5% when `alpha=0.5`.\n\nNative Rust regression coverage includes this independently enumerated path distribution at alpha 0.1, 0.5 and 1, deterministic/empty controls, and low-score encoding through the actual `PipelineTokenizer` across repeated calls.\n\nValidation at exact commit `691dabb68ff22c5df5d414d49bbf90dcdfebd5f1` on GitHub-hosted Ubuntu:\n- New regressions: 6 passed; restoring the upstream `lattice.rs` produces 2 failures and 4 passes.\n- Existing Unigram unit tests: 20 passed.\n- Rustfmt passed. Clippy with warnings denied reports the same two pre-existing `needless_range_loop` diagnostics on the original and patched sources (`word_cache.rs:147` and `lattice.rs:379`); this patch does not change those loops.\n\n[Native baseline/patched run and logs](https://github.com/Afloat16/tokenizers/actions/runs/43279871521). The workflow is on a separate validation branch. This change is limited to full-lattice sampling; `sample_nbest` is unchanged.",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/tokenizers/actions/runs/43279871521",
+      "id": 43279871521,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "7b3e5cb8b31769236cc579da362726fdada50d80",
+      "head_branch": "validation/unigram-sampling-temperature-20261112",
+      "workflow_path": ".github/workflows/validate-unigram-sampling-temperature.yml",
+      "source_binding": {
+        "pr": 2681,
+        "run": 43279871521,
+        "source_sha": "691dabb68ff22c5df5d414d49bbf90dcdfebd5f1",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: 691dabb68ff22c5df5d414d49bbf90dcdfebd5f1"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

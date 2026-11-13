@@ -1,0 +1,41 @@
+{
+  "repository": "sloria/TextBlob",
+  "title": "Reset sentiment negation and modifiers at unordered term boundaries",
+  "base_branch": "dev",
+  "branch": "fix/unordered-sentiment-boundaries-20261112",
+  "commit": "06c0c1c5bb3674d367f5bfcec49dc089a45967da",
+  "commit_url": "https://github.com/Afloat16/TextBlob/commit/06c0c1c5bb3674d367f5bfcec49dc089a45967da",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 618,
+  "pr_url": "https://github.com/sloria/TextBlob/pull/618",
+  "merged_at": null,
+  "closed_at": "2026-11-12T17:11:10Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\nSentiment's dictionary and term-document paths insert `(None, None)` separators to prevent negation and degree modifiers from linking unrelated bag-of-words terms. `assessments` currently skips those separators without resetting its preceding-word state. The same word weights can therefore produce different scores when their insertion order changes: with the bundled English lexicon, `{\"not\": 1, \"good\": 1}` has polarity -0.35 while the reverse ordering has polarity +0.7.\n\n## Change\nClear the pending modifier and negation at an explicit `None` boundary. Ordered word sequences continue to apply the same negation and modifier rules. The change is limited to those two states; it does not redefine punctuation-specific assessment rules.\n\n## Validation\n- The 11 new tests on unchanged upstream: 9 failed, 2 passed.\n- New tests and all existing non-slow sentiment tests: 15 passed, 1 deselected, with native package imports.\n- Tests use hand-calculated weighted polarity/subjectivity, four term orders, both supported bag representations, the bundled English lexicon, and ordered `not good`/`very good` controls.\n- Ruff and `git diff --check` passed. Independent read-only review found no blockers.\n- Corpus-dependent classifier tests were not included; this change needs no downloaded NLTK corpus.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  },
+  "closure_audit": {
+    "number": 618,
+    "events": [
+      {
+        "event": "closed",
+        "actor": "sloria",
+        "created_at": "2026-11-12T17:11:11Z",
+        "commit_id": null
+      }
+    ],
+    "issue_comments": [],
+    "reviews": [],
+    "inline_comments": [],
+    "public_closing_reason": null,
+    "interpretation": "Closed by maintainer without a public closing explanation in timeline, issue comments, reviews, or inline review comments."
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "repository": "cvat-ai/cvat",
+  "title": "Support empty PyTorch project dataset selections",
+  "base_branch": "develop",
+  "branch": "fix/empty-pytorch-project-selection-20261112",
+  "commit": "ab0289b461c004aa3d537c4a663e2567ed62e590",
+  "commit_url": "https://github.com/Afloat16/cvat/commit/ab0289b461c004aa3d537c4a663e2567ed62e590",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 11476,
+  "pr_url": "https://github.com/cvat-ai/cvat/pull/11476",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "### Motivation and context\n\nCloses #11475.\n\nA project with no tasks, or a task/subset filter that selects no tasks, currently reaches `ConcatDataset([])` and raises an assertion during construction. This prevents callers from handling an empty selection through the usual dataset length, indexing, or sequential DataLoader iteration.\n\n### How has this been tested?\n\nRepresent an empty selection with an empty underlying sequence after the normal project, cache, logger, and transform initialization. The nonempty path still sorts task IDs and builds the same `ConcatDataset`.\n\nThe new regressions use the generated SDK, real offline cache files and image chunks, and native PyTorch datasets/DataLoaders. They cover empty projects, empty task/subset selections, deleted frames, ordinary selected-task ordering, image/target transforms, and an empty training loop.\n\n- Exact final commit: `ab0289b461c004aa3d537c4a663e2567ed62e590`.\n- Native hosted validation: https://github.com/Afloat16/cvat/actions/runs/43302835208\n- New regressions: 11 passed; the original implementation produces 6 failures and 5 passing controls.\n- Existing mask/attribute SDK unit tests: 48 passed.\n- Black and isort checks passed.\n\nValidation uses CPU and offline cache data. It does not cover a running CVAT server or GPU execution. Empty datasets with `shuffle=True` retain PyTorch RandomSampler's own nonempty-input requirement.\n\n### Checklist\n\n- [x] The change is based on `develop`.\n- [x] Added a regression test and a changelog fragment.\n- [x] Reviewed the SDK behavior and preserved the ordinary nonempty path.\n- [x] Documentation impact: the project dataset docstring describes the empty-selection behavior.\n",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/cvat/actions/runs/43302835208",
+      "id": 43302835208,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "89f485584b63a969aa725c1e94923d2b085a1e3e",
+      "head_branch": "validation/empty-pytorch-project-selection-20261112",
+      "workflow_path": ".github/workflows/validate-empty-project-selection.yml",
+      "source_binding": {
+        "pr": 11476,
+        "run": 43302835208,
+        "source_sha": "ab0289b461c004aa3d537c4a663e2567ed62e590",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: ab0289b461c004aa3d537c4a663e2567ed62e590"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

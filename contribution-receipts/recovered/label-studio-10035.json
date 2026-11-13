@@ -1,0 +1,43 @@
+{
+  "repository": "HumanSignal/label-studio",
+  "title": "fix: Preserve outer signal suspension during bulk task deletion",
+  "base_branch": "develop",
+  "branch": "fix/nested-signal-suspension-20261112",
+  "commit": "0f828731e70bab5ae2ca026995a3b97235c60f02",
+  "commit_url": "https://github.com/Afloat16/label-studio/commit/0f828731e70bab5ae2ca026995a3b97235c60f02",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 10035,
+  "pr_url": "https://github.com/HumanSignal/label-studio/pull/10035",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Reason for change\n\nFixes #10034.\n\nThe signal suspension context unconditionally reconnects every listed receiver. A nested `Task.delete_tasks_without_signals()` call can resume an outer operation's paused summary callbacks before that operation finishes. A receiver absent before entry is also incorrectly registered on exit.\n\n## What changed\n\nKeep a per-entry list of receivers that were actually disconnected, and restore only that list. A stack preserves ownership for nested entries, including reuse of one context instance. Dispatch UID handling and ordinary receiver reconnection are unchanged.\n\n## Testing\n\nNative locked dependencies (`uv sync --frozen --group test`), Python 3.12 and SQLite on Ubuntu, at the exact contribution SHA:\n\n- 16 new regressions pass. Unchanged source gives 12 failures and 4 passing controls.\n- All 55 existing core tests pass.\n- Tests use real Django Signals and actual Task queryset deletions with ProjectSummary counters. They cover registered/absent receivers, nested separate/shared contexts, exception unwinding, one-shot iterable entries, reused contexts and unrelated senders.\n- Project-pinned Ruff 0.15.1 check and format pass.\n\nRun: https://github.com/Afloat16/label-studio/actions/runs/43296890638\n\n## Acceptance criteria\n\n- A nested bulk task deletion leaves an outer signal suspension active until the outer context exits.\n- Normal callbacks resume once the context that disconnected them exits.\n- Receivers absent on entry remain absent afterward.\n- An inner exception does not prematurely reconnect an outer context's receiver.\n\n## Scope\n\nNo database schema or public API changes. This patch changes context bookkeeping through Django's native connect/disconnect methods. PostgreSQL and concurrent sharing of one context instance across threads were not tested; this does not add transaction-like recovery for an exception during context entry.\n",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/label-studio/actions/runs/43296890638",
+      "id": 43296890638,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "f53e045c1e68872054d06c596c2f31950c6a21bb",
+      "head_branch": "validation/nested-signal-suspension-20261112",
+      "workflow_path": ".github/workflows/validate-signal-suspension.yml",
+      "source_binding": {
+        "pr": 10035,
+        "run": 43296890638,
+        "source_sha": "0f828731e70bab5ae2ca026995a3b97235c60f02",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: 0f828731e70bab5ae2ca026995a3b97235c60f02"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "repository": "huggingface/tokenizers",
+  "title": "fix(ctc): decode word boundaries with cleanup disabled",
+  "base_branch": "main",
+  "branch": "fix/ctc-delimiters-without-cleanup-20261112",
+  "commit": "01e9c587e2acf292d5b5895d70ae8fa6a64deae2",
+  "commit_url": "https://github.com/Afloat16/tokenizers/commit/01e9c587e2acf292d5b5895d70ae8fa6a64deae2",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 2680,
+  "pr_url": "https://github.com/huggingface/tokenizers/pull/2680",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "`CTC` currently leaves word-delimiter tokens in decoded speech when `cleanup=false`. With `<pad>` as the blank and `|` as the delimiter, frame predictions `a a <pad> a | | b b <pad> b` decode to `aa|bb` instead of `aa bb`.\n\nMove delimiter replacement outside the optional WordPiece punctuation cleanup. Repetition collapse and blank removal keep their ordering, and the cleanup-enabled path is unchanged.\n\nThe regression loads a complete canonical tokenizer JSON and uses `PipelineTokenizer::decode`. It covers custom and Unicode delimiters, Unicode words, punctuation with cleanup on/off, blank-separated repeats, and empty input.\n\nValidation on GitHub-hosted Ubuntu with native Rust/Cargo, against exact patch commit `01e9c587e2acf292d5b5895d70ae8fa6a64deae2`:\n- New integration tests: 4 passed; restoring the upstream decoder produces 3 failures and 1 pass.\n- Existing CTC tests: 4 passed.\n- Rustfmt and focused Clippy with warnings denied passed.\n\n[Reproducible validation run](https://github.com/Afloat16/tokenizers/actions/runs/43276644121). The validation workflow is isolated on a separate fork branch; it is not part of this PR.",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/tokenizers/actions/runs/43276644121",
+      "id": 43276644121,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "8079bd833324789f0f4adcd2013d16a0a0c56a72",
+      "head_branch": "validation/ctc-word-delimiters-20261112",
+      "workflow_path": ".github/workflows/validate-ctc-word-delimiters.yml",
+      "source_binding": {
+        "pr": 2680,
+        "run": 43276644121,
+        "source_sha": "01e9c587e2acf292d5b5895d70ae8fa6a64deae2",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: 01e9c587e2acf292d5b5895d70ae8fa6a64deae2"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

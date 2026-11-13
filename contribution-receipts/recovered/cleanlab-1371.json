@@ -1,0 +1,25 @@
+{
+  "repository": "cleanlab/cleanlab",
+  "title": "Keep majority-vote candidates when no untied consensus exists",
+  "base_branch": "master",
+  "branch": "fix/majority-vote-unresolved-ties-20261112",
+  "commit": "7e72253b23affb1d5d886ee42ab612772e999a3d",
+  "commit_url": "https://github.com/Afloat16/cleanlab/commit/7e72253b23affb1d5d886ee42ab612772e999a3d",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1371,
+  "pr_url": "https://github.com/cleanlab/cleanlab/pull/1371",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nSkip the annotator-quality tie-break when the dataset has no example with an untied majority vote. In this case no initial consensus is available to estimate annotator agreement, so the remaining candidates should reach the existing documented random tie-break.\n\n## Impact\n\nFor labels such as `[[0, 1], [1, 0]]`, with no probabilities or tied model probabilities, all agreement estimates are NaN. The previous comparison against their NaN maximum removes every candidate; the final random selection then fails with `ValueError: 'a' cannot be empty`. The change preserves each row's unresolved candidates. Model-probability and empirical-frequency tie-breaks still run first, and the quality tie-break remains unchanged whenever initial consensus examples exist.\n\n## Testing\n\n- Added 12 native regression cases: 11 failed and 1 passed against upstream; all 12 pass after the change.\n- The new cases and entire existing `tests/test_multiannotator.py` pass together: 25 passed.\n- Covered NumPy/DataFrame inputs, missing annotations, absent/uniform model probabilities, seeded selection from independently specified per-row candidates, model-resolved ties without RNG consumption, and the complete multiannotator quality-scoring API with `quality_method=\"agreement\"`.\n- Pinned Black 25.12.0 and `git diff --check` passed. Existing disagreement and pandas future warnings remain.\n\n## Links/References\n\nChecked #654 (partial missing annotator-agreement imputation), #1077 (vectorization), the function's history, and all-state searches for empty majority-vote candidates, `nontied_idx` and all-tie datasets. These do not handle the no-initial-consensus case.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

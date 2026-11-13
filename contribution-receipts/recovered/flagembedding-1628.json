@@ -1,0 +1,25 @@
+{
+  "repository": "FlagOpen/FlagEmbedding",
+  "title": "Keep unprompted same-dataset training text unchanged",
+  "base_branch": "master",
+  "branch": "fix/optional-training-instructions-20261112",
+  "commit": "fb9dd25e52f0c265abba328eff22b7b866ed6a76",
+  "commit_url": "https://github.com/Afloat16/FlagEmbedding/commit/fb9dd25e52f0c265abba328eff22b7b866ed6a76",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1628,
+  "pr_url": "https://github.com/FlagOpen/FlagEmbedding/pull/1628",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nSame-dataset training always formats the query instruction even when `query_instruction_for_retrieval` is left at its default `None`. With the default format, a query becomes `None<query text>`. Symmetric STS/clustering passages receive the same unintended prefix, and the ICL dataset repeats the behavior before tokenization. This introduces training text that is absent from the unprompted inference path.\n\nThe defect was found through code inspection and reproduced using the normal dataset constructors, local JSONL training data and a real local tokenizer.\n\n## Change\n\nOnly format a resolved instruction when it is not `None`, for both base and ICL same-dataset training. Preserve explicit empty-string instructions, configured formats, per-row overrides, passage instructions on retrieval tasks and the ICL suffix/truncation behavior.\n\n## Validation\n\n`PYTHONPATH=. python -m pytest tests/test_finetune_optional_instructions.py tests/test_finetune_trainer_compat.py -q --tb=short`: 28 passed.\n\nThe 24 new cases produce 6 failures and 18 passes on unchanged master, then all pass with this patch. They cover the base and ICL datasets, retrieval/STS/clustering data, absent/global/per-row/empty instructions, queries and passages, and teacher-score/negative-group controls. No mocked package imports or pretrained downloads are used. The four existing trainer compatibility tests also pass. The new test file passes Ruff check and formatting; `git diff --check` passes.\n\nValidation used Python 3.12.14, PyTorch 2.15.0+cpu, Transformers 4.57.1 and Datasets 5.0.1. This verifies dataset text preparation; it does not claim retrieval-quality or GPU-training gains.\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

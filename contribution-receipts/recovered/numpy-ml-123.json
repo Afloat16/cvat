@@ -1,0 +1,25 @@
+{
+  "repository": "ddbourgin/numpy-ml",
+  "title": "Match Fourier coefficients and odd-length frequency bins to the DFT convention",
+  "base_branch": "master",
+  "branch": "fix/fourier-spectrum-conventions-20261112",
+  "commit": "36f0ec429fc5ef3ebe9b798f260e0273720ff669",
+  "commit_url": "https://github.com/Afloat16/numpy-ml/commit/36f0ec429fc5ef3ebe9b798f260e0273720ff669",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 123,
+  "pr_url": "https://github.com/ddbourgin/numpy-ml/pull/123",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n`DFT` builds the documented negative-exponent Fourier basis but evaluates it with `np.vdot`, which conjugates that basis. This reverses complex phase and gives incorrect coefficients for complex-valued inputs. `dft_bins(..., positive_only=True)` also places the final frequency at Nyquist for odd-length frames, even though their last DFT bin is below Nyquist.\n\n## Change\nEvaluate the existing Fourier basis with matrix multiplication, and generate positive frequencies as `k * fs / N`. These changes make coefficient values and their frequency coordinates follow the same DFT convention. Existing real-signal magnitude and power behavior remains covered.\n\n## Validation\n- The 35 new tests against unchanged upstream: 17 failed, 18 passed.\n- New tests plus the existing DFT test: 36 passed on Python 3.9.25.\n- References include NumPy FFT/frequency helpers, a hard-coded four-point sine phase, real/complex inputs, odd/even/singleton lengths, and magnitude/power controls.\n- Independent read-only review found no blockers.\n- Existing full preprocessing tests have three unrelated Librosa 0.11 reference-call incompatibilities; the new frequency tests use NumPy rather than those incompatible calls.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

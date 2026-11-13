@@ -1,0 +1,43 @@
+{
+  "repository": "huggingface/tokenizers",
+  "title": "fix(split): preserve native mode when cloning pre-tokenizers",
+  "base_branch": "main",
+  "branch": "fix/clone-native-split-pretokenizers-20261112",
+  "commit": "41c63e663873e0735beef74899520375a1886bb8",
+  "commit_url": "https://github.com/Afloat16/tokenizers/commit/41c63e663873e0735beef74899520375a1886bb8",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 2685,
+  "pr_url": "https://github.com/huggingface/tokenizers/pull/2685",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nCloning a Split created for a native pre-tokenizer composition reconstructs it through Split::new. For DeepSeek's native composition, the component regexes are intentionally accepted without a general regex backend. A clone therefore panics in a build without fancy-regex. When fancy-regex is enabled, cloning an explicitly native Split instead silently switches its search implementation.\n\n## Change\n\nReconstruct Search::Unavailable through Split::native. Literal and compiled-regex splits retain their existing construction path.\n\n## Validation\n\nNative Rust tests ran on GitHub-hosted Ubuntu against commit 41c63e663873e0735beef74899520375a1886bb8 in [this workflow](https://github.com/Afloat16/tokenizers/actions/runs/43286040092):\n\n- Without fancy-regex: the new tests fail 3 / pass 2 on unchanged upstream, then all 5 pass with the patch. The existing Split test also passes.\n- With fancy-regex: the new tests fail 2 / pass 4 on upstream, then all 6 pass. The 3 existing Split tests pass.\n- Tests include loading canonical DeepSeek JSON, cloning its actual pre-tokenizer, and constructing a usable PipelineTokenizer, plus Unicode literal, native-error, and compiled-regex controls.\n- Rustfmt passes for the changed files.\n- Strict Clippy is blocked in both upstream and patched builds by the same existing needless_range_loop diagnostic in word_cache.rs. The workflow checks that the diagnostic lists match; this is not a claim that strict Clippy passes.\n\nThe validation workflow lives on a separate fork branch and is not part of this PR.",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/tokenizers/actions/runs/43286040092",
+      "id": 43286040092,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "67a2fdad1bd170f4f6e84fb56a662c4dd113708d",
+      "head_branch": "validation/native-split-clone-20261112",
+      "workflow_path": ".github/workflows/validate-native-split-clone.yml",
+      "source_binding": {
+        "pr": 2685,
+        "run": 43286040092,
+        "source_sha": "41c63e663873e0735beef74899520375a1886bb8",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: 41c63e663873e0735beef74899520375a1886bb8"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

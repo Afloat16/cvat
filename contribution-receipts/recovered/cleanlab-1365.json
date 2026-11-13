@@ -1,0 +1,25 @@
+{
+  "repository": "cleanlab/cleanlab",
+  "title": "Compute KNN data valuation with linear temporary memory",
+  "base_branch": "master",
+  "branch": "perf/linear-memory-knn-valuation-20261112",
+  "commit": "58b3ade069c78ae2907be46f77450792df9496f3",
+  "commit_url": "https://github.com/Afloat16/cleanlab/commit/58b3ade069c78ae2907be46f77450792df9496f3",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1365,
+  "pr_url": "https://github.com/cleanlab/cleanlab/pull/1365",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nThe KNN data-valuation scorer allocates an N×N matrix of per-example contributions, then another dense matrix while dividing before taking the mean. Only the sum of each column is needed. This makes scoring a sparse KNN graph require quadratic temporary memory even when k is small.\n\nThe existing recurrence telescopes: a neighbor at rank j contributes `match[j] - match[k-1]`, with the last neighbor contributing zero. Accumulate these contributions directly into an N-element vector and divide by N*k. This preserves the current approximation and its public score calibration.\n\n## Impact\n\nTemporary scoring storage becomes linear in N plus one row of neighbor labels, instead of quadratic in N. Graph construction and storage are unchanged. The k=1 case, string labels, extra stored neighbors beyond k, and repeated precomputed neighbor indices preserve existing behavior.\n\nA native CPU check with a precomputed graph of **N=1,024, k=8** measured peak traced allocation of **16,787,216 bytes before** and **25,136 bytes after**. Median times over seven warm calls were **6.63 ms before** and **4.24 ms after** in this environment. These are measurements of this scoring call, not total process memory or general training throughput.\n\n## Testing\n\n- Added 12 tests: equivalence to the original recursive definition, a hand-calculated public CSR example, the native feature/NearestNeighbors path, repeated indices, and a memory regression check.\n- On unchanged upstream: **1 memory test failed, 11 numerical controls passed**.\n- With the change plus the original `TestDataValuation` tests: **14 passed**.\n- Black and `git diff --check` passed.\n\nThe existing randomized 1,000-example Hypothesis property test and the whole optional-dependency suite were not run in this targeted validation.\n\n## References\n\nReviewed #1142, which introduced the current recurrence, and the related valuation/neighbor PRs. This change preserves the recurrence and does not change neighbor ordering or the valuation method.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "Unstructured-IO/unstructured",
+  "title": "fix(metrics): align detection files by page number",
+  "base_branch": "main",
+  "branch": "Afloat16/detection-page-order-20261112",
+  "commit": "d2c1e6121c242bea0306a3cd1ba2f46f7869f1a2",
+  "commit_url": "https://github.com/Afloat16/unstructured/commit/d2c1e6121c242bea0306a3cd1ba2f46f7869f1a2",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 4700,
+  "pr_url": "https://github.com/Unstructured-IO/unstructured/pull/4700",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\n`ObjectDetectionEvalProcessor.from_json_files` validates prediction and ground-truth pages in page-number order, but then constructs tensors and image dimensions using their original JSON order. Two valid files containing the same pages in different orders therefore compare boxes from different pages and report incorrect detection metrics.\n\nSort both freshly loaded page lists once before validation and reuse that ordering for tensor conversion and image dimensions. Input files are unchanged.\n\n## Validation\n\n- Added 11 native JSON-to-metrics regression cases. On the unchanged base, 6 fail and 5 pass; all 11 pass with this fix.\n- Covers independent prediction/target permutations across three pages with distinct sizes and boxes, single-page behavior, page-number mismatch validation, and unchanged input-file contents.\n- Pinned Ruff 0.15.10 check and format checks and `git diff --check` pass.\n- The full optional-dependency test suite was not run.\n\n## Checklist\n\n- [x] Added regression tests for the behavior change.\n- [x] Kept this change limited to detection page alignment.\n- [ ] Apply the `bug` label.\n\n<!-- This is an auto-generated description by cubic. -->\n<a href=\"https://cubic.dev/pr/Unstructured-IO/unstructured/pull/4700?utm_source=github\" target=\"_blank\" rel=\"noopener noreferrer\" data-no-image-dialog=\"true\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-dark.svg\"><source media=\"(prefers-color-scheme: light)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"><img alt=\"View guided diff\" src=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"></picture></a>\n<!-- End of auto-generated description by cubic. -->\n\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

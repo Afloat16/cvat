@@ -1,0 +1,41 @@
+{
+  "repository": "sloria/TextBlob",
+  "title": "Preserve sentiment scores and assessments across serialization",
+  "base_branch": "dev",
+  "branch": "fix/sentiment-score-serialization-20261112",
+  "commit": "24fe0fcdd4b2910f1ae0226e0d742cf790353a33",
+  "commit_url": "https://github.com/Afloat16/TextBlob/commit/24fe0fcdd4b2910f1ae0226e0d742cf790353a33",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 620,
+  "pr_url": "https://github.com/sloria/TextBlob/pull/620",
+  "merged_at": null,
+  "closed_at": "2026-11-12T17:11:15Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\nThe `Score` tuple returned by the lexical sentiment engine requires two constructor arguments. Its inherited tuple pickle/copy behavior supplies a single tuple instead, so modern pickle protocols and both shallow/deep copying raise `TypeError` rather than preserving sentiment results.\n\n## Change\nProvide the two reconstruction arguments through `__getnewargs__`. Assessment metadata continues to use the normal instance-state serialization, including deep-copy isolation. This is scoped to `Score`; it does not change the separate namedtuple types returned by analyzer wrappers.\n\n## Validation\n- The 14 new tests on unchanged upstream: 10 failed, 4 passed.\n- New tests plus all existing non-slow sentiment tests: 18 passed, 1 deselected.\n- Actual bundled-lexicon results round-trip through pickle protocols 0 through 5, including unknown text with empty assessments. Both copy modes preserve scores and assessments; deep-copy mutation does not affect the original.\n- Ruff and `git diff --check` passed. Independent read-only review found no blockers.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  },
+  "closure_audit": {
+    "number": 620,
+    "events": [
+      {
+        "event": "closed",
+        "actor": "sloria",
+        "created_at": "2026-11-12T17:11:16Z",
+        "commit_id": null
+      }
+    ],
+    "issue_comments": [],
+    "reviews": [],
+    "inline_comments": [],
+    "public_closing_reason": null,
+    "interpretation": "Closed by maintainer without a public closing explanation in timeline, issue comments, reviews, or inline review comments."
+  }
+}

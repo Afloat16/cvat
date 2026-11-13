@@ -1,0 +1,43 @@
+{
+  "repository": "huggingface/tokenizers",
+  "title": "fix(pretokenizer): run children after the native DeepSeek prefix",
+  "base_branch": "main",
+  "branch": "fix/deepseek-sequence-trailing-children-20261112",
+  "commit": "9411811c8cc2eb27f1602d7662593af0948c8359",
+  "commit_url": "https://github.com/Afloat16/tokenizers/commit/9411811c8cc2eb27f1602d7662593af0948c8359",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 2687,
+  "pr_url": "https://github.com/huggingface/tokenizers/pull/2687",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nThe native DeepSeek optimization recognizes the first three members of a pre-tokenizer sequence, then returns immediately. Configured fourth and later non-identity pre-tokenizers are silently ignored. For example, appending `Digits(individual_digits=true)` still emits three-digit groups, which changes the resulting token IDs.\n\n## Change\n\nKeep the direct native path when the remaining members are identities. Otherwise, seed the existing sequential child loop with the native prefix's spans and execute the remaining members in order. This preserves the existing offset rebasing, output append, and scratch reuse behavior.\n\n## Validation\n\nNative Rust tests ran on GitHub-hosted Ubuntu against contribution SHA `9411811c8cc2eb27f1602d7662593af0948c8359`: [validation run](https://github.com/Afloat16/tokenizers/actions/runs/43289111254).\n\n- Nine new regression tests: the original source fails seven and passes two; the patch passes all nine in both `wordlevel` and `wordlevel,fancy-regex` builds.\n- Existing pre-tokenizer tests: 21 pass without a regex backend and 23 pass with `fancy-regex`.\n- Cases cover digit splitting, delimiter removal, Unicode span boundaries, multiple trailing children, output append/scratch reuse, error propagation, and canonical JSON through actual PipelineTokenizer encoding. Prefix-only, identity-tail, and ordinary-sequence controls remain unchanged.\n- Changed Rust files pass rustfmt.\n- Strict Clippy does not pass on either revision: both report the same existing `needless_range_loop` diagnostic in `tk-encode/src/utils/word_cache.rs`. The workflow compares these diagnostics explicitly.\n\nThis is a correctness change. No throughput improvement or Python-binding validation is claimed.",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/tokenizers/actions/runs/43289111254",
+      "id": 43289111254,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "2072f97c7fcf31eaf6244f473656d9036c3f46ec",
+      "head_branch": "validation/deepseek-sequence-tail-20261112",
+      "workflow_path": ".github/workflows/data-deepseek-sequence-tail.yml",
+      "source_binding": {
+        "pr": 2687,
+        "run": 43289111254,
+        "source_sha": "9411811c8cc2eb27f1602d7662593af0948c8359",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: 9411811c8cc2eb27f1602d7662593af0948c8359"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

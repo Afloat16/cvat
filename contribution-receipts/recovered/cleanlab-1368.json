@@ -1,0 +1,25 @@
+{
+  "repository": "cleanlab/cleanlab",
+  "title": "Preserve the sample axis when validating one regression example",
+  "base_branch": "master",
+  "branch": "fix/singleton-regression-labels-20261112",
+  "commit": "48831c62c3dcbdb66e2fa1897c3a2b942a37d600",
+  "commit_url": "https://github.com/Afloat16/cleanlab/commit/48831c62c3dcbdb66e2fa1897c3a2b942a37d600",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1368,
+  "pr_url": "https://github.com/cleanlab/cleanlab/pull/1368",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nKeep a one-element sample axis when normalizing regression labels and predictions. Extra singleton dimensions are still removed, while a raw scalar is still rejected as a non-vector input.\n\n## Impact\n\n`check_dimension_and_datatype` previously applied `np.squeeze` unconditionally, turning every valid one-example array into a zero-dimensional scalar and immediately rejecting it. Consequently, `get_label_quality_scores(..., method=\"residual\")` could score a batch but could not score the same examples individually. This change makes single-example residual scores agree with the corresponding full-batch scores for lists, NumPy vectors/rows/columns, pandas Series and DataFrames.\n\n## Testing\n\n- Added 18 regression cases: 13 failed and 5 passed against the upstream base; all 18 pass with the fix.\n- The new tests and existing `tests/test_regression.py` pass together: 39 passed.\n- Coverage includes zero/nonzero residuals, six accepted containers, individual-versus-batched scoring, and unchanged rejection of raw scalars, empty arrays and non-vector arrays.\n- Black and `git diff --check` passed.\n\n## Links/References\n\nChecked the regression validator's history (including its introduction in #572) and all-state pull requests for singleton inputs, squeezing and one-sample regression scoring; no equivalent change was found.\n\n## Reviewer Notes\n\nThis corrects input normalization for residual scoring. It does not relax the neighbor requirements of the OUTRE scoring method.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "ddbourgin/numpy-ml",
+  "title": "Preserve image batches and boundary samples when resampling",
+  "base_branch": "master",
+  "branch": "fix/image-batch-resampling-20261112",
+  "commit": "bc4336545d5697afc95c394825c03a7d322b8d5c",
+  "commit_url": "https://github.com/Afloat16/numpy-ml/commit/bc4336545d5697afc95c394825c03a7d322b8d5c",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 118,
+  "pr_url": "https://github.com/ddbourgin/numpy-ml/pull/118",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\n`batch_resample` documents an output of shape `(n_ex, out_rows, out_cols, in_channels)`, but `np.dstack` combines the batch into the channel axis. Even resizing one image without changing its dimensions drops the batch axis.\n\nThe sampling grid also ends at `in_dim - 2`, omitting the last row and column. Extending the grid alone exposes a related boundary defect in `bilinear_interpolate`: clipping the two neighboring indices to the same border pixel makes every interpolation weight zero.\n\nFor example, resizing an input of shape `(1, 3, 4, 1)` to `(3, 4)` currently returns `(3, 4, 1)`, and sampling its last pixel with value 12 returns 0.\n\n## Change\n\n- Stack resampled images along the batch axis.\n- Sample from the first through the last input pixel, documenting the coordinate convention.\n- Clamp coordinates to the image boundary and compute bilinear weights from fractional offsets, preserving edge pixels and one-pixel dimensions.\n\n## Validation\n\nPython 3.9.25, NumPy 1.26.4, SciPy 1.13.1 and pytest 8.4.2, using normal imports from each checked-out revision.\n\n`PYTHONPATH=. python -m pytest numpy_ml/tests/test_resampling.py -q --tb=short`: 20 passed. All 20 cases fail on unchanged master `b0359af`.\n\nCoverage includes both interpolation modes; one- and two-image batches; independent channels; identity resizing; one-row, one-column and one-pixel images; hardcoded 2x2-to-3x3 results; exact integer-grid samples; and comparison with SciPy's first-order `map_coordinates(..., mode=\"nearest\")` at fractional and out-of-range coordinates.\n\nThe existing `numpy_ml/tests/test_preprocessing.py` has the same result on unchanged master and this branch: 6 passed, 3 failed. The failures are `test_mfcc`, `test_dft_bins` and `test_mel_filterbank`, whose reference calls pass positional arguments to keyword-only APIs in the installed Librosa 0.11.0. Those tests and APIs are outside this patch.\n\nBlack checks pass for the changed resampling region and the new test file; `git diff --check` passes.\n\n### Changes to Existing Models\n\n- [x] Explain the problem and resulting behavior.\n- [x] Add regression tests with independent expected results.\n- [x] Run the changes locally and report the existing test limitations.\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

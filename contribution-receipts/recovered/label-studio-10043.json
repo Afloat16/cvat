@@ -1,0 +1,43 @@
+{
+  "repository": "HumanSignal/label-studio",
+  "title": "fix: detect CSV delimiters outside quoted header fields",
+  "base_branch": "develop",
+  "branch": "fix/quoted-csv-header-separators-20261112",
+  "commit": "ef338e5da49ba613e7860d1900b48bc27e2ed4f7",
+  "commit_url": "https://github.com/Afloat16/label-studio/commit/ef338e5da49ba613e7860d1900b48bc27e2ed4f7",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 10043,
+  "pr_url": "https://github.com/HumanSignal/label-studio/pull/10043",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Reason for change\n\nCloses #10042.\n\nCSV separator detection counts punctuation inside quoted header fields. A comma-separated file with a header such as `\"context;one;two;three\"` can therefore be read as semicolon-separated, and vice versa. This can reject otherwise valid task imports or change their columns.\n\nCount commas and semicolons outside quoted fields in the first logical header record. Preserve the existing semicolon-if-more-frequent rule and comma fallback. Track field starts so literal quotes inside unquoted fields keep their existing meaning; also handle escaped quotes, embedded newlines, and the initial UTF-8 BOM.\n\n## Tests and acceptance criteria\n\n- Both delimiters retain the original header names and task values, including quoted punctuation and multiline headers.\n- Escaped quotes, unquoted literal quotes, UTF-8 BOM, single-column and empty-header cases are covered.\n- Native FileUpload and streaming readers return identical expected data.\n- Real import API requests persist the expected Task dictionaries.\n- Exact tested commit: `ef338e5da49ba613e7860d1900b48bc27e2ed4f7`.\n- SQLite and PostgreSQL16 each pass 24 new cases and 20 existing CSV/TSV API cases.\n- Original source: 15 failures and 9 passing controls on each database.\n- Ruff0.15.1 lint and format checks pass.\n\nNative validation: https://github.com/Afloat16/label-studio/actions/runs/43305826080\n\n## Scope and risks\n\nThis retains the existing two-candidate frequency heuristic and its comma tie-breaking rule. It does not attempt to infer arbitrary CSV dialects or uniquely resolve ambiguous headers. The test suite checks the backend import paths; no frontend behavior is changed.\n",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/label-studio/actions/runs/43305826080",
+      "id": 43305826080,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "8ecb4c90efcf4d84502060622f37a6c20fd02bac",
+      "head_branch": "validation/quoted-csv-header-separators-20261112",
+      "workflow_path": ".github/workflows/validate-quoted-csv-headers.yml",
+      "source_binding": {
+        "pr": 10043,
+        "run": 43305826080,
+        "source_sha": "ef338e5da49ba613e7860d1900b48bc27e2ed4f7",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: ef338e5da49ba613e7860d1900b48bc27e2ed4f7"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

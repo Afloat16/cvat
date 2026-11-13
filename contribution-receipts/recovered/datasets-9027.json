@@ -1,0 +1,25 @@
+{
+  "repository": "huggingface/datasets",
+  "title": "fix(features): normalize non-native NumPy byte order",
+  "base_branch": "main",
+  "branch": "fix/non-native-numpy-byte-order-20261112",
+  "commit": "db27ef286c5351924e4ae3a40c880e2fbdfacc36",
+  "commit_url": "https://github.com/Afloat16/datasets/commit/db27ef286c5351924e4ae3a40c880e2fbdfacc36",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 9027,
+  "pr_url": "https://github.com/huggingface/datasets/pull/9027",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nNumPy arrays can retain a non-native byte order after loading an NPY file or reading external binary data. The NumPy-to-Arrow conversion passes that dtype directly to Arrow, which raises `ArrowNotImplementedError: Byte-swapped arrays not supported`. This affects inferred scalar columns and multidimensional ArrayXD inputs, including read-only memory-mapped arrays.\n\n## Changes\n\nNormalize non-native NumPy dtypes to native byte order with a value-preserving `astype` before Arrow conversion. This changes the byte representation rather than relabeling the existing bytes. Native-order inputs keep the existing path, and the input array is never modified.\n\n## Validation\n\n- Added 42 cases covering signed/unsigned integers, float32/64, inferred and declared scalar features, Array2D through Array5D, reversed/strided/Fortran/read-only layouts, empty arrays, ragged Arrow storage, and ordinary Python-list controls.\n- Native NPY integration opens a non-native file with `mmap_mode='r'`, builds a dataset, saves and reloads it, and checks exact feature values and a numeric projection. The source file remains byte-for-byte unchanged.\n- Final regressions on unchanged upstream: **19 failed, 23 passed**.\n- New tests plus the existing ArrayXD module: **148 passed**.\n- Ruff lint, Ruff formatting, and `git diff --check` pass.\n\nThe existing declared-uint64 overflow above int64 range and the ragged-null Python read path are separate issues; this change does not alter those paths. Full-range uint64 coverage here uses the inferred NumPy path, and the ragged-null check verifies the resulting Arrow storage.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

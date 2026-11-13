@@ -1,0 +1,25 @@
+{
+  "repository": "cleanlab/cleanlab",
+  "title": "Accumulate raw confidence statistics across inspection batches",
+  "base_branch": "master",
+  "branch": "fix/batched-confidence-statistics-20261112",
+  "commit": "834f9b38c70cf3399abcf2faa6a5eb8b2d6fdc25",
+  "commit_url": "https://github.com/Afloat16/cleanlab/commit/834f9b38c70cf3399abcf2faa6a5eb8b2d6fdc25",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1367,
+  "pr_url": "https://github.com/cleanlab/cleanlab/pull/1367",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nAccumulate each class's raw self-confidence sum and example count in `LabelInspector`, then apply the confidence floor to the resulting global mean. Classes not observed so far use the same threshold of 2 as `cleanlab.count.get_confident_thresholds` and are replaced by their actual mean when examples arrive.\n\n## Impact\n\nPreviously, averaging already-clipped thresholds from individual batches made the final threshold depend on batch size. For raw confidences `[0, 1e-5, 0, 2e-5]`, the correct mean is `7.5e-6`; clipping each small batch first changes that value. An absent class also received the minimum confidence threshold, which could introduce spurious confident label issues. The change keeps O(K) state and makes the batched estimator agree with the complete-data estimator for both cases.\n\n## Testing\n\n- Added 14 regression cases. On the upstream base: 12 failed and 2 passed. With this change: all 14 passed.\n- Covered float32/float64 probabilities, uint64 labels, multiple batch sizes, classes first appearing in later batches, both issue-count estimators, single/multiple workers, and the public `find_label_issues_batched` path.\n- The existing batched-label-issue test and complete segmentation test module also passed: 26 additional tests. Existing multiprocessing and plotting warnings remain.\n- Black and `git diff --check` passed.\n\n## Links/References\n\nChecked the original threshold-floor change (#647), related file history, and all-state pull requests for `LabelInspector`, confidence thresholds, and missing classes; no equivalent correction was found.\n\n## Reviewer Notes\n\nThe confidence floor remains unchanged. It is applied after accumulating the raw statistics rather than becoming part of the statistics themselves.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "ddbourgin/numpy-ml",
+  "title": "Apply punctuation filtering before whitespace-token stopword removal",
+  "base_branch": "master",
+  "branch": "fix/whitespace-punctuation-filter-20261112",
+  "commit": "3515629ef93cb162051362a668518767cb3674d8",
+  "commit_url": "https://github.com/Afloat16/numpy-ml/commit/3515629ef93cb162051362a668518767cb3674d8",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 124,
+  "pr_url": "https://github.com/ddbourgin/numpy-ml/pull/124",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n`tokenize_whitespace` computes punctuation-stripped values into `line` but returns the original `words`. The default filtering therefore leaves punctuation attached to vocabulary entries and prevents punctuation-bearing stop words from being removed. Punctuation-only strings also become vocabulary entries.\n\n## Change\nWrite stripped, nonempty tokens back to `words` before applying stop-word filtering. Keep the existing lowercase and filtering switches. Add direct flag-combination tests and end-to-end Vocabulary and TFIDF checks.\n\n## Validation\n- The 11 new tests against unchanged upstream: 7 failed, 4 passed.\n- The new tests plus the existing TFIDF test: 12 passed on Python 3.9.25 with native package imports.\n- Independent read-only review covered the filtering semantics and downstream tests.\n- The broader existing preprocessing suite has known Librosa 0.11 reference-call incompatibilities (three tests call keyword-only APIs positionally); this patch does not change those tests.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "FlagOpen/FlagEmbedding",
+  "title": "Handle empty evaluation reranking candidates",
+  "base_branch": "master",
+  "branch": "fix/empty-reranking-candidates-20261112",
+  "commit": "fa7da1ec822e9f120370e695947204471fccb3e2",
+  "commit_url": "https://github.com/Afloat16/FlagEmbedding/commit/fa7da1ec822e9f120370e695947204471fccb3e2",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1632,
+  "pr_url": "https://github.com/FlagOpen/FlagEmbedding/pull/1632",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\n`EvalReranker` always calls its scoring model, including when no query-document pairs remain. An empty retrieval run, zero reranking depth, or identical-ID filtering that removes all candidates reaches `AbsReranker.compute_score([])` and raises an `IndexError` before evaluation can continue.\n\n## Changes\n\nIf the final pair list is empty, return an empty score mapping for each input query. Mixed batches that still contain candidates continue through the normal scoring path.\n\n## Validation\n\n- Eight regression cases use a locally saved tiny BERT classifier and vocabulary through the actual `BaseReranker` and evaluation wrapper.\n- Cover no queries, one/multiple empty candidate lists, all candidates removed by identical-ID filtering, zero reranking depth, and mixed empty/nonempty query groups.\n- Exact final baseline: **6 failed, 2 passed**. After the patch: **8 passed**.\n- New cases plus existing Trainer/import tests: **16 passed, 1 skipped**. The skipped check requires Transformers 5.x.\n- PyTorch 2.15.0+cpu, Transformers 4.57.1, FAISS CPU 1.16.0 and pytrec-eval-terrier 0.5.11; no remote checkpoint download or GPU run. Optional evaluation imports are skipped if their dependencies are absent; they were present for validation.\n- This patch only handles an empty candidate set at the evaluation-wrapper boundary. Input candidate mutation and filtering depth remain separate behavior.\n- Ruff and `git diff --check` pass.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

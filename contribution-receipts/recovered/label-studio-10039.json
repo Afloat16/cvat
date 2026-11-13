@@ -1,0 +1,43 @@
+{
+  "repository": "HumanSignal/label-studio",
+  "title": "fix: preserve sliced and combined querysets during batch iteration",
+  "base_branch": "develop",
+  "branch": "fix/nonfilterable-queryset-batches-20261112",
+  "commit": "1b3c60f52c0d8aea720f2fe35d21674188a05b73",
+  "commit_url": "https://github.com/Afloat16/label-studio/commit/1b3c60f52c0d8aea720f2fe35d21674188a05b73",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 10039,
+  "pr_url": "https://github.com/HumanSignal/label-studio/pull/10039",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Reason for change\n\nCloses #10038.\n\nPrimary-key batching adds a filter to the original queryset. Django rejects this for slices and combined queries (UNION, INTERSECT and EXCEPT), so valid selections fail before they can be processed. Re-selecting primary keys also rewrites some projected combined queries.\n\n## Changes\n\nUse bounded offset pages for sliced and combined querysets. This preserves their existing limits, ordering, selected values and UNION ALL multiplicity. The existing primary-key path and aggregate fallback retain their behavior.\n\nThe fallback does not introduce server-side cursors, preserving the motivation for #8259's PgBouncer transaction-pooling compatibility. OFFSET cost can grow for large combined queries; correctness for these previously failing queries is the objective.\n\n## Testing\n\nExact SHA `1b3c60f52c0d8aea720f2fe35d21674188a05b73`, Python 3.12 and locked native dependencies, on both SQLite and PostgreSQL 16:\n\n- Each database passes 25 new cases and all 6 existing iterator cases.\n- Restoring unchanged upstream on each database gives 19 failures and 6 passing controls.\n- Tests cover sliced annotations/values, nonzero offsets, empty limits, four set operations, UNION ALL duplicates, combined values with a slice, invalid batch sizes and ordinary-query controls.\n- The real Data Manager column-update function changes exactly the requested limited task selection.\n- SQL observations check bounded LIMIT pages.\n- Pinned Ruff 0.15.1 lint and formatting pass.\n\nRun: https://github.com/Afloat16/label-studio/actions/runs/43301342700\n\n## Acceptance criteria and scope\n\nSupported Django slices and set-operation queries can be iterated in batches without unsupported filter calls, with the tested limits and result semantics preserved.\n\nNo schema migration or feature flag is required. As with the existing batching helper, this does not provide a transactional snapshot when rows are concurrently added, removed or reordered.",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/label-studio/actions/runs/43301342700",
+      "id": 43301342700,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "cbae57e3b8a83f556c7c0aa5ef9ce48bddc9f8e1",
+      "head_branch": "validation/nonfilterable-queryset-batches-20261112",
+      "workflow_path": ".github/workflows/validate-nonfilterable-querysets.yml",
+      "source_binding": {
+        "pr": 10039,
+        "run": 43301342700,
+        "source_sha": "1b3c60f52c0d8aea720f2fe35d21674188a05b73",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: 1b3c60f52c0d8aea720f2fe35d21674188a05b73"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

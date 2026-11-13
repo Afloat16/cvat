@@ -1,0 +1,43 @@
+{
+  "repository": "cvat-ai/cvat",
+  "title": "Avoid retaining backward tensors during torchvision auto-annotation",
+  "base_branch": "develop",
+  "branch": "perf/torchvision-annotation-no-grad-20261112",
+  "commit": "b1c28f08fa399c3e1fe3a2f74ef47bf5ffd383f6",
+  "commit_url": "https://github.com/Afloat16/cvat/commit/b1c28f08fa399c3e1fe3a2f74ef47bf5ffd383f6",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 11474,
+  "pr_url": "https://github.com/cvat-ai/cvat/pull/11474",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "### Motivation and context\n\nCloses #11473.\n\nThe four built-in torchvision auto-annotation functions run eval-mode models with autograd enabled. They convert the results into SDK annotation objects, so saved backward tensors only retain unnecessary inference intermediates.\n\nUse a method-local `torch.no_grad()` context for classification, object detection, instance segmentation and keypoint detection. Annotation output, the caller's gradient mode and model parameter `requires_grad` flags retain their existing behavior.\n\n### How has this been tested?\n\nExact contribution SHA on an Ubuntu CPU runner, Python 3.11, PyTorch 2.9.0 and torchvision 0.24.0, using the repository's generated native SDK:\n\n- 16 new regressions pass; unchanged upstream produces 4 saved-tensor failures and 12 passing controls.\n- 48 existing mask and attribute unit tests pass.\n- Tests execute actual offline ResNet18, Faster R-CNN, Mask R-CNN and Keypoint R-CNN models with random weights and real torchvision image transforms. Only the constructor's pretrained-weight download is bypassed.\n- Actual annotations match a no-grad reference; saved-tensor hooks observe no backward tensors; caller gradient mode, subsequent backward and exception restoration are checked.\n- Changed Python files pass Black and isort.\n\nRun: https://github.com/Afloat16/cvat/actions/runs/43300581518\n\nThis verifies CPU inference semantics and autograd storage. GPU/server throughput and pretrained-model quality are not measured.\n\n### Checklist\n\n- [x] I submit my changes into the `develop` branch\n- [x] I have created a changelog fragment\n- ~~I have updated the documentation accordingly~~ — existing inference API and annotation format are unchanged.\n- [x] I have added tests to cover my changes\n- [x] I have linked related issues\n\n### License\n\n- [x] I submit my code changes under the same MIT License that covers the project.\n",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/cvat/actions/runs/43300581518",
+      "id": 43300581518,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "2bcf5bdc5f9fd781f6f9ac41e7e9657de5e21520",
+      "head_branch": "validation/torchvision-annotation-no-grad-20261112",
+      "workflow_path": ".github/workflows/validate-torchvision-inference.yml",
+      "source_binding": {
+        "pr": 11474,
+        "run": 43300581518,
+        "source_sha": "b1c28f08fa399c3e1fe3a2f74ef47bf5ffd383f6",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: b1c28f08fa399c3e1fe3a2f74ef47bf5ffd383f6"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

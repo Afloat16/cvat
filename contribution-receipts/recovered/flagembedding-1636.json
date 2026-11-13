@@ -1,0 +1,25 @@
+{
+  "repository": "FlagOpen/FlagEmbedding",
+  "title": "Align M3 ColBERT vectors and masks across variable-length sub-batches",
+  "base_branch": "master",
+  "branch": "fix/m3-variable-subbatch-lengths-20261112",
+  "commit": "9a2dd61e9a47464b361abd58a1f8d5d1a363012a",
+  "commit_url": "https://github.com/Afloat16/FlagEmbedding/commit/9a2dd61e9a47464b361abd58a1f8d5d1a363012a",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1636,
+  "pr_url": "https://github.com/FlagOpen/FlagEmbedding/pull/1636",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nBoth embedder collators can dynamically pad each sub-batch to a different sequence length. M3's list-input encoding path directly concatenates the ColBERT vectors along the batch dimension, so unified fine-tuning raises a tensor-size mismatch when those sequence lengths differ. This prevents the documented sub-batch option from working on ordinary variable-length training text.\n\n## Changes\n\nPad the ColBERT vectors to the longest sub-batch sequence before concatenation, using the tokenizer's padding side and zero vectors for padding. Build the corresponding list-input attention mask in the same order: remove each sub-batch's first position, as ColBERT encoding already does, then pad. A leading column preserves the existing full-mask scoring interface.\n\nDense-only encoding and the tensor-input sub-batch path are unchanged.\n\n## Validation\n\nAdded 20 tests with an actual local BertTokenizerFast, tiny BERT backbone, sparse/ColBERT heads, and both native collators:\n\n- Dynamic sub-batch embeddings match the existing full-batch path with right padding.\n- Supervised, teacher-distillation, and self-distillation training match full-batch losses and all parameter gradients.\n- Left/right padding preserves each original vector and aligns every mask value with it, with zero vectors and zero masks in added positions.\n- Dense-only and fixed-length tensor sub-batches retain their previous behavior.\n\nThe unchanged upstream base produces **14 failed, 6 passed**. With the fix, the new tests and existing Trainer/import checks produce **28 passed, 1 skipped**. Ruff on the new test module and `git diff --check` pass.\n\nThe tests preserve the existing first-position removal convention and do not claim to redefine left-padded special-token handling. This change is separate from passage MaxSim masking in #1610; it does not change that scoring reduction.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

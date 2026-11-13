@@ -1,0 +1,43 @@
+{
+  "repository": "huggingface/tokenizers",
+  "title": "fix(unigram): normalize n-best weights before exponentiation",
+  "base_branch": "main",
+  "branch": "fix/unigram-nbest-log-weights-20261112",
+  "commit": "669dd2c81f7bcbc4458d0bcb927e209f549868d3",
+  "commit_url": "https://github.com/Afloat16/tokenizers/commit/669dd2c81f7bcbc4458d0bcb927e209f549868d3",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 2682,
+  "pr_url": "https://github.com/huggingface/tokenizers/pull/2682",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "The n-best Unigram sampler exponentiates each complete path score directly. A sufficiently negative score shared by every candidate can underflow all weights to zero. `WeightedIndex` then fails and the existing fallback always returns the first path, although the relative path probabilities remain well defined.\n\nSubtract the maximum log weight before exponentiation. This preserves every relative weight for finite scores and ensures that at least one candidate has weight one. The full-lattice sampling recurrence is unchanged.\n\nThe regression tests use a common prefix with scores 0, -2000 and -10000. Equal-score suffix paths must remain equiprobable regardless of this shared offset; unequal suffix scores are checked against an independently calculated logistic probability. Further tests exercise a canonical JSON tokenizer through the real `PipelineTokenizer`, as well as empty, single-candidate and zero-temperature controls.\n\nValidation at exact commit `669dd2c81f7bcbc4458d0bcb927e209f549868d3` on GitHub-hosted Ubuntu:\n- New regressions: 4 passed. Restoring the upstream `lattice.rs` produces 3 failures and 1 pass.\n- Existing Unigram unit tests: 20 passed.\n- Rustfmt passed. Clippy with warnings denied reports the same two pre-existing `needless_range_loop` diagnostics on the original and patched sources (`word_cache.rs:147` and `lattice.rs:379`); this patch does not alter those loops.\n\n[Native baseline/patched run and logs](https://github.com/Afloat16/tokenizers/actions/runs/43280293002). The validation workflow is on a separate branch and is not part of this pull request.",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/tokenizers/actions/runs/43280293002",
+      "id": 43280293002,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "381b4bb9445bd21014a4ee97ef8faf5ed875926b",
+      "head_branch": "validation/unigram-nbest-log-weights-20261112",
+      "workflow_path": ".github/workflows/validate-unigram-nbest-log-weights.yml",
+      "source_binding": {
+        "pr": 2682,
+        "run": 43280293002,
+        "source_sha": "669dd2c81f7bcbc4458d0bcb927e209f549868d3",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: 669dd2c81f7bcbc4458d0bcb927e209f549868d3"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "repository": "huggingface/tokenizers",
+  "title": "fix(added-vocab): allocate IDs above sparse model vocabularies",
+  "base_branch": "main",
+  "branch": "fix/sparse-model-added-token-ids-20261112",
+  "commit": "fdbaf41985934b2c66d8cdaf67063d0dabf5672a",
+  "commit_url": "https://github.com/Afloat16/tokenizers/commit/fdbaf41985934b2c66d8cdaf67063d0dabf5672a",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 2683,
+  "pr_url": "https://github.com/huggingface/tokenizers/pull/2683",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "The canonical JSON reader uses the number of model vocabulary entries as the starting ID for new added tokens. Sparse BPE, WordPiece and WordLevel vocabularies can already contain that ID: for example, {\"<unk>\": 0, \"a\": 2} assigns a newly added token ID 2, so decoding the original model token returns the added token instead.\n\nFind the first ID above the highest model vocabulary ID before assigning new added tokens. Existing model tokens still reuse their own IDs, and vocabulary size continues to report the number of entries. Unigram's dense indexing is unchanged.\n\nKeep the allocation cursor wide until a new ID is needed, then check that it fits u32. This allows the last available ID and returns an error when no further ID is available, rather than wrapping or overwriting a model entry. Registering an existing token at the ID limit remains valid.\n\nNative regression coverage loads canonical JSON through the actual PipelineTokenizer and checks token lookup, encoded IDs, decoding, uniqueness, vocabulary size, and serialize/load round trips. It covers all three sparse model types, dense and empty controls, registration order, Unigram, and the WordLevel u32 boundary.\n\nValidation at exact commit `fdbaf41985934b2c66d8cdaf67063d0dabf5672a` on GitHub-hosted Ubuntu:\n- 9 new tests passed; restoring both upstream implementation files produces 6 failures and 3 passes.\n- 11 existing JSON reader tests and 14 existing added-vocabulary tests passed.\n- Rustfmt passed. Strict Clippy is blocked by the same two pre-existing needless_range_loop diagnostics on the original and patched sources (word_cache.rs:147 and lattice.rs:379); the validation compares both results explicitly.\n\n[Native baseline/patched run and logs](https://github.com/Afloat16/tokenizers/actions/runs/43282863590). The validation workflow is isolated from this PR. No downloaded-model suite or 32-bit runtime was run.",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/tokenizers/actions/runs/43282863590",
+      "id": 43282863590,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "c16ac7eadcf5128bcb8948b7540a91a79e602f85",
+      "head_branch": "validation/sparse-model-added-token-ids-20261112",
+      "workflow_path": ".github/workflows/validate-sparse-added-ids.yml",
+      "source_binding": {
+        "pr": 2683,
+        "run": 43282863590,
+        "source_sha": "fdbaf41985934b2c66d8cdaf67063d0dabf5672a",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: fdbaf41985934b2c66d8cdaf67063d0dabf5672a"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

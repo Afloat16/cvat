@@ -1,0 +1,25 @@
+{
+  "repository": "FlagOpen/FlagEmbedding",
+  "title": "Train all requested layerwise reranker heads",
+  "base_branch": "master",
+  "branch": "fix/layerwise-training-heads-20261112",
+  "commit": "159723be41f80ba4222abf2afb7509c2aa686487",
+  "commit_url": "https://github.com/Afloat16/FlagEmbedding/commit/159723be41f80ba4222abf2afb7509c2aa686487",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1630,
+  "pr_url": "https://github.com/FlagOpen/FlagEmbedding/pull/1630",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nThe layerwise training wrapper records `start_layer` but does not pass `cutoff_layers` to its backbone. The backbone defaults to returning only the final layer. As a result, intermediate layer scores never reach the training loss: their supervised loss is missing, the self-distillation loop has no student layers, and independent intermediate classifier heads receive no gradients.\n\n## Changes\n\nPass the complete requested range, from `start_layer` through `num_hidden_layers`, when the training wrapper encodes pairs. The existing loss already supports multiple layer outputs, so no loss formula or backbone default needs to change. This also restores the layer selection used by the repository's earlier research training implementation in the current package entry point.\n\n## Validation\n\n- A real, locally initialized three-layer `LayerWiseMiniCPMForCausalLM` exercises shared and independent heads, three starting layers, external teacher targets, and self-distillation.\n- Compare every returned score, the full loss, and parameter gradients with explicit backbone calls for the requested cutoff layers; check that each requested independent head receives nonzero gradients.\n- Evaluation returns the requested layer scores with no training loss. Direct backbone calls still default to the final layer.\n- The 20 new cases produce **12 failures and 8 passes** on the unchanged upstream base and **20 passes** with this patch.\n- New cases plus existing Trainer/import compatibility modules: **28 passed, 1 skipped** with PyTorch 2.15.0+cpu and Transformers 4.57.1. The skipped check requires Transformers 5.x. These tests require no checkpoint download; pretrained retrieval quality and CUDA execution were not evaluated.\n- Ruff on the new tests and `git diff --check` pass.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "FlagOpen/FlagEmbedding",
+  "title": "Include missing retrieval queries in evaluation averages",
+  "base_branch": "master",
+  "branch": "fix/missing-query-evaluation-20261112",
+  "commit": "d94a46fa298cf5baf5162c7c771cd9831d0cc62f",
+  "commit_url": "https://github.com/Afloat16/FlagEmbedding/commit/d94a46fa298cf5baf5162c7c771cd9831d0cc62f",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1633,
+  "pr_url": "https://github.com/FlagOpen/FlagEmbedding/pull/1633",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\n`evaluate_metrics` averages the scores returned by pytrec_eval over the number of queries present in that output. A judged query omitted from a retrieval run disappears from the denominator, so an incomplete run can report perfect NDCG, MAP, recall and precision. Representing the same missing query with an explicit empty result instead gives a different score. A completely empty run also divides by zero even when the judgment set is nonempty.\n\n## Changes\n\nAverage these four metrics over the full set of queries in `qrels`, matching the evaluation population already used by this module's MRR and capped recall. Missing query results contribute zero without changing per-query pytrec_eval calculations or complete-run scores.\n\n## Validation\n\n- Eleven native pytrec_eval cases cover omitted/empty/nonrelevant result equivalence, multiple cutoffs, entirely empty runs, hand-calculated rank-two hits, unjudged query exclusion, and complete-run controls.\n- Exact baseline: **5 failed, 6 passed**. With the patch: **11 passed**.\n- New cases plus existing Trainer/import checks: **19 passed, 1 skipped**; the skipped check requires Transformers 5.x.\n- Tested with pytrec-eval-terrier 0.5.11 and FAISS CPU 1.16.0 installed. The tests use normal package imports and skip when these optional evaluation dependencies are unavailable.\n- The judgment set remains nonempty in this regression scope; this change does not redefine empty-qrels behavior or other metric functions.\n- Ruff and `git diff --check` pass.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

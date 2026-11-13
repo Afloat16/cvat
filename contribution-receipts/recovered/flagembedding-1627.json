@@ -1,0 +1,25 @@
+{
+  "repository": "FlagOpen/FlagEmbedding",
+  "title": "Load training files in a stable order across ranks",
+  "base_branch": "master",
+  "branch": "fix/sorted-training-files-20261112",
+  "commit": "e7b4a33f0924f666d665bdebb2fdbf66b7285cd2",
+  "commit_url": "https://github.com/Afloat16/FlagEmbedding/commit/e7b4a33f0924f666d665bdebb2fdbf66b7285cd2",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1627,
+  "pr_url": "https://github.com/FlagOpen/FlagEmbedding/pull/1627",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nDirectory-backed embedder and reranker training load JSON/JSONL files in the order returned by `os.listdir`. That order can differ between hosts even when every host has the same files and the training seed is identical.\n\nThis changes concatenated row indices and capped per-file sampling. For same-dataset training, ranks can therefore combine examples from different datasets in one global batch and duplicate or omit rows across the epoch.\n\n## Change\n\nSort directory entries in the three training loaders before loading or sampling files. Preserve the caller's `train_data` order and the existing JSON/JSONL filtering.\n\n## Validation\n\n`PYTHONPATH=. python -m pytest tests/test_finetune_file_order.py tests/test_finetune_trainer_compat.py -q --tb=short`: 11 passed.\n\nThe seven new regression cases fail on unchanged master and pass with this patch. They exercise the real dataset constructors and local JSONL data under reversed directory listings:\n\n- Stable concatenated rows in the embedder, same-dataset embedder and reranker loaders, both with and without per-file sample caps.\n- Two rank-specific same-dataset configurations with opposite file enumeration orders, checking that each combined batch belongs to one dataset and every input row is covered exactly once.\n\nThe four existing trainer compatibility tests also pass. Ruff check and formatting pass for the new tests, and `git diff --check` passes.\n\nValidation used Python 3.12.14, PyTorch 2.15.0+cpu, Transformers 4.57.1 and Datasets 5.0.1. The rank test exercises dataset partitioning locally; a distributed GPU training job was not run.\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

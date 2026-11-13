@@ -1,0 +1,43 @@
+{
+  "repository": "huggingface/tokenizers",
+  "title": "fix(unigram): sample covered text without an unknown token id",
+  "base_branch": "main",
+  "branch": "fix/unigram-sampling-optional-unknown-id-20261112",
+  "commit": "58eb5c01f18ac667f45dae8c38cc5e6254965c08",
+  "commit_url": "https://github.com/Afloat16/tokenizers/commit/58eb5c01f18ac667f45dae8c38cc5e6254965c08",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 2686,
+  "pr_url": "https://github.com/huggingface/tokenizers/pull/2686",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nA Unigram vocabulary may omit an unknown-token ID when it covers the input. Deterministic encoding supports this configuration. Sampling instead checks every lattice node against unk_id.ok_or(...), so even known tokens raise MissingUnkId.\n\n## Change\n\nCompare Some(node.id) with the optional unknown ID. This matches the existing optimized path: known nodes remain ordinary pieces when no unknown ID is configured, and configured unknown spans retain their existing fusion behavior.\n\n## Validation\n\n[Native Rust validation on GitHub-hosted Ubuntu](https://github.com/Afloat16/tokenizers/actions/runs/43287236281) checks exact commit 58eb5c01f18ac667f45dae8c38cc5e6254965c08:\n\n- 8 new regressions: unchanged upstream fails 6 / passes 2; the patch passes all 8.\n- All 20 existing Unigram tests pass.\n- Full-lattice and n-best sampling, Unicode token offsets, the actual PipelineTokenizer, switching from deterministic encoding, empty input, and configured unknown-token controls are covered.\n- Rustfmt passes for changed files.\n- Strict Clippy is blocked before and after by the same two existing needless_range_loop diagnostics in word_cache.rs and lattice.rs; the workflow verifies the matching diagnostics. Strict Clippy is not reported as passing.\n\nThe validation workflow lives on a separate fork branch.\n\n## Scope\n\nOnly the unnecessary unknown-ID requirement while converting a covered sampled path to pieces changes. Sampling weights, vocabulary construction, and other out-of-vocabulary path behavior are unchanged.",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/tokenizers/actions/runs/43287236281",
+      "id": 43287236281,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4e31b8fb7fb9c7086bfa5079cc2ae83c54339029",
+      "head_branch": "validation/unigram-optional-unknown-id-20261112",
+      "workflow_path": ".github/workflows/validate-unigram-optional-unk.yml",
+      "source_binding": {
+        "pr": 2686,
+        "run": 43287236281,
+        "source_sha": "58eb5c01f18ac667f45dae8c38cc5e6254965c08",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: 58eb5c01f18ac667f45dae8c38cc5e6254965c08"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

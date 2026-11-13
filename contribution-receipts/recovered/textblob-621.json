@@ -1,0 +1,41 @@
+{
+  "repository": "sloria/TextBlob",
+  "title": "Forward probability estimators when training positive classifiers",
+  "base_branch": "dev",
+  "branch": "fix/positive-classifier-train-options-20261112",
+  "commit": "8db148dd403d359cda5f1383a7c81c325e4c3fe8",
+  "commit_url": "https://github.com/Afloat16/TextBlob/commit/8db148dd403d359cda5f1383a7c81c325e4c3fe8",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 621,
+  "pr_url": "https://github.com/sloria/TextBlob/pull/621",
+  "merged_at": null,
+  "closed_at": "2026-11-12T17:11:17Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n`PositiveNaiveBayesClassifier.train` accepts additional arguments but discards them when calling NLTK. Passing a custom probability estimator therefore silently trains with the default smoothing. The existing `update` method already forwards these options.\n\n## Change\nForward the extra arguments after the configured positive prior, consistently with `update`, and document that order. Add real NLTK probability-distribution comparisons for positional and keyword estimators while retaining the configured prior.\n\n## Validation\n- The 13 new tests on unchanged upstream: 8 failed, 5 passed.\n- New tests plus existing format and utility tests: 30 passed.\n- Lidstone smoothing with gamma 0.1, 0.5 and 2.0 is compared against direct NLTK training at priors 0.2 and 0.5, across several query feature sets. Default ELE smoothing is a control.\n- Ruff and `git diff --check` passed. Independent read-only review found no blockers.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  },
+  "closure_audit": {
+    "number": 621,
+    "events": [
+      {
+        "event": "closed",
+        "actor": "sloria",
+        "created_at": "2026-11-12T17:11:18Z",
+        "commit_id": null
+      }
+    ],
+    "issue_comments": [],
+    "reviews": [],
+    "inline_comments": [],
+    "public_closing_reason": null,
+    "interpretation": "Closed by maintainer without a public closing explanation in timeline, issue comments, reviews, or inline review comments."
+  }
+}

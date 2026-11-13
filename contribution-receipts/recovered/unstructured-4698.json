@@ -1,0 +1,25 @@
+{
+  "repository": "Unstructured-IO/unstructured",
+  "title": "fix(staging): declare Weaviate array metadata as array properties",
+  "base_branch": "main",
+  "branch": "Afloat16/weaviate-array-types-20261112",
+  "commit": "eeae70f9b5c3445a8462a0f9383eb549fe07e22b",
+  "commit_url": "https://github.com/Afloat16/unstructured/commit/eeae70f9b5c3445a8462a0f9383eb549fe07e22b",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 4698,
+  "pr_url": "https://github.com/Unstructured-IO/unstructured/pull/4698",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nPreserve primitive list types when generating a Weaviate collection schema. `stage_for_weaviate()` emits lists for languages, links, email recipients, and emphasized text, but `create_unstructured_weaviate_class()` currently declares these properties as scalar `text` or `int`. The generated schema therefore disagrees with the staged values.\n\nUnwrap `Optional` and recognize `list`/`List` annotations for supported primitive types, producing the documented `text[]`, `int[]`, `number[]`, or `date[]` property type. Existing scalar and excluded-field behavior is preserved.\n\n## Validation\n\n- Added 22 cases; unchanged upstream produces 19 failures and 3 passes.\n- Native schema generation and staging cover all ten current primitive-list metadata fields, three scalar controls, and bare/optional/legacy `List` annotation forms.\n- New and existing Weaviate staging tests: **23 passed, 1 skipped**. The existing database integration test retains its environment-based skip; no Weaviate server upload was run.\n- Checked the array representation against the [official property data types reference](https://docs.weaviate.io/weaviate/config-refs/datatypes).\n- Lockfile-pinned Ruff 0.15.10 check/format and `git diff --check` passed.\n\n## Release note\n\nThis corrects newly generated schemas. Existing collections retain their stored property types and are not migrated by this helper.\n\n## Checklist\n\n- [x] The PR title is a user-facing release-note entry with a conventional commit prefix.\n- [ ] Please apply the `bug` category label during maintainer triage.\n- [x] No changelog edit or version bump.\n\n<!-- This is an auto-generated description by cubic. -->\n<a href=\"https://cubic.dev/pr/Unstructured-IO/unstructured/pull/4698?utm_source=github\" target=\"_blank\" rel=\"noopener noreferrer\" data-no-image-dialog=\"true\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-dark.svg\"><source media=\"(prefers-color-scheme: light)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"><img alt=\"View guided diff\" src=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"></picture></a>\n<!-- End of auto-generated description by cubic. -->\n\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

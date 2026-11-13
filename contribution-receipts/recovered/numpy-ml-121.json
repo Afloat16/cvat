@@ -1,0 +1,25 @@
+{
+  "repository": "ddbourgin/numpy-ml",
+  "title": "Preserve special-token frequencies during TF-IDF reindexing",
+  "base_branch": "master",
+  "branch": "fix/tfidf-special-token-counts-20261112",
+  "commit": "d68a1e34e891fa2787bd090b5856d210efc83264",
+  "commit_url": "https://github.com/Afloat16/numpy-ml/commit/d68a1e34e891fa2787bd090b5856d210efc83264",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 121,
+  "pr_url": "https://github.com/ddbourgin/numpy-ml/pull/121",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nTFIDFEncoder._sort_tokens reindexes ordinary term frequencies but discards the frequencies of <bol>, <eol> and <unk>. Explicitly requesting those columns returns zeros instead of their TF-IDF values. An empty document or a document filtered entirely into <unk> can also fail during transform because its term-frequency mapping has become empty.\n\n## Change\n\nCopy each special token's existing document counts to its new column index, as already done for ordinary terms. Preserve ordinary-first alphabetical ordering and the public option to omit special columns.\n\n## Validation\n\n`PYTHONPATH=. python -m pytest numpy_ml/tests/test_tfidf_special_counts.py numpy_ml/tests/test_preprocessing.py::test_tfidf -q`: 11 passed.\n\nAll ten new cases fail on unchanged master b0359af. Handwritten term counts and independently calculated TF-IDF expectations cover smoothing on/off, normal and multiline documents, vocabulary filtering, minimum-frequency filtering, and empty documents. Assertions cover both complete and ordinary-only outputs plus the reindexed per-document counts.\n\nNative Python 3.9.25 and NumPy 1.26.4. Black checks on the modified source region and complete new tests, plus git diff --check, pass. The full repository suite was not rerun.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

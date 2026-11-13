@@ -1,0 +1,41 @@
+{
+  "repository": "sloria/TextBlob",
+  "title": "Honor sentiment lexicon confidence thresholds",
+  "base_branch": "dev",
+  "branch": "fix/sentiment-confidence-threshold-20261112",
+  "commit": "c73aad99b611107df739a038bc353d68d57eee92",
+  "commit_url": "https://github.com/Afloat16/TextBlob/commit/c73aad99b611107df739a038bc353d68d57eee92",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 617,
+  "pr_url": "https://github.com/sloria/TextBlob/pull/617",
+  "merged_at": null,
+  "closed_at": "2026-11-12T17:11:08Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n`Sentiment` accepts a `confidence` threshold, and its XML loader already checks that threshold before aggregating word senses. The constructor always stores `None`, so the supplied threshold is discarded and low-confidence senses still influence polarity and subjectivity.\n\n## Change\nStore the supplied threshold in the existing `_confidence` field. The existing inclusive comparison and default behavior are unchanged. Add XML-backed tests for sense aggregation, synset scores, semantic labels, lazy loading and explicit loading.\n\n## Validation\n- The six new tests on unchanged upstream: 5 failed, 1 passed.\n- New tests plus all existing non-slow sentiment tests: 10 passed, 1 deselected.\n- A controlled lexicon changes `bright` from the unfiltered polarity -0.1 to the high-confidence polarity +0.6; thresholds `None`, 0, 0.5, 0.8 and 1 exercise default, inclusive and fully filtered cases.\n- Native package imports, Ruff and `git diff --check` passed. Independent read-only review found no blockers.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  },
+  "closure_audit": {
+    "number": 617,
+    "events": [
+      {
+        "event": "closed",
+        "actor": "sloria",
+        "created_at": "2026-11-12T17:11:08Z",
+        "commit_id": null
+      }
+    ],
+    "issue_comments": [],
+    "reviews": [],
+    "inline_comments": [],
+    "public_closing_reason": null,
+    "interpretation": "Closed by maintainer without a public closing explanation in timeline, issue comments, reviews, or inline review comments."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "ddbourgin/numpy-ml",
+  "title": "Expose invertible fitted standardization statistics",
+  "base_branch": "master",
+  "branch": "fix/standardizer-fitted-statistics-20261112",
+  "commit": "2f407f2ca6affd64d387bb0da27cb4ad8f87a1da",
+  "commit_url": "https://github.com/Afloat16/numpy-ml/commit/2f407f2ca6affd64d387bb0da27cb4ad8f87a1da",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 120,
+  "pr_url": "https://github.com/ddbourgin/numpy-ml/pull/120",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nStandardizer.parameters tests for mean/std attributes, but fit stores _mean/_std. A fitted instance therefore reports both statistics as None and inverse_transform fails with TypeError. Zero-variance training features also retain a zero scale and produce nonfinite transformed values.\n\n## Change\n\nExpose the fitted attributes through parameters, and use unit scale for zero-variance features. This preserves finite forward transforms and permits reconstruction of the original values, including held-out data whose previously constant feature changes.\n\n## Validation\n\n`PYTHONPATH=. python -m pytest numpy_ml/tests/test_standardizer_statistics.py numpy_ml/tests/test_preprocessing.py::test_standardizer -q`: 10 passed.\n\nThe nine new cases give eight failures and one passing control on unchanged master b0359af. They cover all four centering/scaling configurations, ordinary and constant columns, stored statistics, training and held-out data, inverse reconstruction and an unfitted control. Forward results are compared with sklearn StandardScaler.\n\nNative Python 3.9.25, NumPy 1.26.4 and scikit-learn 1.6.1. Black checks on the modified source region and new tests, plus git diff --check, pass. The full repository suite was not rerun.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

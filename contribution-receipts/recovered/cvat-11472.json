@@ -1,0 +1,43 @@
+{
+  "repository": "cvat-ai/cvat",
+  "title": "Avoid per-pixel coordinate allocations when inferring mask bounds",
+  "base_branch": "develop",
+  "branch": "perf/sdk-mask-bounds-memory-20261112",
+  "commit": "4043870d55694b723b75fa073f033873fe3d30f3",
+  "commit_url": "https://github.com/Afloat16/cvat/commit/4043870d55694b723b75fa073f033873fe3d30f3",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 11472,
+  "pr_url": "https://github.com/cvat-ai/cvat/pull/11472",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "### Motivation and context\n\nFixes #11471.\n\n`encode_mask(bitmap)` infers bounds with two integer coordinates for every foreground pixel. A dense 2048×2048 boolean mask therefore allocates about 64 MiB just for these coordinates, in addition to the RLE scan.\n\nUse row/column occupancy reductions to infer the same bounds, with temporary coordinate arrays proportional to the image dimensions. Explicit bounds and the RLE representation are unchanged.\n\n### How has this been tested?\n\nNative generated SDK on Ubuntu, Python 3.11 and NumPy 2.0.0, at the exact contribution SHA:\n\n- 21 new checks pass alongside 48 existing mask/attribute tests (69 total).\n- The unchanged source passes all 20 new numerical controls and fails the peak-allocation regression; this is a performance fix, with unchanged encoded values.\n- Exact RLE and decoded pixels are checked using an independent pixel reference, including noncontiguous/reversed/readonly views, all-false masks, singleton axes, explicit crops and dense masks.\n- Black and isort pass.\n\nRun: https://github.com/Afloat16/cvat/actions/runs/43296533652\n\nThe workflow runs three independent benchmark processes per version and checks every output digest matches. Each process uses one warm-up and seven timed repetitions. The first process's medians, printed in the run log, are:\n\n| Dense mask | Before | After | Peak tracked allocation before → after |\n| --- | ---: | ---: | ---: |\n| 256×256 | 0.214 ms | 0.035 ms | 1,181,068 → 136,737 bytes |\n| 1024×1024 | 3.264 ms | 0.797 ms | 18,875,852 → 2,115,010 bytes |\n| 2048×2048 | 19.776 ms | 1.997 ms | 75,498,956 → 8,423,009 bytes |\n\nThese measurements cover this SDK encoding operation on the hosted CPU. They do not measure server-wide memory, overall dataset throughput or GPU training. The remaining RLE scan still uses memory proportional to the cropped bitmap.\n\n### Checklist\n\n- [x] I submit my changes into the `develop` branch\n- [x] I have created a changelog fragment\n- [x] ~~I have updated the documentation accordingly~~ — public encoding behavior is unchanged; the changelog records the allocation improvement.\n- [x] I have added tests to cover my changes\n- [x] I have linked related issues\n\n### License\n\n- [x] I submit my code changes under the same MIT License that covers the project.\n",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/cvat/actions/runs/43296533652",
+      "id": 43296533652,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "ca59d6b082aad71a19c0ead098db5ea3af9ffe0f",
+      "head_branch": "validation/sdk-mask-bounds-memory-20261112",
+      "workflow_path": ".github/workflows/validate-sdk-mask-bounds.yml",
+      "source_binding": {
+        "pr": 11472,
+        "run": 43296533652,
+        "source_sha": "4043870d55694b723b75fa073f033873fe3d30f3",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: 4043870d55694b723b75fa073f033873fe3d30f3"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

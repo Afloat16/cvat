@@ -1,0 +1,25 @@
+{
+  "repository": "cleanlab/cleanlab",
+  "title": "Stabilize softmax inputs before temperature scaling",
+  "base_branch": "master",
+  "branch": "fix/stable-low-temperature-softmax-20261112",
+  "commit": "82432167e3f9849e5f5d8acafce983dc0e30c8f3",
+  "commit_url": "https://github.com/Afloat16/cleanlab/commit/82432167e3f9849e5f5d8acafce983dc0e30c8f3",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1372,
+  "pr_url": "https://github.com/cleanlab/cleanlab/pull/1372",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nUse at least float32 arithmetic and, when shifting is requested, subtract the maximum before dividing by temperature. The existing temperature floor and `shift=False` option remain in place.\n\n## Impact\n\nA large shared offset can overflow during temperature division before the existing stabilizing shift is reached, producing `inf - inf` and NaN probabilities. Half-precision label-quality scores can also overflow at low temperatures despite all their input values being in [0, 1]. This affects softmin aggregation and the public token-classification label-quality API.\n\nMoving the shift ahead of scaling preserves softmax's translation invariance and avoids overflow caused by a common offset. Promoting half-precision arithmetic prevents the demonstrated low-temperature failures; integer inputs are also converted before subtraction so their differences do not wrap.\n\n## Testing\n\n- Added 22 regression cases: upstream has 10 failures and 12 passes; all 22 pass with this change.\n- New tests plus complete existing numerics and token-classification modules: 73 passed, with four existing warnings.\n- Covered float16/32/64 values, four axis choices, large common offsets, signed/unsigned inputs, two actual softmin aggregators and the public token-classification scoring API. References use SciPy in a safe float64 range or explicitly known normalized probabilities. Inputs are checked for mutation.\n- Project-pinned Black 25.12.0 and `git diff --check` passed.\n\n## Links/References\n\nChecked #667, #826 and #1114 and the complete numerical helper history. The previous stability changes still divide before shifting; all-state low-temperature/shift/float16 searches found no equivalent change.\n\n## Reviewer Notes\n\nThis covers the demonstrated low-temperature and common-offset cases. It does not claim every extreme floating-point input can be processed without any overflow warning.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

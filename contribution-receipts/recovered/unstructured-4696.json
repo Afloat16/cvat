@@ -1,0 +1,25 @@
+{
+  "repository": "Unstructured-IO/unstructured",
+  "title": "fix(staging): associate COCO annotations with their source images",
+  "base_branch": "main",
+  "branch": "Afloat16/coco-annotation-images-20261112",
+  "commit": "ff6628b14d12f8406c8aa80e2da07a30e1dda493",
+  "commit_url": "https://github.com/Afloat16/unstructured/commit/ff6628b14d12f8406c8aa80e2da07a30e1dda493",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 4696,
+  "pr_url": "https://github.com/Unstructured-IO/unstructured/pull/4696",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nInclude the matching `image_id` on every annotation produced by `convert_to_coco()`. The current export omits this required relationship, so the native COCO reader raises `KeyError: 'image_id'` while building its index and cannot retrieve training annotations by image.\n\nReuse the existing five image identity fields and preserve their first-seen numbering and deduplication. Multiple elements from the same page share its image ID; different files, directories, pages, or dimensions retain distinct images. Source elements are unchanged.\n\n## Validation\n\n- Added 10 regression cases: the unchanged upstream code produces 9 failures and 1 pass; the fix passes all 10.\n- Exercised a real `pycocotools` 2.0.11 JSON-file load, image indexing, and per-image annotation filtering, alongside repeated pages, all five identity fields, generator input, missing metadata, and empty input.\n- New tests plus the existing COCO export and coordinate-system module: **27 passed** on Python 3.12. The full repository suite was not run.\n- Lockfile-pinned Ruff 0.15.10 check/format and `git diff --check` passed.\n\n## Checklist\n\n- [x] The PR title is a user-facing release-note entry with a conventional commit prefix.\n- [ ] Please apply the `bug` category label during maintainer triage.\n- [x] No breaking change, changelog edit, or version bump.\n\n<!-- This is an auto-generated description by cubic. -->\n<a href=\"https://cubic.dev/pr/Unstructured-IO/unstructured/pull/4696?utm_source=github\" target=\"_blank\" rel=\"noopener noreferrer\" data-no-image-dialog=\"true\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-dark.svg\"><source media=\"(prefers-color-scheme: light)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"><img alt=\"View guided diff\" src=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"></picture></a>\n<!-- End of auto-generated description by cubic. -->\n\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

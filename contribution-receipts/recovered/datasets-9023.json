@@ -1,0 +1,25 @@
+{
+  "repository": "huggingface/datasets",
+  "title": "fix(features): recognize NumPy scalar indices in pandas arrays",
+  "base_branch": "main",
+  "branch": "fix/pandas-numpy-scalar-indices-20261112",
+  "commit": "546f58efcf57a76dc84ff557ccd58235d9097ec3",
+  "commit_url": "https://github.com/Afloat16/datasets/commit/546f58efcf57a76dc84ff557ccd58235d9097ec3",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 9023,
+  "pr_url": "https://github.com/huggingface/datasets/pull/9023",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nAn ArrayXD column converted to pandas treats a NumPy integer index as a nonscalar selection. `series.iloc[np.int64(1)]` and `series.iat[np.int64(1)]` return a `PandasArrayExtensionArray` wrapping the row instead of the row's ndarray. This loses the expected scalar shape/type and breaks downstream operations such as converting an embedding selected by `np.argmax` into a torch tensor.\n\n## Change\n\nRecognize NumPy integer scalars alongside Python integers in the extension array's scalar indexing branch. Slices, index arrays, and boolean masks keep the existing extension-array return path; no new production copy is introduced.\n\n## Validation\n\n- Added 26 cases covering native Dataset-to-pandas Array2D–Array5D columns, multiple payload dtypes, signed/unsigned NumPy indices, Python integers, negative indices, dynamic and empty row shapes, nonscalar selection controls, and out-of-bounds errors.\n- An end-to-end case selects an embedding with `np.argmax`, converts a writable copy of that row with `torch.from_numpy`, and checks a hand-calculated projection.\n- Unchanged upstream: **16 failed, 10 passed**.\n- Fixed implementation plus all 106 existing ArrayXD tests: **132 passed**.\n- Ruff lint, formatting, and `git diff --check` pass.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

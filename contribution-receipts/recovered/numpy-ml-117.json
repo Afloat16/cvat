@@ -1,0 +1,25 @@
+{
+  "repository": "ddbourgin/numpy-ml",
+  "title": "Finish byte-pair training when no merge candidates remain",
+  "base_branch": "master",
+  "branch": "fix/exhausted-bpe-merges-20261112",
+  "commit": "0eb3abce10e848ee67508fb407edb0b28553b25e",
+  "commit_url": "https://github.com/Afloat16/numpy-ml/commit/0eb3abce10e848ee67508fb407edb0b28553b25e",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 117,
+  "pr_url": "https://github.com/ddbourgin/numpy-ml/pull/117",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\n`BytePairEncoder.fit` always tries to perform exactly `max_merges` iterations, even after the vocabulary has no adjacent pairs left. It then calls `max()` on an empty dictionary and raises `ValueError`.\n\nThis prevents ordinary short corpora from being trained with the default upper bound of 3000 merges. A corpus containing `abba abba` is sufficient to reproduce the failure.\n\n## Change\n\nStop the merge loop when no candidates remain, then finalize the learned codebook through the existing path. Document this early-termination behavior. The requested merge count remains an upper bound.\n\n## Validation\n\n`PYTHONPATH=. python -m pytest numpy_ml/tests/test_byte_pair_encoder.py numpy_ml/tests/test_preprocessing.py::test_huffman numpy_ml/tests/test_preprocessing.py::test_tfidf -q --tb=short`: 14 passed.\n\nThe 12 new cases give 10 failures and 2 passing controls on unchanged master `b0359af`. They cover the default budget and an explicit budget larger than the available pairs, empty and single-byte training corpora, repeated ASCII, multiple lines, and Unicode. Learned tokens still compress nontrivial training text, and nonempty training/unseen Unicode strings round-trip. An empty training file retains the base byte alphabet for encoding unseen text. Exact token outputs for budgets zero and one verify that small explicit limits remain effective.\n\nThe new tests plus the complete existing preprocessing module produce 18 passes and 3 failures. The same three existing tests fail on unchanged master: `test_mfcc`, `test_dft_bins` and `test_mel_filterbank` pass positional arguments to keyword-only Librosa 0.11 reference APIs.\n\nValidation used normal package imports on Python 3.9.25 with NumPy 1.26.4, SciPy 1.13.1 and pytest 8.4.2. Black checks pass for the modified fit region and the new test file, and `git diff --check` passes.\n\n### Changes to Existing Models\n\n- [x] Explain the failure and the stopping condition.\n- [x] Add failing regressions and passing budget controls.\n- [x] Run new tests and existing Huffman/TF-IDF checks locally.\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

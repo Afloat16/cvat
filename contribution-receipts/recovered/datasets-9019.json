@@ -1,0 +1,25 @@
+{
+  "repository": "huggingface/datasets",
+  "title": "fix(fingerprint): resolve lazy tensor views before hashing",
+  "base_branch": "main",
+  "branch": "fix/lazy-tensor-view-fingerprints-20261112",
+  "commit": "a3effe550054d8487b831f31992bb6695847ff04",
+  "commit_url": "https://github.com/Afloat16/datasets/commit/a3effe550054d8487b831f31992bb6695847ff04",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 9019,
+  "pr_url": "https://github.com/huggingface/datasets/pull/9019",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nThe Torch tensor reducer calls `.numpy()` directly after detaching and moving the tensor to CPU. PyTorch rejects that conversion for views with a lazy conjugate or negative bit, including tensors returned by `tensor.conj()` and `tensor.conj().imag`. When a map transform captures such a tensor, fingerprinting falls back to a random value, so an unchanged transform recomputes the dataset instead of reusing its existing Arrow cache.\n\n## Change\n\nResolve the detached tensor's conjugate and negative view bits before the existing NumPy conversion. Preserve the original object passed to `save_reduce`, so repeated references still share their reconstructed tensor. Keep the existing BF16 conversion and ordinary tensor paths.\n\n## Validation\n\n- 14 new native tests report **10 failed, 4 passed** on upstream, and **14 passed** after the change.\n- Including the existing Torch tensor and generator fingerprint tests, **16 passed**.\n- Tests cover complex64/complex128, strided views, exact logical values, pickle alias preservation, unchanged input storage/flags/gradient state, and ordinary int64/float32/BF16/complex128 controls.\n- Real on-disk datasets exercise `Dataset.map` twice with a view captured by the transform: the second call reuses the same cache file and does not execute the transform again. Changing the underlying tensor values correctly changes the fingerprint and reruns the transform.\n- Ruff checks, Ruff formatting checks and `git diff --check` pass.\n\nThis change is limited to CPU-tested dense tensor view serialization; it does not add sparse or quantized tensor serialization.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

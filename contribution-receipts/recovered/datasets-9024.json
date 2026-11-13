@@ -1,0 +1,25 @@
+{
+  "repository": "huggingface/datasets",
+  "title": "fix(features): allow necessary copies in pandas array construction",
+  "base_branch": "main",
+  "branch": "fix/pandas-array-sequence-construction-20261112",
+  "commit": "2d73e5a4f38af00b57467eb7ae75a13e51140926",
+  "commit_url": "https://github.com/Afloat16/datasets/commit/2d73e5a4f38af00b57467eb7ae75a13e51140926",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 9024,
+  "pr_url": "https://github.com/huggingface/datasets/pull/9024",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nPandas extension-array construction uses `copy=False` to avoid unnecessary copies, but `PandasArrayExtensionArray._from_sequence` passes that flag to NumPy's strict no-copy constructor. On NumPy 2, constructing an ArrayXD pandas column from separate ndarray rows raises `ValueError: Unable to avoid copy while creating an array as requested`. Converting a contiguous input to a different requested payload dtype fails for the same reason.\n\n## Change\n\nUse `np.asarray` for the initial dense conversion so necessary stacking or dtype conversion is allowed. The existing final `cls(data, copy=copy)` still enforces an independent buffer when `copy=True`; same-dtype ndarray inputs can continue sharing storage when `copy=False`.\n\n## Validation\n\n- Added 17 tests for 2D/3D payloads, int32/float64, both copy settings, dtype conversion, contiguous and strided input storage, and existing empty/singleton/ragged behavior.\n- The dense-row cases exercise `pd.array` to `DataFrame` to `Dataset.from_pandas` and verify exact reconstructed values.\n- Unchanged upstream: **5 failed, 12 passed**.\n- Fixed implementation with all 106 existing ArrayXD tests: **123 passed**.\n- Ruff lint, formatting, and `git diff --check` pass.\n\nThis changes pandas sequence construction; NumPy's external `__array__` protocol is unchanged.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

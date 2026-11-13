@@ -1,0 +1,25 @@
+{
+  "repository": "cleanlab/cleanlab",
+  "title": "Stream non-IID permutations instead of storing every neighbor graph",
+  "base_branch": "master",
+  "branch": "perf/stream-noniid-permutations-20261112",
+  "commit": "336bee612c4baef1715f948fb3c45cb4d4528722",
+  "commit_url": "https://github.com/Afloat16/cleanlab/commit/336bee612c4baef1715f948fb3c45cb4d4528722",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1373,
+  "pr_url": "https://github.com/cleanlab/cleanlab/pull/1373",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nGenerate and score each non-IID permutation individually instead of materializing all permutations and their relabelled neighbor graphs at once. The retained statistics remain one scalar per permutation.\n\n## Impact\n\nThe previous temporary distance arrays grow with `num_permutations × num_examples × k`. Streaming reduces the temporary graph storage to one `num_examples × k` graph. The permutation order, RNG behavior, KS statistic, background CDF and Gaussian KDE calculation are preserved.\n\n## Testing\n\n- Added 15 regression cases. On the base, the memory bound fails and 14 numerical/integration controls pass. The fixed branch and existing non-IID test module pass together: 29 passed.\n- An independently materialized permutation/KS/KDE reference verifies exact p-value equality for multiple neighbor counts, permutation counts, fixed seeds and `seed=None`. The next random draw is also checked, and the real Datalab API is exercised.\n- Native benchmark with N=1,024, k=8 and 60 permutations: peak traced temporary allocation fell from 12,288,736 to 420,835 bytes; median of seven warm calls fell from 9.933747 ms to 4.938370 ms. Both p-values were exactly `0.7527866559781102`. These measurements describe this helper and input, not total process RSS or all workloads.\n- Pinned Black 25.12.0 and `git diff --check` passed.\n\n## Links/References\n\nChecked the original permutation implementation in #614, seeding change #694, later file history and all-state memory/permutation queries; no equivalent streaming implementation was found.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

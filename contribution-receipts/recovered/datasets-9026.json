@@ -1,0 +1,25 @@
+{
+  "repository": "huggingface/datasets",
+  "title": "perf(batch): reduce grouping comparisons inside Arrow",
+  "base_branch": "main",
+  "branch": "perf/arrow-group-comparison-reduction-20261112",
+  "commit": "7d1dd9bf999d56452449059f0b59b4c31edbde32",
+  "commit_url": "https://github.com/Afloat16/datasets/commit/7d1dd9bf999d56452449059f0b59b4c31edbde32",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 9026,
+  "pr_url": "https://github.com/huggingface/datasets/pull/9026",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nWhen a `batch(by_column=...)` group spans input tables, the accumulation check converts an entire Arrow comparison column to a Python list just to call `any()`. This creates a temporary Python pointer for every input row, even though only one boolean result is needed.\n\n## Changes\n\nReduce the existing null-aware comparisons with `pyarrow.compute.any` and convert only the scalar result to Python. Group boundaries, null semantics, accumulation, and output values stay the same.\n\n## Validation\n\n- Added 22 tests covering native `Dataset` and `IterableDataset` grouping, multiple keys, nullable/all-null columns, NaN keys, chunked Arrow columns, and Python allocation limits for long identical groups.\n- On unchanged upstream: **20 passed, 2 failed**. The two failures are allocation-budget regressions; the numerical grouping controls already pass.\n- With this change and the existing `batch_by_column` tests: **33 passed**.\n- Ruff lint, Ruff formatting, and `git diff --check` pass.\n\nLocal CPU measurements use preconstructed tables, one warmup, and five measured repetitions:\n\n| Accumulated comparison rows | Before median | After median | Before Python peak | After Python peak |\n| --- | ---: | ---: | ---: | ---: |\n| 1,000 | 0.036 ms | 0.030 ms | 17,064 B | 1,375 B |\n| 100,000 | 0.552 ms | 0.065 ms | 1,601,192 B | 1,375 B |\n| 1,000,000 | 5.011 ms | 0.337 ms | 16,448,936 B | 1,375 B |\n\nA separate native `Dataset.batch` benchmark with 200,000 rows and 1,000-row input batches measured 14.042 ms before and 13.796 ms after, with identical serialized Arrow output hashes. That small end-to-end difference should not be read as a general throughput improvement. The substantial measured benefit is removal of the temporary Python comparison list, especially with larger input batches. Arrow's own comparison buffers are still needed and are outside the Python allocation figures.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

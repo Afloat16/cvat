@@ -1,0 +1,43 @@
+{
+  "repository": "cvat-ai/cvat",
+  "title": "Fix ellipse extents in PyTorch bounding box targets",
+  "base_branch": "develop",
+  "branch": "fix/sdk-ellipse-bounding-box-extents-20261112",
+  "commit": "bf30b7e5897c1121c669711c3b36281b7b0ee423",
+  "commit_url": "https://github.com/Afloat16/cvat/commit/bf30b7e5897c1121c669711c3b36281b7b0ee423",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 11470,
+  "pr_url": "https://github.com/cvat-ai/cvat/pull/11470",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "### Motivation and context\n\nFixes #11469.\n\nCVAT ellipse points encode the center and right/top radius endpoints. The SDK currently treats them as ordinary polygon vertices when building PyTorch bounding box targets, losing half of the extent on each axis. For example, `[10, 20, 14, 17]` produces `[10, 17, 14, 20]` instead of the full box `[6, 17, 14, 23]`.\n\nMirror the radius endpoints around the center before constructing the unrotated box. Other shape conventions and the existing rejection of rotated shapes remain unchanged.\n\n### How has this been tested?\n\nNative Ubuntu SDK validation using the checked-in OpenAPI generator, Python 3.11, CPU PyTorch 2.9.0 and torchvision 0.24.0, at the exact contribution SHA:\n\n- 15 new cases pass; unchanged upstream gives 8 failures and 7 passing controls.\n- 48 existing SDK mask and attribute tests pass.\n- Cases cover hard-coded ellipse geometry, negative/fractional/zero extents, other shapes, label filtering, rotated-shape rejection, and two actual torchvision GIoU optimization steps compared with manual geometric targets.\n- Black and isort checks pass.\n\nRun: https://github.com/Afloat16/cvat/actions/runs/43291722198\n\nThe complete server integration suite, GPU training and detection model quality benchmarks were not run.\n\n### Checklist\n\n- [x] I submit my changes into the `develop` branch\n- [x] I have created a changelog fragment\n- [x] ~~I have updated the documentation accordingly~~ — existing ellipse format is unchanged; the changelog documents the correction.\n- [x] I have added tests to cover my changes\n- [x] I have linked related issues\n\n### License\n\n- [x] I submit my code changes under the same MIT License that covers the project.\n",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/cvat/actions/runs/43291722198",
+      "id": 43291722198,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4c6053e104c598d80f191573ab5c22b5ccd1f53e",
+      "head_branch": "validation/sdk-ellipse-boxes-20261112",
+      "workflow_path": ".github/workflows/validate-sdk-ellipse-boxes.yml",
+      "source_binding": {
+        "pr": 11470,
+        "run": 43291722198,
+        "source_sha": "bf30b7e5897c1121c669711c3b36281b7b0ee423",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: bf30b7e5897c1121c669711c3b36281b7b0ee423"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

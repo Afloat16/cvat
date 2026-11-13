@@ -1,0 +1,41 @@
+{
+  "repository": "sloria/TextBlob",
+  "title": "Accept token sequences in labeled basic-extractor input",
+  "base_branch": "dev",
+  "branch": "fix/pretokenized-basic-features-20261112",
+  "commit": "e7c52c88f04db44259d2c593d542fc5a01ed24d4",
+  "commit_url": "https://github.com/Afloat16/TextBlob/commit/e7c52c88f04db44259d2c593d542fc5a01ed24d4",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 624,
+  "pr_url": "https://github.com/sloria/TextBlob/pull/624",
+  "merged_at": null,
+  "closed_at": "2026-11-12T17:11:24Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n`basic_extractor` rejects labeled training rows when their document is already tokenized: an assertion requires the first document to be a string, although the underlying dataset-to-vocabulary helper supports token iterables. This also rejects an empty first tokenized document.\n\n## Change\nAllow labeled rows to reach the existing string-or-token-sequence handling. Invalid noniterable documents still raise the existing malformed-training-data `ValueError`. Bare vocabulary inputs keep their existing path.\n\n## Validation\n- The 11 new tests on unchanged upstream: 7 failed, 4 passed.\n- New tests plus existing format and utility tests: 28 passed.\n- Hand-written expected feature dictionaries cover list/tuple/iterator documents, list/iterator rows, an empty first document, bare vocabularies and malformed inputs.\n- Ruff and `git diff --check` passed. Independent read-only review found no blockers.\n- The earlier vocabulary-cache change in PR #136 was inspected; it does not fix this string-only validation.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  },
+  "closure_audit": {
+    "number": 624,
+    "events": [
+      {
+        "event": "closed",
+        "actor": "sloria",
+        "created_at": "2026-11-12T17:11:26Z",
+        "commit_id": null
+      }
+    ],
+    "issue_comments": [],
+    "reviews": [],
+    "inline_comments": [],
+    "public_closing_reason": null,
+    "interpretation": "Closed by maintainer without a public closing explanation in timeline, issue comments, reviews, or inline review comments."
+  }
+}

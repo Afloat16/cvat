@@ -1,0 +1,25 @@
+{
+  "repository": "Unstructured-IO/unstructured",
+  "title": "fix(lang): treat an empty language selection as automatic",
+  "base_branch": "main",
+  "branch": "Afloat16/empty-language-auto-detection-20261112",
+  "commit": "dde618b7cefa882017ea5b2778d4f5b5f5da89ed",
+  "commit_url": "https://github.com/Afloat16/unstructured/commit/dde618b7cefa882017ea5b2778d4f5b5f5da89ed",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 4704,
+  "pr_url": "https://github.com/Unstructured-IO/unstructured/pull/4704",
+  "merged_at": "2026-11-12T21:12:00Z",
+  "closed_at": "2026-11-12T21:12:00Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": true,
+  "body": "## Summary\n\nPassing `languages=[]` to language detection or metadata application raises `IndexError` at `languages[0]`, before either empty-text handling or automatic detection can run. An empty selection is already treated as a default by `check_language_args` and by the later automatic-detection branch.\n\nNormalize an empty language list to the existing automatic mode, just like `None`. This also uses the normal short-ASCII fallback. Explicit languages, the empty-string skip sentinel, and validation of non-list inputs retain their existing behavior.\n\n## Validation\n\n- Added 18 native cases: 11 fail and 7 pass on the unchanged base.\n- New and existing language tests: **83 passed, 4 skipped**. The skips are optional backend tests in the existing suite.\n- Covers actual langdetect output for English/French/Korean, empty/whitespace text, short-text fallback, list/iterator metadata application in whole-document and per-element modes, unchanged input lists, and existing explicit/invalid language options.\n- Ruff 0.15.10 check/format and `git diff --check` pass. The full project test suite was not run.\n\n## Checklist\n\n- [x] Added regression tests and documented empty-list behavior.\n- [x] Preserved explicit language selection and invalid-input checks.\n- [ ] Apply the `bug` label.\n\n<!-- This is an auto-generated description by cubic. -->\n<a href=\"https://cubic.dev/pr/Unstructured-IO/unstructured/pull/4704?utm_source=github\" target=\"_blank\" rel=\"noopener noreferrer\" data-no-image-dialog=\"true\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-dark.svg\"><source media=\"(prefers-color-scheme: light)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"><img alt=\"View guided diff\" src=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"></picture></a>\n<!-- End of auto-generated description by cubic. -->\n\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

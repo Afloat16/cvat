@@ -1,0 +1,43 @@
+{
+  "repository": "HumanSignal/label-studio",
+  "title": "fix: preserve empty common-data-column intersections across import batches",
+  "base_branch": "develop",
+  "branch": "fix/empty-summary-column-intersections-20261112",
+  "commit": "bed8cea6f91e60a040c94d347ef58142e5a99551",
+  "commit_url": "https://github.com/Afloat16/label-studio/commit/bed8cea6f91e60a040c94d347ef58142e5a99551",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 10037,
+  "pr_url": "https://github.com/HumanSignal/label-studio/pull/10037",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Reason for change\n\nCloses #10036.\n\nBoth intersection steps in `ProjectSummary.update_data_columns` treat an empty set as uninitialized. Later tasks can therefore resurrect columns that are absent from earlier tasks, making column-summary metadata depend on task order and import batch boundaries. Empty batches also discard a populated common-column list.\n\n## Changes\n\nUse a distinct uninitialized sentinel for the current batch. Distinguish a fresh summary from an existing empty intersection using existing column counts and, when those counts are empty, the number of persisted tasks relative to the incoming batch. All existing import, storage and task-save callers persist their batch before updating the summary; full recalculation passes all tasks.\n\nAn empty batch preserves the current field values and still follows the existing save path, so full recalculation on an empty project persists its explicit cache reset.\n\n## Testing\n\nNative Django SQLite database, Python 3.12 and locked repository dependencies at exact SHA `bed8cea6f91e60a040c94d347ef58142e5a99551`:\n\n- 19 new tests pass. Unchanged upstream has 11 failures and 8 passing controls.\n- All 55 existing core tests pass.\n- Real task save signals, persisted import-style batches, six row permutations, four batch partitions, prior empty-data tasks, empty batches, and populated/empty project recalculation are covered.\n- Column counts and intersections are compared with independent set/Counter calculations.\n- Pinned Ruff 0.15.1 lint and formatting pass.\n\nRun: https://github.com/Afloat16/label-studio/actions/runs/43300292035\n\n## Acceptance criteria and scope\n\nThe common-column intersection stays empty after a missing column is observed, independent of the tested row orders and batch boundaries. Empty batch updates preserve the summary, and empty-project recalculation clears persisted cached columns.\n\nThere is no schema migration or feature flag. This changes column-summary metadata only; it does not add concurrency guarantees or change annotation counters. PostgreSQL has not been exercised by this test run.\n",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/label-studio/actions/runs/43300292035",
+      "id": 43300292035,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "a591b3df35a207b064c150ae6c570f3639de5d99",
+      "head_branch": "validation/empty-summary-column-intersections-20261112",
+      "workflow_path": ".github/workflows/validate-summary-column-intersections.yml",
+      "source_binding": {
+        "pr": 10037,
+        "run": 43300292035,
+        "source_sha": "bed8cea6f91e60a040c94d347ef58142e5a99551",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: bed8cea6f91e60a040c94d347ef58142e5a99551"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

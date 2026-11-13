@@ -1,0 +1,25 @@
+{
+  "repository": "Unstructured-IO/unstructured",
+  "title": "fix(sorting): retain positive extents when shrinking thin boxes",
+  "base_branch": "main",
+  "branch": "Afloat16/xycut-positive-box-extents-20261112",
+  "commit": "c35f0f9d96997344393c677da0b4063b00b5afcb",
+  "commit_url": "https://github.com/Afloat16/unstructured/commit/c35f0f9d96997344393c677da0b4063b00b5afcb",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 4705,
+  "pr_url": "https://github.com/Unstructured-IO/unstructured/pull/4705",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nWith the default shrink factor, a valid one-pixel-wide or one-pixel-high box is truncated to zero width or height. XY-cut then has no projection for that box and can omit its text element from the sorted page. Fractional page coordinates can also lose their positive extents if they are converted to integers before shrinking.\n\nPreserve the original coordinates until shrinking, then keep each strictly positive scaled dimension at least one pixel wide/high on the integer projection grid. The top-left anchor, normal-size integer boxes, originally zero dimensions and an explicit zero shrink factor retain their existing behavior.\n\n## Release note\n\nRecovering previously omitted text can change reading order and sequence-derived element IDs. Consumers that persist IDs or compare ordered outputs should account for this corrected output.\n\n## Validation\n\n- Added public `sort_page_elements` coverage for fractional narrow width, narrow height and both dimensions, plus originally zero-width/height controls, in both XY-cut directions. The expanded regression file gives **6 failed, 32 passed** before the fractional-coordinate fix and **38 passed** after it.\n- The complete thin-box regression, sorting and XY-cut test modules pass: **63 passed**. They check returned text, element identity, unchanged input coordinates, integer and fractional boxes, and zero-factor controls.\n- Verified with Python 3.12.14, NumPy 2.4.4, Numba 0.65.0, pytest 9.0.3, unstructured-inference 1.6.12 and OpenCV 4.13.0.92.\n- Ruff 0.15.10 lint/format and `git diff --check` pass.\n- Merged main `0bf5f787`; the version guard passes with the unchanged `0.27.38-dev` version.\n- The full project suite and partition benchmark were not run locally. [Upstream repository CI](https://github.com/Unstructured-IO/unstructured/actions/runs/43351665781) has now passed on `c35f0f9`. CodeQL and Security still require maintainer approval. [Partition Benchmark](https://github.com/Unstructured-IO/unstructured/actions/runs/43351665965/job/131653371162) stops before measurement because the Tesseract PPA has no Ubuntu 26.04 `resolute` Release file; the [current main benchmark](https://github.com/Unstructured-IO/unstructured/actions/runs/43352412529/job/131647266676) fails at the same installation step.\n\n## Checklist\n\n- [x] Added regression tests for retained text and unchanged sorting inputs.\n- [x] Preserved the existing zero-size/zero-factor behavior.\n- [ ] Apply the `bug` label.\n\n<!-- This is an auto-generated description by cubic. -->\n<a href=\"https://cubic.dev/pr/Unstructured-IO/unstructured/pull/4705?utm_source=github\" target=\"_blank\" rel=\"noopener noreferrer\" data-no-image-dialog=\"true\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-dark.svg\"><source media=\"(prefers-color-scheme: light)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"><img alt=\"View guided diff\" src=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"></picture></a>\n<!-- End of auto-generated description by cubic. -->\n\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

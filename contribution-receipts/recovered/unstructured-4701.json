@@ -1,0 +1,25 @@
+{
+  "repository": "Unstructured-IO/unstructured",
+  "title": "fix(metrics): retain detection tensor columns for empty pages",
+  "base_branch": "main",
+  "branch": "Afloat16/detection-empty-pages-20261112",
+  "commit": "1f5a8a26f6cb57188c503091e504277237c25485",
+  "commit_url": "https://github.com/Afloat16/unstructured/commit/1f5a8a26f6cb57188c503091e504277237c25485",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 4701,
+  "pr_url": "https://github.com/Unstructured-IO/unstructured/pull/4701",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nThe JSON detection loader converts an empty page to a tensor with shape `(0,)`. Matching expects a prediction matrix with six columns and a target matrix with five columns, so blank pages or pages without annotations raise an `IndexError` during document evaluation.\n\nReshape each loaded page to its declared matrix format. Nonempty page values and layout are unchanged; empty predictions and empty targets can now participate in the existing matching and metric calculations.\n\n## Validation\n\n- Added 10 native JSON-to-metrics tests: 7 fail and 3 pass on the unchanged base; all 10 pass after the fix.\n- Covers all empty/nonempty prediction and target combinations, blank pages at different document positions, false-positive and false-negative pages with hand-calculated precision/recall/F1/AP, and the existing empty-document sentinel.\n- Preserves the existing undefined (`NaN`) metrics when no class has any ground-truth targets.\n- Ruff 0.15.10 check/format and `git diff --check` pass. The full optional-dependency suite was not run.\n\n## Checklist\n\n- [x] Added regression tests for the behavior change.\n- [x] Preserved nonempty tensor layout and metric conventions.\n- [ ] Apply the `bug` label.\n\n<!-- This is an auto-generated description by cubic. -->\n<a href=\"https://cubic.dev/pr/Unstructured-IO/unstructured/pull/4701?utm_source=github\" target=\"_blank\" rel=\"noopener noreferrer\" data-no-image-dialog=\"true\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-dark.svg\"><source media=\"(prefers-color-scheme: light)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"><img alt=\"View guided diff\" src=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"></picture></a>\n<!-- End of auto-generated description by cubic. -->\n\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "FlagOpen/FlagEmbedding",
+  "title": "Apply retrieval and reranking depth after candidate filtering",
+  "base_branch": "master",
+  "branch": "fix/filtered-search-depth-20261112",
+  "commit": "ec20b74c9aa506553d522d8094431044aa081d8e",
+  "commit_url": "https://github.com/Afloat16/FlagEmbedding/commit/ec20b74c9aa506553d522d8094431044aa081d8e",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1635,
+  "pr_url": "https://github.com/FlagOpen/FlagEmbedding/pull/1635",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nThe configured search or reranking depth is applied before excluded candidates are removed. Dense retrieval can return fewer eligible documents when a query ID also occurs in the corpus. BRIGHT retrieval has the same issue for its per-query exclusion lists, and reranking can discard a valid candidate at the depth boundary when an identical ID occupies an earlier slot.\n\n## Changes\n\n- Retrieve one additional dense candidate when identical IDs are excluded, then cap the eligible output at the requested depth.\n- For BRIGHT, retrieve enough candidates for the largest relevant exclusion list (plus an optional identical ID), bounded by the corpus size. Keep the existing `N/A` sentinel behavior.\n- Remove identical IDs from the reranker candidate sequence before selecting its configured depth.\n\n## Validation\n\nAdded 30 tests using local tiny BERT models, the native embedder/reranker, and FAISS. Retrieval results are compared with a full NumPy similarity ranking after applying the same eligibility rules. Cases cover depths 1, 2, and larger than the corpus; multiple BRIGHT exclusions; queries with and without corpus IDs; and enabled/disabled identical-ID filtering.\n\n- New tests against the unchanged upstream base: **14 failed, 16 passed**.\n- New tests with this change plus the existing Trainer/import checks: **38 passed, 1 skipped**.\n- Ruff on the new test module and `git diff --check` passed.\n\nThis change fixes candidate selection depth. It does not change embedding scores, reranking scores, or exclusion policy.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

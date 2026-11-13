@@ -1,0 +1,25 @@
+{
+  "repository": "huggingface/datasets",
+  "title": "fix(parallel): handle worker sentinels in automatic batching",
+  "base_branch": "main",
+  "branch": "fix/automatic-batches-worker-sentinels-20261112",
+  "commit": "0b87e2e5eabebe00b6e8951714aa00c648eac805",
+  "commit_url": "https://github.com/Afloat16/datasets/commit/0b87e2e5eabebe00b6e8951714aa00c648eac805",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 9022,
+  "pr_url": "https://github.com/huggingface/datasets/pull/9022",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\n`map_nested(..., batched=True, batch_size=None)` uses `num_proc` as a divisor when choosing the batch size. The existing serial sentinel `num_proc=0` therefore raises `ZeroDivisionError`, and joblib's `num_proc=-1` produces a negative batch size and raises `ValueError`. Nonpositive `batch_size` values have the same failure because they use this automatic path.\n\n## Change\n\nUse a positive count only for batch-size arithmetic while passing the original worker argument to the execution backend. For nonpositive worker arguments, the automatic batch contains the whole iterable, consistent with the documented full-batch setting. Positive worker counts and explicit positive batch sizes retain their existing boundaries.\n\n## Validation\n\n- Added 25 native tests for serial/threading/sequential execution, `None`/zero/negative automatic batch settings, empty and singleton inputs, nested training/validation inputs, positive worker batch boundaries, and explicit-batch controls.\n- Unchanged upstream: **16 failed, 9 passed**.\n- Fixed implementation and related existing mapping tests: **72 passed, 27 deselected**.\n- Tests execute the real joblib backend and inspect actual batch contents; input data remains unchanged.\n- Ruff lint, formatting, and `git diff --check` pass.\n\nThis fixes batch-size selection; it does not add negative-worker support to the default multiprocessing backend or change joblib's worker selection.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

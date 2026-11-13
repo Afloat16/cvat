@@ -1,0 +1,43 @@
+{
+  "repository": "huggingface/tokenizers",
+  "title": "fix(unigram): stabilize required-character finalization order",
+  "base_branch": "main",
+  "branch": "fix/unigram-required-character-order-20261112",
+  "commit": "af4f00f0148216afbdfb89d3a96b8ef628c7f87e",
+  "commit_url": "https://github.com/Afloat16/tokenizers/commit/af4f00f0148216afbdfb89d3a96b8ef628c7f87e",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 2689,
+  "pr_url": "https://github.com/huggingface/tokenizers/pull/2689",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nUnigram finalization iterates required characters in hash-set order. Equal-score characters receive hash-dependent token IDs; required characters absent from the learned vocabulary also receive hash-dependent fallback penalties. Identical learned pieces can therefore be finalized into different vocabularies.\n\n## Change\n\nVisit required characters in a stable sorted order before assigning fallback penalties and applying the existing stable score sort. Special-token order, learned scores, candidate selection and EM updates retain their existing behavior. Freshly trained equal-score character IDs become stable; loading an existing model does not run this finalization step.\n\n## Validation\n\nNative Rust on Ubuntu with Rust 1.100.0, at the exact contribution SHA:\n\n- 6 new tests pass. Restoring unchanged upstream gives 5 failures and 1 passing control.\n- All 5 existing Unigram trainer tests pass.\n- Fixed hash seeds are checked against explicit token-ID and fallback-score expectations. Tests also cover native repeated training, Unicode token offsets, unseen initial alphabets, requested special-token order/unknown ID and distinct-score controls.\n- Changed Rust files pass rustfmt.\n- Strict Clippy is blocked by the same two pre-existing `needless_range_loop` diagnostics in unchanged upstream and patched code (`word_cache.rs` and `unigram/lattice.rs`).\n\nRun: https://github.com/Afloat16/tokenizers/actions/runs/43298508797\n\nThe scope is nondeterminism introduced by required-character iteration during finalization. This does not promise identical floating-point reductions across all parallel EM training configurations.\n",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/tokenizers/actions/runs/43298508797",
+      "id": 43298508797,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "e181f6df07cd971a45b5f21a6602cb1285d5920e",
+      "head_branch": "validation/unigram-finalization-order-20261112",
+      "workflow_path": ".github/workflows/validate-unigram-finalization-order.yml",
+      "source_binding": {
+        "pr": 2689,
+        "run": 43298508797,
+        "source_sha": "af4f00f0148216afbdfb89d3a96b8ef628c7f87e",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: af4f00f0148216afbdfb89d3a96b8ef628c7f87e"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

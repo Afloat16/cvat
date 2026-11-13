@@ -1,0 +1,25 @@
+{
+  "repository": "huggingface/datasets",
+  "title": "perf(json): avoid shifting the schema traversal queue",
+  "base_branch": "main",
+  "branch": "perf/json-schema-traversal-queue-20261112",
+  "commit": "acc7c9a5e52bfd9ce34c32cd8fa9dad65f977217",
+  "commit_url": "https://github.com/Afloat16/datasets/commit/acc7c9a5e52bfd9ce34c32cd8fa9dad65f977217",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 9025,
+  "pr_url": "https://github.com/huggingface/datasets/pull/9025",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\n`find_mixed_struct_types_field_paths` uses a list as a breadth-first queue. Removing its first element with `pop(0)` shifts all remaining entries on every visit, adding quadratic queue-management work for wide JSON records.\n\n## Changes\n\nUse `collections.deque` and `popleft()` for the pending paths. The traversal order, detected paths, and input ownership stay the same.\n\n## Validation\n\n- Added 14 semantic controls for null/empty inputs, root handling, mixed nested values, literal field names, wide nested schemas, and native `Dataset.from_json` / streaming JSON loading. All 14 pass on both the upstream code and this change; this is a performance change.\n- With the existing JSON parser module: **47 passed, 11 skipped**. The skipped cases require the optional `teich` dependency.\n- Ruff lint, formatting, and `git diff --check` pass.\n\nA local CPU benchmark builds inputs before timing, performs one warmup and five measured scans, and compares the resulting paths by SHA-256. Every output hash matches:\n\n| Input | Before median | After median |\n| --- | ---: | ---: |\n| 1,000 flat fields | 0.785 ms | 0.801 ms |\n| 10,000 flat fields | 11.444 ms | 9.409 ms |\n| 50,000 flat fields | 206.961 ms | 130.515 ms |\n| 10,000 nested fields | 49.440 ms | 45.665 ms |\n\nThe benefit is reduced queue overhead on wide inputs. The small case did not improve, and these measurements do not establish end-to-end dataset loading or training throughput.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

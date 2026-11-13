@@ -1,0 +1,25 @@
+{
+  "repository": "huggingface/datasets",
+  "title": "fix(stratify): avoid overflowing class-count products",
+  "base_branch": "main",
+  "branch": "fix/stratified-count-overflow-20261112",
+  "commit": "b09aed557466e80782d09064974364343b37dd2b",
+  "commit_url": "https://github.com/Afloat16/datasets/commit/b09aed557466e80782d09064974364343b37dd2b",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 9021,
+  "pr_url": "https://github.com/huggingface/datasets/pull/9021",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\n`approximate_mode` multiplies the integer class counts by the number of requested draws before converting the result to proportions. That intermediate product can overflow even when the individual counts, their sum, and the requested sample size are all valid int64 values. For example, counts `[4_000_000_000, 6_000_000_000]` and 8,000,000,000 draws currently produce `[-489348814, -734023222]` instead of `[3200000000, 4800000000]`.\n\n## Change\n\nCompute class proportions before multiplying by the number of draws. This matches the arithmetic order used by scikit-learn's corresponding allocation routine and keeps the existing floor, remainder ranking, and random tie-breaking logic.\n\n## Validation\n\n- Added 17 tests: six large-count cases compare int64/uint64 inputs against an independent exact `Fraction` allocation, eight small-count cases cover zero/full draws and the random stream after ties, one compares three complete splits with scikit-learn, and two exercise `Dataset.train_test_split` with real `ClassLabel` features.\n- Unchanged upstream: **6 failed, 11 passed**.\n- Fixed implementation, including both existing stratified Dataset tests: **19 passed**.\n- Ruff lint, formatting, and `git diff --check` pass.\n\nThe large-count cases use small count vectors; they do not materialize or benchmark a billion-row dataset. This change prevents the intermediate integer product overflow and does not extend the range of the count sum or float64 precision.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "cleanlab/cleanlab",
+  "title": "Preserve categorical labels when downsampling segmentation masks",
+  "base_branch": "master",
+  "branch": "fix/categorical-segmentation-downsampling-20261112",
+  "commit": "acb54a1a888781a140617c4275bcfe6a57c2924a",
+  "commit_url": "https://github.com/Afloat16/cleanlab/commit/acb54a1a888781a140617c4275bcfe6a57c2924a",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1366,
+  "pr_url": "https://github.com/cleanlab/cleanlab/pull/1366",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nPreserve categorical labels when downsampling semantic segmentation masks. Averaging class IDs and rounding can create a class that is absent from a block: a 2×2 block containing three pixels of class 0 and one of class 3 becomes class 1. The resulting label-issue mask can change merely by renumbering otherwise identical classes.\n\nThe downsampled label is now the most frequent class in each spatial block. Ties select the smallest class, preserving the existing binary tie behavior. Predicted probabilities still use the existing block average and normalization.\n\n## Impact\n\nOnly `cleanlab.segmentation.filter.find_label_issues(..., downsample>1)` changes. The public signature, output shape, probability pooling, and final removal of pixels whose prediction matches their supplied label are unchanged. The tie rule is documented explicitly.\n\nIn a four-image synthetic example with known block majorities, the old implementation differs from the majority-based reference at 14 pixels, marking pixels in the first three clean-majority images and omitting pixels in the fourth corrupted image. The fix agrees with the reference. This is a correctness check, not a claim about benchmark-wide segmentation quality or runtime improvement.\n\n## Testing\n\nAdded 12 native tests covering factors 2 and 3, small/large processing batches, explicit block-majority reference masks, class-ID permutations where each block has a unique majority, three numeric label dtypes, deterministic ties, and the unchanged downsample=1 path. The observation tests call the actual LabelInspector implementation.\n\n- New tests on the unchanged upstream base: **11 failed, 1 passed**.\n- New tests plus the complete existing segmentation test module: **37 passed**.\n- Black and `git diff --check` passed.\n\nThe existing module emits multiprocessing-fork and Matplotlib open-figure warnings; there were no test failures. Tests do not claim class-renumbering invariance for tied modes, whose smallest-class tie rule is intentional.\n\n## References\n\nRelated historical segmentation changes #677, #918, and #1067 were checked; they introduce the API or optimize batching/vectorization and do not correct categorical pooling.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

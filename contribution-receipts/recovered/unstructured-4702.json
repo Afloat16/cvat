@@ -1,0 +1,25 @@
+{
+  "repository": "Unstructured-IO/unstructured",
+  "title": "fix(metrics): preserve caller-owned detection predictions",
+  "base_branch": "main",
+  "branch": "Afloat16/detection-preserve-predictions-20261112",
+  "commit": "7319c06716ee6eb649a8df1069af8044fad9a753",
+  "commit_url": "https://github.com/Afloat16/unstructured/commit/7319c06716ee6eb649a8df1069af8044fad9a753",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 4702,
+  "pr_url": "https://github.com/Unstructured-IO/unstructured/pull/4702",
+  "merged_at": "2026-11-13T04:12:19Z",
+  "closed_at": "2026-11-13T04:12:19Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": true,
+  "body": "## Summary\n\nDetection matching clips predicted boxes in place. On CPU the processor can share the caller's tensor storage, so evaluating one document changes the model predictions supplied by the caller. Reusing the same prediction tensor for a larger page then evaluates previously clipped coordinates and can turn a perfect match into a miss.\n\nClip a local copy of the four box-coordinate columns and use that copy for matching. Scores, classes, caller-owned tensors and their backing storage are preserved. The clipping and matching calculations are otherwise unchanged.\n\n## Validation\n\n- Added 11 native detection-evaluation cases: the unchanged base has 6 failures and 5 passes; all 11 pass after the fix.\n- Covers float32/float64 predictions, contiguous and strided tensors, shared backing storage, out-of-bounds and in-bounds boxes, reuse across both page-size orders, unchanged targets, and pages without targets.\n- Hand-calculated perfect-match metrics verify that local clipping still affects matching correctly.\n- Ruff 0.15.10 check/format and `git diff --check` pass. The full optional-dependency suite and GPU execution were not run.\n\n## Checklist\n\n- [x] Added regression tests for input preservation and repeated evaluation.\n- [x] Preserved matching and score semantics.\n- [ ] Apply the `bug` label.\n\n<!-- This is an auto-generated description by cubic. -->\n<a href=\"https://cubic.dev/pr/Unstructured-IO/unstructured/pull/4702?utm_source=github\" target=\"_blank\" rel=\"noopener noreferrer\" data-no-image-dialog=\"true\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-dark.svg\"><source media=\"(prefers-color-scheme: light)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"><img alt=\"View guided diff\" src=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"></picture></a>\n<!-- End of auto-generated description by cubic. -->\n\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "ddbourgin/numpy-ml",
+  "title": "Preserve signal strides when constructing zero-copy frames",
+  "base_branch": "master",
+  "branch": "fix/strided-signal-framing-20261112",
+  "commit": "46bf4c1a909aea096c68675f977e1ea7b24dcd1e",
+  "commit_url": "https://github.com/Afloat16/numpy-ml/commit/46bf4c1a909aea096c68675f977e1ea7b24dcd1e",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 125,
+  "pr_url": "https://github.com/ddbourgin/numpy-ml/pull/125",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n`to_frames` derives both output strides from `x.itemsize`, assuming contiguous input. For a subsampled or reversed signal view, the resulting frames read different samples from the requested logical signal and can point outside that view.\n\n## Change\nUse the input's actual one-dimensional sample stride for both frame and hop strides. The returned frames remain zero-copy views, with the existing writeability behavior.\n\n## Validation\n- The 12 new tests against unchanged upstream: 8 failed, 4 passed.\n- New tests plus the existing framing test: 13 passed on Python 3.9.25.\n- Slicing-based expected windows cover contiguous, subsampled and reversed views, two hop sizes, both writeability settings, shared storage and mutation aliasing.\n- The reversed-input fixture is placed inside a larger owned buffer, so the old implementation can be tested without reading outside the allocation.\n- Independent read-only review found no blockers.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

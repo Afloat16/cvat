@@ -1,0 +1,41 @@
+{
+  "repository": "sloria/TextBlob",
+  "title": "Reuse lexical sentiment results when returning assessments",
+  "base_branch": "dev",
+  "branch": "fix/single-pass-sentiment-assessments-20261112",
+  "commit": "d1d57c3d39b4733a8ccfbdc59517e45cb6521544",
+  "commit_url": "https://github.com/Afloat16/TextBlob/commit/d1d57c3d39b4733a8ccfbdc59517e45cb6521544",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 622,
+  "pr_url": "https://github.com/sloria/TextBlob/pull/622",
+  "merged_at": null,
+  "closed_at": "2026-11-12T17:11:22Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n`PatternAnalyzer.analyze(..., keep_assessments=True)` evaluates the same text twice: once to retrieve assessments and again to retrieve polarity/subjectivity. Both are already available in the first returned `Score`, so every request for assessments repeats tokenization and lexical analysis.\n\n## Change\nRetain that `Score` and reuse its assessments and two numeric values. Return fields and namedtuple construction remain unchanged.\n\n## Validation\n- The eight new tests on unchanged upstream: 4 failed, 4 passed.\n- New tests plus all existing non-slow sentiment tests: 12 passed, 1 deselected.\n- A counting wrapper still invokes the real lexical analyzer and checks identical scores/assessments for both output modes, including empty and Unicode text.\n- Warm-cache local timing for an 1,830-character text, 40 calls per repeat and five repeats: median 0.046352775 s before, 0.023087732 s after (about 2.01x for this workload and path). This is a local microbenchmark, not a general throughput guarantee.\n- Ruff and `git diff --check` passed. Independent read-only review found no blockers.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  },
+  "closure_audit": {
+    "number": 622,
+    "events": [
+      {
+        "event": "closed",
+        "actor": "sloria",
+        "created_at": "2026-11-12T17:11:23Z",
+        "commit_id": null
+      }
+    ],
+    "issue_comments": [],
+    "reviews": [],
+    "inline_comments": [],
+    "public_closing_reason": null,
+    "interpretation": "Closed by maintainer without a public closing explanation in timeline, issue comments, reviews, or inline review comments."
+  }
+}

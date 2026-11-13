@@ -1,0 +1,25 @@
+{
+  "repository": "Unstructured-IO/unstructured",
+  "title": "fix(staging): export COCO boxes in screen coordinates",
+  "base_branch": "main",
+  "branch": "Afloat16/coco-coordinate-bounds-20261112",
+  "commit": "3f291cdc28bfc14f14298147c0af4a29b9f4eecb",
+  "commit_url": "https://github.com/Afloat16/unstructured/commit/3f291cdc28bfc14f14298147c0af4a29b9f4eecb",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 4697,
+  "pr_url": "https://github.com/Unstructured-IO/unstructured/pull/4697",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nCompute COCO bounding boxes from the bounds of all source vertices in screen coordinates. The current exporter assumes a particular ordering of the first three points and treats every coordinate system as having a top-left origin. This can move a valid rectangle, give a zero height to clockwise vertices, or export Cartesian coordinates on the wrong side of the page.\n\nUse the existing coordinate-system conversion to a `PixelSpace` of the same dimensions, then calculate the minimum corner, width, and height. Reuse those dimensions for the existing bounding-box area. Missing coordinates retain their empty-box/`None`-area representation, and source metadata is unchanged.\n\n## Validation\n\n- Added 13 regression cases; unchanged upstream produces 11 failures and 2 passes.\n- Cover four vertex orders in PixelSpace and PointSpace, triangle and diamond bounds, opposite corners, missing coordinates, and source metadata preservation.\n- A native `pycocotools.mask.iou` calculation confirms unit overlap with the independently specified screen-space rectangle.\n- New tests plus the existing COCO export and coordinate-system module: **30 passed** on Python 3.12. The full repository suite was not run.\n- Lockfile-pinned Ruff 0.15.10 check/format and `git diff --check` passed.\n\n## Checklist\n\n- [x] The PR title is a user-facing release-note entry with a conventional commit prefix.\n- [ ] Please apply the `bug` category label during maintainer triage.\n- [x] No changelog edit or version bump; this restores the COCO bounding-box convention.\n\n<!-- This is an auto-generated description by cubic. -->\n<a href=\"https://cubic.dev/pr/Unstructured-IO/unstructured/pull/4697?utm_source=github\" target=\"_blank\" rel=\"noopener noreferrer\" data-no-image-dialog=\"true\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-dark.svg\"><source media=\"(prefers-color-scheme: light)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"><img alt=\"View guided diff\" src=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"></picture></a>\n<!-- End of auto-generated description by cubic. -->\n\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "Unstructured-IO/unstructured",
+  "title": "fix(metrics): separate threshold precision from the AP envelope",
+  "base_branch": "main",
+  "branch": "Afloat16/detection-threshold-precision-20261112",
+  "commit": "f944cc34a3db5e1409ca2773162c0cb92df9a79d",
+  "commit_url": "https://github.com/Afloat16/unstructured/commit/f944cc34a3db5e1409ca2773162c0cb92df9a79d",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 4703,
+  "pr_url": "https://github.com/Unstructured-IO/unstructured/pull/4703",
+  "merged_at": "2026-11-13T02:28:26Z",
+  "closed_at": "2026-11-13T02:28:26Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": true,
+  "body": "## Summary\n\nFixed-confidence detection precision currently uses the interpolated precision envelope intended for average precision. This lets correct predictions below the selected score threshold inflate the reported precision and F1 for detections above it.\n\nFor example, with a high-confidence false positive followed by true positives at scores 0.8 and 0.05, threshold 0.1 accepts one true positive and one false positive. Precision should be 1/2, but the AP envelope makes it 2/3.\n\nCompute fixed-threshold precision from the actual cumulative TP/FP counts, then construct the interpolated envelope only for AP. Recall, detection matching and AP remain unchanged.\n\n## Validation\n\n- Added 13 native `get_metrics` cases: 7 fail and 6 pass on the unchanged base; all 13 pass with this fix.\n- Hand-calculated precision, recall, F1 and AP cover six thresholds, exact-score boundaries, two input orderings and two-class macro averaging.\n- The AP checks remain identical at every confidence threshold.\n- Ruff 0.15.10 check/format and `git diff --check` pass. The full optional-dependency suite was not run.\n\n## Checklist\n\n- [x] Added regression tests for corrected precision/F1 and unchanged AP.\n- [x] Kept detection matching and IoU thresholds unchanged.\n- [ ] Apply the `bug` label.\n\n<!-- This is an auto-generated description by cubic. -->\n<a href=\"https://cubic.dev/pr/Unstructured-IO/unstructured/pull/4703?utm_source=github\" target=\"_blank\" rel=\"noopener noreferrer\" data-no-image-dialog=\"true\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-dark.svg\"><source media=\"(prefers-color-scheme: light)\" srcset=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"><img alt=\"View guided diff\" src=\"https://www.cubic.dev/buttons/review-in-cubic-light.svg\"></picture></a>\n<!-- End of auto-generated description by cubic. -->\n\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

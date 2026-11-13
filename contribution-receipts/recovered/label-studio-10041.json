@@ -1,0 +1,43 @@
+{
+  "repository": "HumanSignal/label-studio",
+  "title": "fix: preserve apostrophes in inline JSON imports",
+  "base_branch": "develop",
+  "branch": "fix/inline-json-apostrophes-20261112",
+  "commit": "967977d2c7e0e1cca0612e2e481642bf4351f11f",
+  "commit_url": "https://github.com/Afloat16/label-studio/commit/967977d2c7e0e1cca0612e2e481642bf4351f11f",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 10041,
+  "pr_url": "https://github.com/HumanSignal/label-studio/pull/10041",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Reason for change\n\nCloses #10040.\n\nValid inline JSON in the form-encoded `url` field can contain apostrophes in text or object keys. The shared parser currently replaces every apostrophe before parsing, so content such as `don't` becomes invalid JSON. The synchronous, asynchronous, and streaming loaders then incorrectly take the download-URL path.\n\nParse the original JSON first and use the existing single-quote normalization only as a fallback after a parse failure. The file-import paths retain the original uploaded bytes.\n\n## Tests and acceptance criteria\n\n- Valid JSON preserves apostrophes, escaped double quotes, backslashes, Unicode, and nested values.\n- Legacy single-quoted helper inputs and invalid-input `None` behavior are preserved.\n- Native form parsing plus all three import loaders produce the expected tasks and unchanged uploaded file bytes.\n- Exact final commit: `967977d2c7e0e1cca0612e2e481642bf4351f11f`.\n- SQLite and PostgreSQL16 each pass 17 new tests and 6 existing import/file-size controls.\n- On the original implementation, the new suite has 7 failures and 10 passing controls on each database.\n- Ruff0.15.1 lint and format checks pass.\n\nNative validation: https://github.com/Afloat16/label-studio/actions/runs/43304481562\n\n## Scope and risks\n\nThe change is limited to deciding whether an input is inline JSON. URL validation, external downloads, task-count rules, and the existing legacy fallback are unchanged. Validation uses real database and local file-import paths; it does not involve an external download service.\n",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/label-studio/actions/runs/43304481562",
+      "id": 43304481562,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "f8acfbef331dbdd91b847646daa8f9b26a145be1",
+      "head_branch": "validation/inline-json-apostrophes-20261112",
+      "workflow_path": ".github/workflows/validate-inline-json-apostrophes.yml",
+      "source_binding": {
+        "pr": 10041,
+        "run": 43304481562,
+        "source_sha": "967977d2c7e0e1cca0612e2e481642bf4351f11f",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: 967977d2c7e0e1cca0612e2e481642bf4351f11f"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "huggingface/datasets",
+  "title": "fix(csv): honor parser modes that cannot iterate chunks",
+  "base_branch": "main",
+  "branch": "fix/csv-noniterator-parser-modes-20261112",
+  "commit": "5e7b9d0dcb4327099f3f1cd6e42af7c11771f723",
+  "commit_url": "https://github.com/Afloat16/datasets/commit/5e7b9d0dcb4327099f3f1cd6e42af7c11771f723",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 9018,
+  "pr_url": "https://github.com/huggingface/datasets/pull/9018",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nThe CSV builder always passes `iterator=True` and `chunksize` to pandas. This makes two existing configuration options unusable: `engine=\"pyarrow\"` rejects the iterator argument, and `skipfooter` is unsupported by pandas' incremental reader. Both fail before yielding any training examples, including through `Dataset.from_csv` and streaming `load_dataset`.\n\n## Change\n\nFor these two parser modes, read each file with pandas without iterator/chunksize options, then slice the resulting DataFrame into the requested Arrow batch sizes. Preserve a schema-bearing empty table for header-only inputs. Keep the existing incremental path for the default, C and ordinary Python parser modes, and keep pandas' error when an explicitly selected engine cannot parse the requested footer.\n\nThese parser modes necessarily materialize each input file in pandas before yielding Arrow batches; selecting the streaming Dataset API does not make their per-file parsing memory-bounded. Existing incremental modes retain their behavior.\n\n## Validation\n\n- 25 new native tests: **21 failed, 4 passed** on the upstream implementation; all 25 pass after the fix.\n- New tests and the complete existing CSV module: **39 passed**. The 8 warnings are pandas' normal notice when it automatically selects the Python engine for `skipfooter`.\n- Tests cover PyArrow, explicit and inferred Python footer handling; batch sizes 1, 2 and `None`; UTF-8 text; typed `Dataset.from_csv`; actual streaming `load_dataset`; header-only input; multiple files; and unchanged ordinary parser behavior.\n- Ruff checks, Ruff formatting checks and `git diff --check` pass.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

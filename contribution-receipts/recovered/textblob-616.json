@@ -1,0 +1,41 @@
+{
+  "repository": "sloria/TextBlob",
+  "title": "Preserve the positive class prior when updating training data",
+  "base_branch": "dev",
+  "branch": "fix/preserve-positive-prior-20261112",
+  "commit": "77d1217fc40afcf965b11b5a91a65679945c1afa",
+  "commit_url": "https://github.com/Afloat16/TextBlob/commit/77d1217fc40afcf965b11b5a91a65679945c1afa",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 616,
+  "pr_url": "https://github.com/sloria/TextBlob/pull/616",
+  "merged_at": null,
+  "closed_at": "2026-11-12T17:11:05Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\n`PositiveNaiveBayesClassifier.update()` silently replaces an existing positive-class prior with 0.5 when the caller only adds training data. A classifier initialized with a prior of 0.2 therefore changes its prior to 0.5 on an ordinary update. This also changes its learned posterior probabilities. The defect was found through code inspection and reproduced with actual NLTK training.\n\n## Change\n\nPreserve the current prior when `positive_prob_prior` is omitted or `None`. Continue to accept an explicit new prior, including on later updates. The constructor's default remains 0.5. Document the update behavior and add the contributor entry requested by the contribution guide.\n\n## Validation\n\n- `PYTHONPATH=src python -m pytest tests/test_positive_classifier_prior.py tests/test_formats.py tests/test_utils.py -q`: 27 passed.\n- The 10 new regression cases on unchanged dev: 9 failed, 1 passed; with the fix: all 10 pass.\n- Regressions train real NLTK models on tokenized documents and compare the updated posteriors with fresh training at the intended prior. They cover positive-only, unlabeled-only, combined and empty updates, explicit prior replacement, subsequent updates and the default prior.\n- Ruff check, Ruff format check and `git diff --check`: passed.\n\nPython 3.12.14, NLTK 3.10.4, pytest 9.2.0. The broader corpus-dependent classifier tests could not complete because `punkt_tab` is unavailable and NLTK's downloader rejects this environment's proxy. The new tests require no downloaded corpora.\n",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  },
+  "closure_audit": {
+    "number": 616,
+    "events": [
+      {
+        "event": "closed",
+        "actor": "sloria",
+        "created_at": "2026-11-12T17:11:06Z",
+        "commit_id": null
+      }
+    ],
+    "issue_comments": [],
+    "reviews": [],
+    "inline_comments": [],
+    "public_closing_reason": null,
+    "interpretation": "Closed by maintainer without a public closing explanation in timeline, issue comments, reviews, or inline review comments."
+  }
+}

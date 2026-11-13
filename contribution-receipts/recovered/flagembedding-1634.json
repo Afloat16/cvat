@@ -1,0 +1,25 @@
+{
+  "repository": "FlagOpen/FlagEmbedding",
+  "title": "Preserve retrieval candidates when evaluating rerankers",
+  "base_branch": "master",
+  "branch": "fix/preserve-reranking-candidates-20261112",
+  "commit": "ba599e0562ab5839584956dbd8209aab1185d18e",
+  "commit_url": "https://github.com/Afloat16/FlagEmbedding/commit/ba599e0562ab5839584956dbd8209aab1185d18e",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1634,
+  "pr_url": "https://github.com/FlagOpen/FlagEmbedding/pull/1634",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\n`EvalReranker` replaces each query's candidate mapping in the supplied `search_results` dictionary with a truncated top-k mapping. Reusing the same retrieval results for another reranker or depth silently loses candidates: a top-1 run followed by top-3 can only rerank the one candidate left by the first call.\n\n## Changes\n\nBuild the top-k candidate mappings locally without modifying the caller's retrieval results. Ranking, truncation, identical-ID filtering, and score computation keep their existing order and behavior.\n\n## Validation\n\n- Eight native regression cases use a tiny BERT sequence classifier and local BERT vocabulary saved to disk, then run the actual `BaseReranker` inference path through `EvalReranker`.\n- Check the original result values and nested mappings, top-1/top-2/top-4 selections with identical-ID filtering on/off, and comparisons at increasing/decreasing reranking depths.\n- Exact final baseline: **7 failed, 1 passed**. After the patch: **8 passed**.\n- New cases plus existing Trainer/import checks: **16 passed, 1 skipped**. The skipped check requires Transformers 5.x.\n- Tested with PyTorch 2.15.0+cpu, Transformers 4.57.1, FAISS CPU 1.16.0 and pytrec-eval-terrier 0.5.11. Tests skip cleanly when optional evaluation dependencies are absent; they were present for these runs. No remote model download or GPU execution was used.\n- Ruff and `git diff --check` pass.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "ddbourgin/numpy-ml",
+  "title": "Preserve complete UTF-8 bytes when splitting punctuation",
+  "base_branch": "master",
+  "branch": "fix/byte-punctuation-boundaries-20261112",
+  "commit": "22254636cc6427b15353d8a12107c4b293a13433",
+  "commit_url": "https://github.com/Afloat16/numpy-ml/commit/22254636cc6427b15353d8a12107c4b293a13433",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 126,
+  "pr_url": "https://github.com/ddbourgin/numpy-ml/pull/126",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n`tokenize_bytes_raw(..., splitter=\"punctuation\")` applies its punctuation regex to decimal byte values without numeric boundaries. ASCII punctuation codes can match inside unrelated UTF-8 bytes: `95` is matched inside `195` and `40` inside `240`. Splitting text such as `café!` or `🙂?` therefore corrupts the original bytes.\n\n## Change\nRequire a complete decimal byte before treating it as punctuation. Preserve the existing capture group, ASCII punctuation splitting and empty-piece behavior.\n\n## Validation\n- The 13 new tests against unchanged upstream: 4 failed, 9 passed.\n- New tests plus the existing Huffman test: 14 passed on Python 3.9.25 with native package imports.\n- UTF-8 byte reconstruction and decoding cover accented Latin, Greek and emoji input; a hard-coded byte-group example verifies the actual split boundaries. ASCII, decimal text, empty text and `splitter=None` are controls.\n- Black and `git diff --check` passed; independent read-only review found no blockers.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

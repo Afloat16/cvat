@@ -1,0 +1,41 @@
+{
+  "repository": "sloria/TextBlob",
+  "title": "Normalize pretokenized sentiment words consistently with text",
+  "base_branch": "dev",
+  "branch": "fix/pretokenized-sentiment-case-20261112",
+  "commit": "e826598fa26b2ffb0f69a9363c2524799f720b44",
+  "commit_url": "https://github.com/Afloat16/TextBlob/commit/e826598fa26b2ffb0f69a9363c2524799f720b44",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 623,
+  "pr_url": "https://github.com/sloria/TextBlob/pull/623",
+  "merged_at": null,
+  "closed_at": "2026-11-12T17:11:20Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\nThe lexical sentiment engine lowercases string input before lookup, but skips that normalization for a list of tokens. Equivalent pretokenized text can therefore lose known sentiment words, negation, degree modifiers and case-sensitive emoticons. For example, `['GOOD']` scores as neutral while `'GOOD'` has positive polarity.\n\n## Change\nApply the same lowercase normalization to ordered token-list input before assessing it. Dictionary/term weighting and punctuation rules are unchanged.\n\n## Validation\n- The nine new tests on unchanged upstream: 7 failed, 2 passed.\n- New tests plus all existing non-slow sentiment tests: 13 passed, 1 deselected.\n- Actual bundled-English results are compared with equivalent string input, including negation, modifiers, emoticons, lowercase and empty controls. A hand-defined accented Unicode lexicon verifies non-ASCII normalization.\n- Ruff and `git diff --check` passed. Independent read-only review found no blockers.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  },
+  "closure_audit": {
+    "number": 623,
+    "events": [
+      {
+        "event": "closed",
+        "actor": "sloria",
+        "created_at": "2026-11-12T17:11:21Z",
+        "commit_id": null
+      }
+    ],
+    "issue_comments": [],
+    "reviews": [],
+    "inline_comments": [],
+    "public_closing_reason": null,
+    "interpretation": "Closed by maintainer without a public closing explanation in timeline, issue comments, reviews, or inline review comments."
+  }
+}

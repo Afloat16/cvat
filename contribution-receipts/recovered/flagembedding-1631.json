@@ -1,0 +1,25 @@
+{
+  "repository": "FlagOpen/FlagEmbedding",
+  "title": "Avoid cross-query score matrices for local-negative training",
+  "base_branch": "master",
+  "branch": "perf/local-negative-score-matrix-20261112",
+  "commit": "efeca600b61fa87fbe3da039bd31b9311bd981f2",
+  "commit_url": "https://github.com/Afloat16/FlagEmbedding/commit/efeca600b61fa87fbe3da039bd31b9311bd981f2",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1631,
+  "pr_url": "https://github.com/FlagOpen/FlagEmbedding/pull/1631",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nWhen dense embedder training disables in-batch negatives, the default local-scoring path still builds scores for every query against every passage and then selects each query's own passage group. For B queries and G passages per query, this materializes a B × (B × G) matrix although the objective uses only B × G entries.\n\n## Changes\n\nThe three built-in dense embedder models use their existing batched similarity operation to compute each query's own passage group directly. The abstract embedder's two-dimensional scoring contract stays unchanged. Explicit scoring callbacks and dense subclasses that override `compute_score` retain the original path, so the optimization does not add a new shape requirement to custom models.\n\nThis is separate from #1609, which corrects M3 local-target and ensemble layouts. This patch leaves those loss and M3 callback paths unchanged.\n\n## Validation\n\n- The 31 new cases produce **2 allocation failures and 29 passes** on the unchanged base, and **31 passes** after this patch.\n- Compare local scores and embedding gradients with independent per-query dot products in float32/float64, including non-contiguous tensors.\n- Native tiny BERT, GPT-2 and decoder ICL training preserves supervised/KL losses and parameter gradients, with and without MRL. Native forward gradient comparisons use float64; the existing MRL float32 loss accumulator is retained.\n- Custom callbacks, a custom two-dimensional abstract embedder, and custom scoring overrides of all three dense model classes keep their existing behavior.\n- CPU profiling at B=128, G=8, D=16 shows the largest operator allocation in local scoring falling from **524,288 to 4,096 bytes** for float32 and from **1,048,576 to 8,192 bytes** for float64. These figures cover this scoring operation, not total model memory or GPU throughput.\n- New tests plus existing Trainer/import modules: **39 passed, 1 skipped** on PyTorch 2.15.0+cpu and Transformers 4.57.1. The skipped check requires Transformers 5.x. No pretrained checkpoint or CUDA benchmark was used.\n- Ruff and `git diff --check` pass.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

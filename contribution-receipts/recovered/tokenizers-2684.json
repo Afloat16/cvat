@@ -1,0 +1,43 @@
+{
+  "repository": "huggingface/tokenizers",
+  "title": "fix(unigram): widen aggregate training frequency counters",
+  "base_branch": "main",
+  "branch": "fix/unigram-aggregate-frequency-counts-20261112",
+  "commit": "c8101b0e09c53550c3aa3f4b9189fe878e82b182",
+  "commit_url": "https://github.com/Afloat16/tokenizers/commit/c8101b0e09c53550c3aa3f4b9189fe878e82b182",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 2684,
+  "pr_url": "https://github.com/huggingface/tokenizers/pull/2684",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "Unigram training accepts a u32 count for each distinct word, but its character-frequency accumulator and total corpus-frequency accumulator are also u32. Valid per-word counts can overflow these aggregates. For example, \"aa\" occurring 3,000,000,000 times contributes 6,000,000,000 occurrences of \"a\"; a corpus containing several independently valid word counts can also exceed u32::MAX.\n\nAccumulate these two quantities in u64 and convert to f64 at the existing probability calculations. The per-word input and serialized trainer types remain unchanged. This keeps weighted seed probabilities and the E-step normalization denominator valid without expanding the counted corpus.\n\nThe native regression suite checks hand-calculated seed probabilities, the weighted log-likelihood objective and expected counts, actual training from counted words, trainer serialization, Unicode characters, and equivalence to a small expanded corpus.\n\nValidation at exact commit `c8101b0e09c53550c3aa3f4b9189fe878e82b182` on GitHub-hosted Ubuntu:\n- New regression tests: 6 passed. The original production source with the same test module gives 3 failures and 3 passes.\n- Existing Unigram trainer tests: 5 passed.\n- Rustfmt passed. Strict Clippy reports the same two pre-existing needless_range_loop diagnostics on the original and patched sources (word_cache.rs:147 and lattice.rs:379); the validation compares both results explicitly.\n\n[Native baseline/patched run and logs](https://github.com/Afloat16/tokenizers/actions/runs/43283917302). The validation workflow is isolated from this PR. The test corpus is represented by counts; no multi-billion-row dataset is materialized. Substring candidate scores, per-word counters and the diagnostic token counter are outside this change.",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/tokenizers/actions/runs/43283917302",
+      "id": 43283917302,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "5051a43c6a2ce1581e81206fc93691ee54321a62",
+      "head_branch": "validation/unigram-aggregate-counts-20261112",
+      "workflow_path": ".github/workflows/validate-unigram-aggregate-counts.yml",
+      "source_binding": {
+        "pr": 2684,
+        "run": 43283917302,
+        "source_sha": "c8101b0e09c53550c3aa3f4b9189fe878e82b182",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: c8101b0e09c53550c3aa3f4b9189fe878e82b182"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

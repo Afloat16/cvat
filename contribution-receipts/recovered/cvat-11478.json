@@ -1,0 +1,43 @@
+{
+  "repository": "cvat-ai/cvat",
+  "title": "Validate mask run totals before allocating decoded pixels",
+  "base_branch": "develop",
+  "branch": "fix/validate-mask-run-totals-before-allocation-20261112",
+  "commit": "cda23a2909737cd74b97ff5f3c26fcb054233cfe",
+  "commit_url": "https://github.com/Afloat16/cvat/commit/cda23a2909737cd74b97ff5f3c26fcb054233cfe",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 11478,
+  "pr_url": "https://github.com/cvat-ai/cvat/pull/11478",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "### Motivation and context\n\nCloses #11477.\n\n`decode_mask` expands all run lengths with `np.repeat` before checking whether their total matches the bounding-box area. A malformed run can therefore allocate a large bitmap that is immediately rejected. Totals beyond NumPy's index range reach a lower-level conversion error instead of the intended size validation.\n\nCheck the Python-integer sum after validating the box and before expanding any pixels. Keep the existing expansion and placement for valid encodings.\n\n### How has this been tested?\n\n- Native generated SDK; exact final commit `cda23a2909737cd74b97ff5f3c26fcb054233cfe`.\n- Final validation: https://github.com/Afloat16/cvat/actions/runs/43304612924\n- 18 new regressions pass. The original source has 4 failures and 14 passing controls.\n- 48 existing mask/attribute SDK unit tests pass.\n- Black and isort checks pass.\n\nThe new tests trace the real allocation for bounded one- and two-million-pixel malformed runs against a four-pixel bounding box. They also check out-of-range totals, zero-length runs, integer-valued float counts, negative-run rejection, an offset mask with hand-written expected pixels, and a native encode/decode round trip.\n\nThe allocation bound applies to rejecting invalid totals. This PR makes no claim about valid-mask decoding throughput, a running CVAT service, or GPU performance.\n\n### Checklist\n\n- [x] Based on `develop`.\n- [x] Added regression tests and a changelog fragment.\n- [x] Valid masks retain their existing pixels and shape.\n- [x] Documentation impact: no public API change; the existing validation is performed before allocation.\n",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/cvat/actions/runs/43304612924",
+      "id": 43304612924,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "3f147677c545793bdf2c20db8b32e112032a442d",
+      "head_branch": "validation/mask-decode-validation-20261112",
+      "workflow_path": ".github/workflows/validate-mask-decode-validation.yml",
+      "source_binding": {
+        "pr": 11478,
+        "run": 43304612924,
+        "source_sha": "cda23a2909737cd74b97ff5f3c26fcb054233cfe",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: cda23a2909737cd74b97ff5f3c26fcb054233cfe"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

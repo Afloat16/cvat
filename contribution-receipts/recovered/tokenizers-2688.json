@@ -1,0 +1,43 @@
+{
+  "repository": "huggingface/tokenizers",
+  "title": "fix(unigram): preserve sampling settings in canonical JSON",
+  "base_branch": "main",
+  "branch": "fix/unigram-sampling-json-roundtrip-20261112",
+  "commit": "8f2deb6d8295e1c0faa2410f210ffc9eae0c1087",
+  "commit_url": "https://github.com/Afloat16/tokenizers/commit/8f2deb6d8295e1c0faa2410f210ffc9eae0c1087",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 2688,
+  "pr_url": "https://github.com/huggingface/tokenizers/pull/2688",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nSerializing a configured Unigram model omits `alpha` and `nbest_size`; the reader also ignores these fields. Reloading a sampling tokenizer therefore silently switches to deterministic tokenization, disabling its subword sampling behavior.\n\n## Change\n\nRead and write the optional sampling settings, retaining explicit zeros. Existing files that omit them retain their deterministic defaults, and the writer omits unset fields. Invalid field types and nonfinite serialized temperatures return errors through the existing JSON contracts. Document the optional canonical fields.\n\n## Validation\n\nNative Rust tests on Ubuntu with Rust 1.100.0, checked out at the exact contribution SHA:\n\n- 9 new regressions pass; restoring the unchanged upstream reader and writer gives 8 failures and 1 passing control.\n- 42 existing serialization tests pass, with 1 existing ignored test.\n- Cases cover optional/zero combinations, exact temperature bits, independent JSON field checks, missing/null defaults, actual PipelineTokenizer sampling after reload, single-best controls, malformed types, and nonfinite serialization errors.\n- Changed Rust files pass rustfmt. Strict Clippy is blocked on both unchanged upstream and the patch by the same two pre-existing `needless_range_loop` diagnostics in `word_cache.rs` and `unigram/lattice.rs`.\n\nNative validation: https://github.com/Afloat16/tokenizers/actions/runs/43290673728\n\nThis changes configuration persistence; it does not change Unigram sampling formulas.",
+  "native_runs": [
+    {
+      "url": "https://github.com/Afloat16/tokenizers/actions/runs/43290673728",
+      "id": 43290673728,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "d66cd46e3a4bb9aa36863a115d57d74680d288bd",
+      "head_branch": "validation/unigram-sampling-json-20261112",
+      "workflow_path": ".github/workflows/data-unigram-sampling-json.yml",
+      "source_binding": {
+        "pr": 2688,
+        "run": 43290673728,
+        "source_sha": "8f2deb6d8295e1c0faa2410f210ffc9eae0c1087",
+        "exact_source_mentioned": true,
+        "checkout_refs": [
+          "ref: 8f2deb6d8295e1c0faa2410f210ffc9eae0c1087"
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": true
+  }
+}

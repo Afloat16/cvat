@@ -1,0 +1,25 @@
+{
+  "repository": "ddbourgin/numpy-ml",
+  "title": "Replace learned byte-pair codebooks deterministically on refit",
+  "base_branch": "master",
+  "branch": "fix/refitted-bpe-codebooks-20261112",
+  "commit": "4108dc68f468b356d2e21ce183286115a29cf4c7",
+  "commit_url": "https://github.com/Afloat16/numpy-ml/commit/4108dc68f468b356d2e21ce183286115a29cf4c7",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 122,
+  "pr_url": "https://github.com/ddbourgin/numpy-ml/pull/122",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nFitting a BytePairEncoder again overwrites token IDs without removing the old byte-to-token entries. After learning ab and then xy, encoding and decoding abab can silently return xyxy. Learned token IDs also inherit the iteration order of a set, so identical training data can produce different codebooks under different Python hash seeds.\n\n## Change\n\nAfter the new vocabulary has been learned, replace both maps with the base 256-byte alphabet and add the current learned tokens in a stable order. This keeps the two maps consistent and makes successful refits replace the previous codebook. The existing merge budget and merge-selection algorithm remain unchanged.\n\n## Validation\n\n`PYTHONPATH=. python -m pytest numpy_ml/tests/test_bpe_codebook_refit.py numpy_ml/tests/test_preprocessing.py::test_huffman numpy_ml/tests/test_preprocessing.py::test_tfidf -q`: 5 passed.\n\nAll three new regression cases fail on unchanged master b0359af. They cover refitting with zero and one permitted merge, comparison with a fresh encoder, exact round-trips for old/new/unseen Unicode text, and native subprocesses with PYTHONHASHSEED values 1, 7 and 11.\n\nPython 3.9.25 and NumPy 1.26.4, normal package imports. Black checks on the changed source region and new test file, plus git diff --check, pass. Full repository tests and large-corpus timing were not run.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "repository": "ddbourgin/numpy-ml",
+  "title": "Restore dense and sparse feature-hashing matrices",
+  "base_branch": "master",
+  "branch": "fix/feature-hasher-matrices-20261112",
+  "commit": "6b37a2956513d48c48d1dd4cf7b372b8dcc46193",
+  "commit_url": "https://github.com/Afloat16/numpy-ml/commit/6b37a2956513d48c48d1dd4cf7b372b8dcc46193",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 119,
+  "pr_url": "https://github.com/ddbourgin/numpy-ml/pull/119",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\n\nBoth documented output modes of FeatureHasher fail before producing a feature matrix. The dense path passes the feature dimension as the dtype argument to np.zeros. The sparse path hands SciPy a one-shot zip object for coordinates; ordinary nonempty inputs and empty inputs raise a coordinate-count error.\n\n## Change\n\nAllocate the dense output with its two-dimensional shape. Build explicit row and column lists for the sparse output. Keep the existing hash mapping, values and collision accumulation.\n\n## Validation\n\n`PYTHONPATH=. python -m pytest numpy_ml/tests/test_feature_hasher.py -q`: 14 passed. All 14 cases fail on unchanged master b0359af.\n\nThe tests use fixed MD5 bucket expectations and cover dense/CSR output, dict and list inputs, byte and tuple feature keys, collisions, negative and fractional values, empty rows and an empty collection. Native package imports on Python 3.9.25, NumPy 1.26.4 and SciPy 1.13.1. Black checks on the changed source region and new tests, plus git diff --check, pass.\n\nThe full repository suite was not rerun for this isolated matrix-construction change.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}

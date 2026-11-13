@@ -1,0 +1,41 @@
+{
+  "repository": "sloria/TextBlob",
+  "title": "Retain single-pass classifier training rows and token sequences",
+  "base_branch": "dev",
+  "branch": "fix/iterable-classifier-training-data-20261112",
+  "commit": "54bf0503ef5a020a7ea01e7448441b2f36a6db06",
+  "commit_url": "https://github.com/Afloat16/TextBlob/commit/54bf0503ef5a020a7ea01e7448441b2f36a6db06",
+  "pr_created": true,
+  "pr_status": "closed",
+  "pr_number": 619,
+  "pr_url": "https://github.com/sloria/TextBlob/pull/619",
+  "merged_at": null,
+  "closed_at": "2026-11-12T17:11:12Z",
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Problem\nClassifier training reads its dataset once to build the vocabulary and again to extract features. A single-pass row iterator is exhausted by the first read, and single-pass token sequences become empty documents. During `update`, list extension consumes a row iterator before its new vocabulary is collected. These cases produce missing training data or silently empty features.\n\n## Change\nMaterialize training rows and non-string token sequences once before the existing repeated reads, both on construction and update. Strings keep their tokenizer path. Retraining and the underlying NLTK algorithms are unchanged.\n\n## Validation\n- The final 16 new tests on unchanged upstream: 12 failed, 4 passed.\n- New tests plus existing format and utility tests: 33 passed.\n- Actual NaiveBayes and DecisionTree training cover outer row lists/iterators and inner token lists/iterators. A hand-built feature matrix verifies retained vocabulary and observations; updated predictions are compared with a fresh model trained from equivalent reusable data.\n- Ruff and `git diff --check` passed. Independent read-only review found no blockers.\n- Broader corpus-dependent classifier tests remain limited by unavailable NLTK data; all new cases use the supported pretokenized input path.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  },
+  "closure_audit": {
+    "number": 619,
+    "events": [
+      {
+        "event": "closed",
+        "actor": "sloria",
+        "created_at": "2026-11-12T17:11:13Z",
+        "commit_id": null
+      }
+    ],
+    "issue_comments": [],
+    "reviews": [],
+    "inline_comments": [],
+    "public_closing_reason": null,
+    "interpretation": "Closed by maintainer without a public closing explanation in timeline, issue comments, reviews, or inline review comments."
+  }
+}

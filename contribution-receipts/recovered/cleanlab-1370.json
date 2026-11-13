@@ -1,0 +1,25 @@
+{
+  "repository": "cleanlab/cleanlab",
+  "title": "Promote bounding-box arithmetic before computing geometry",
+  "base_branch": "master",
+  "branch": "fix/safe-bounding-box-arithmetic-20261112",
+  "commit": "18330d8a0e6b3233d7ff41d39da4ad5d817aa1cf",
+  "commit_url": "https://github.com/Afloat16/cleanlab/commit/18330d8a0e6b3233d7ff41d39da4ad5d817aa1cf",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_number": 1370,
+  "pr_url": "https://github.com/cleanlab/cleanlab/pull/1370",
+  "merged_at": null,
+  "closed_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "body": "## Summary\n\nPerform bounding-box coordinate arithmetic in a type that can represent its intermediate results. Scalar box operations now convert NumPy scalars individually to Python scalars before subtraction, addition and multiplication. Batched areas use exact integer arithmetic for integer coordinates and at least float64 arithmetic for floating-point coordinates, returning a numeric floating-point array.\n\n## Impact\n\nCoordinate values that fit in their storage dtype can still overflow when computing an area or a center. For example, a 600×600 box stored as uint16 has a valid set of coordinates but its area exceeds uint16. Such overflow changes IoU, center similarity, box dimensions and ultimately label-quality scores: two perfectly matching annotations can receive an incorrect score.\n\nConverting each scalar independently also preserves mixed Python integer/float lists and one-pixel integer boxes positioned above 2**53; it does not first round all their coordinates through float64. Inputs are not modified.\n\n## Testing\n\n- Added 20 regression cases: upstream base has 14 failures and 6 passes; the fix passes all 20.\n- Covered uint8/uint16/int16/int32/int64 and float16/32/64 geometry, signed coordinate differences, center-boundary overflow, integer offsets above 2**53, mixed Python scalar lists, and the actual `get_label_quality_scores` API with matching predictions.\n- Existing object-detection tests: 48 passed and 2 failed on both the base and this branch. Both unchanged failures use NumPy's removed `in1d`; that separate compatibility change already exists in #1344 and is not included here. Combined new/existing run: 68 passed, 2 unchanged failures.\n- Project-pinned Black 25.12.0 and `git diff --check` passed.\n\n## Links/References\n\nChecked original object-detection/area changes #676 and #968, division safeguards #1114, the vectorization proposal #1098, and #1344. All-state searches for IoU overflow, integer bounding boxes and bounding-box dtype changes found no equivalent arithmetic correction.",
+  "native_runs": [],
+  "verification": {
+    "retrieved_at": "2026-11-13T11:29:00Z",
+    "source": "GitHub REST pull-request metadata and public PR body",
+    "local_receipt_preserved": false,
+    "native_run_state_refreshed": false,
+    "local_validation_evidence": "Original native local test results are recorded in the PR body. Earlier transient raw logs are not present in the current workspace; no hosted run is invented."
+  }
+}
