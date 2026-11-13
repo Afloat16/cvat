@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 55e474aceb896db1d196acb296c8516ff4861862
+          ref: 26c9a21f8463ab8eab0be5ed7395340f0533d7d9
           fetch-depth: 3
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
@@ -60,7 +60,7 @@ jobs:
                       start = 1 + index % 16
                       end = size - 2
                       shapes.append(models.LabeledShape(
-                          frame=0, label_id=1, type=models.ShapeType("polygon"),
+                          frame=0, label_id=1, type=models.ShapeType("polygon"), rotation=0,
                           points=[start, start, end, start, end, end, start, end],
                       ))
                   return Target(
@@ -123,7 +123,7 @@ jobs:
           set -o pipefail
           python -m pytest tests/python/sdk/test_instance_mask_storage.py --no-services --no-coverage-collection -q 2>&1 | tee baseline.log
           python /tmp/benchmark_instance_masks.py > benchmark-baseline.json
-          git checkout 55e474aceb896db1d196acb296c8516ff4861862 -- cvat-sdk/cvat_sdk/pytorch/transforms.py
+          git checkout 26c9a21f8463ab8eab0be5ed7395340f0533d7d9 -- cvat-sdk/cvat_sdk/pytorch/transforms.py
           python - <<'PY'
           import json
           old = json.load(open("benchmark-baseline.json"))
