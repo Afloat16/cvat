@@ -1,0 +1,31 @@
+{
+  "repository": "cvat-ai/cvat",
+  "stars": 17134,
+  "title": "SDK: make empty annotation deletion selections a no-op",
+  "base": "af625a127fff3d2c0019f9bc0dc003d66b75385e",
+  "base_branch": "develop",
+  "branch": "fix/empty-annotation-deletion-selection-20261113",
+  "commit": "a210f04a4023b157727393a9948133edd4cccee5",
+  "commit_url": "https://github.com/Afloat16/cvat/commit/a210f04a4023b157727393a9948133edd4cccee5",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_url": "https://github.com/cvat-ai/cvat/pull/11488",
+  "pr_number": 11488,
+  "merged_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "issue_url": "https://github.com/cvat-ai/cvat/issues/11486",
+  "body": "### Motivation and context\n\nFixes #11486.\n\n`Task.remove_annotations(ids=[])` and `Job.remove_annotations(ids=[])` currently take the same branch as an omitted selection and issue a full DELETE. A caller that filters existing annotations and finds no matching IDs can therefore erase unrelated annotations.\n\nDistinguish an absent selection (`None`) from an explicitly empty selection. Empty selections return without an annotation request; omitted IDs and `None` keep the documented full-delete behavior. Nonempty selections retain the existing GET/filter/PATCH flow. The method docstring states these three cases.\n\n### How has this been tested?\n\n[Native SDK validation](https://github.com/Afloat16/cvat/actions/runs/43405322890) passed for exact commit `a210f04a4023b157727393a9948133edd4cccee5` on Python 3.11, using the officially generated SDK:\n\n- 28 new cases passed. Against the original source, the same tests produced 12 failures and 16 passing controls.\n- All 48 existing SDK mask/attribute unit tests passed.\n- Black 25.12.0 and isort 6.1.0 checks passed.\n\nThe tests use a local HTTP server and the real generated client, including retrieval of Task/Job response models. They inspect actual annotation GET/PATCH/DELETE requests and resulting isolated state. Cases cover empty lists/tuples/sets/ranges, selective tag/shape/track deletion, repeated or unknown IDs, explicit `None`, omitted IDs and a real empty label-filter result. No running CVAT deployment is needed for this protocol-level regression.\n\n### Checklist\n\n- [x] I submit my changes into the `develop` branch\n- [x] I have created a changelog fragment\n- [x] I have updated the documentation accordingly (method docstring)\n- [x] I have added tests to cover my changes\n- [x] I have linked related issues\n\n### License\n\n- [x] I submit my code changes under the same MIT License that covers the project.",
+  "validation": {
+    "after": "28 new tests and all 48 existing SDK mask/attribute controls passed.",
+    "before": "Original source with final identical fixtures: 12 failed, 16 passed.",
+    "checks": "Black 25.12.0 and isort 6.1.0 passed.",
+    "run_url": "https://github.com/Afloat16/cvat/actions/runs/43405322890",
+    "workflow_commit": "20cfb973c81bb9c91588f8df9f3c468665ac3538",
+    "validation_branch": "validation/empty-annotation-deletion-selection-20261113",
+    "broader": "Official SDK generated from the repository schema, real generated HTTP client and isolated localhost protocol server. No actual user tasks or annotations deleted; no full CVAT deployment claimed. Early fixture construction errors were corrected to native HTTP entity retrieval before original/fixed comparison."
+  },
+  "independent_review": "eval_contributions approved production change and annotation selection semantics; final fixture retrieves native Task/Job models over HTTP, with identical production logic.",
+  "deduplication": "All 20 pre-existing fork heads are this task or validation/audit branches. Complete seven-entry annotations.py history and actual patches inspected; all-state remove_annotations/empty deletion searches found no core fix. PR #11089 only guards an example caller with `if matched`, leaving the SDK method unchanged; #10961 changes frontend filtering. Original SDK behavior traced to #4813.",
+  "recorded_at": "2026-11-13T10:01:15.213Z"
+}
