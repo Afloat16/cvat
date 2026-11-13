@@ -1,0 +1,31 @@
+{
+  "repository": "cvat-ai/cvat",
+  "stars": 17125,
+  "title": "Decode HTTP content encoding in SDK downloads",
+  "base": "873008dead495e215a51dbea5c705bc19b61016d",
+  "base_branch": "develop",
+  "branch": "fix/download-http-content-encoding-20261112",
+  "commit": "45c2bb9855064975ebd31be8b005859c4231118c",
+  "commit_url": "https://github.com/Afloat16/cvat/commit/45c2bb9855064975ebd31be8b005859c4231118c",
+  "pr_created": true,
+  "pr_status": "open",
+  "pr_url": "https://github.com/cvat-ai/cvat/pull/11484",
+  "pr_number": 11484,
+  "merged_at": null,
+  "counts_for_implementation": true,
+  "counts_for_merged": false,
+  "issue_url": "https://github.com/cvat-ai/cvat/issues/11482",
+  "body": "### Motivation and context\n\nCloses #11482.\n\nThe SDK requests HTTP responses through urllib3 but writes downloads with `decode_content=False`. A proxy or server that applies gzip/deflate Content-Encoding therefore leaves the HTTP-compressed bytes in the requested dataset file instead of the archive content.\n\nDecode HTTP Content-Encoding while reading the response. Treat progress totals as unknown for encoded responses, because their Content-Length describes compressed wire bytes rather than the decoded bytes written to disk.\n\n### How has this been tested?\n\n- Exact final commit: `45c2bb9855064975ebd31be8b005859c4231118c`.\n- Native generated SDK and urllib3 HTTP transport against a local HTTP peer.\n- Final validation: https://github.com/Afloat16/cvat/actions/runs/43398823652\n- 20 new tests pass; original implementation: 11 failures and 9 passing controls.\n- 48 existing mask/attribute SDK controls pass.\n- Black and isort checks pass.\n\nCases cover gzip, deflate, identity, and absent Content-Encoding; Content-Length and chunked responses; explicit-file and directory targets; usable ZIP contents; decoded bodies exceeding the 10 MiB read size; progress counters; and atomic cleanup after malformed gzip. A native .gz file without HTTP Content-Encoding remains byte-for-byte compressed.\n\nThe original-source comparison now reports large payload mismatches through length/hash assertions to keep pytest's failure rendering bounded. The final exact-SHA run includes both implementations.\n\n### Scope and risks\n\nThis concerns HTTP transfer encoding, not extraction of downloaded archives. The integration tests use a controlled local HTTP peer, not a deployed CVAT service. Encoded responses have indeterminate progress totals until their decoded length is known.\n\n### Checklist\n\n- [x] I submit my changes into the `develop` branch\n- [x] I have created a changelog fragment\n- ~~I have updated the documentation accordingly~~ — no public API change.\n- [x] I have added tests to cover my changes\n- [x] I have linked related issues\n\n### License\n\n- [x] I submit my code changes under the same MIT License that covers the project.\n",
+  "validation": {
+    "after": "20 new and 48 existing SDK cases passed.",
+    "before": "Original source: 11 failed and 9 passed.",
+    "checks": "Black 25.12.0 and isort 6.1.0 passed.",
+    "run_url": "https://github.com/Afloat16/cvat/actions/runs/43398823652",
+    "workflow_commit": "0648d18be1a1899841e212791215001d9aa3eb6c",
+    "validation_branch": "validation/download-http-content-encoding-20261112",
+    "broader": "Native generated SDK and urllib3 against a local HTTP peer; no production CVAT deployment or GPU validation. Initial baseline failure rendering exceeded pytest timeout; final large-payload assertions compare lengths/hashes and complete normally."
+  },
+  "independent_review": "existing_prs approved full source semantics and 20 tests; subsequent changes bound large failure rendering and format only.",
+  "deduplication": "All fork heads belong to this task; complete 15-entry downloading history and actual #6002/#4813/#9732/#11122 diffs checked; gzip, decode_content and Content-Encoding all-state searches found no same fix. Latest develop af625a1 still uses decode_content=False.",
+  "recorded_at": "2026-11-13T09:11:31.886Z"
+}
